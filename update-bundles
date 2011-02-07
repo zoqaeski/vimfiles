@@ -1,0 +1,71 @@
+#!/usr/bin/env ruby
+# Useful update manager for Vim.
+
+git_bundles = [ 
+"git://github.com/chrismetcalf/vim-yankring.git",
+"git://github.com/ciaranm/securemodelines.git",
+"git://github.com/godlygeek/tabular.git",
+"git://github.com/scrooloose/nerdtree.git",
+#"git://github.com/scrooloose/nerdcommenter.git",
+"git://github.com/thinca/vim-visualstar.git",
+"git://github.com/tomtom/tcomment_vim.git",
+"git://github.com/tpope/vim-markdown.git",
+"git://github.com/tpope/vim-ragtag.git",
+"git://github.com/tpope/vim-repeat.git",
+"git://github.com/tpope/vim-surround.git",
+"git://github.com/tpope/vim-unimpaired.git",
+"git://github.com/tpope/vim-vividchalk.git",
+"git://github.com/tsaleh/vim-matchit.git",
+]
+
+vim_org_scripts = [
+#  ["IndexedSearch", "7062",  "plugin"],
+#  ["gist",          "12732", "plugin"],
+#  ["jquery",        "12107", "syntax"],
+]
+
+require 'fileutils'
+require 'open-uri'
+require 'date'
+
+bundles_dir = File.join(File.dirname(__FILE__), "bundle")
+backup_dir = File.join(File.dirname(__FILE__), "Removed-Bundles")
+
+FileUtils.mkdir_p(backup_dir)
+FileUtils.cd(bundles_dir)
+
+puts "Backing up old versions for today (" + Date.today.to_s + ")"
+Dir["*"].each do |dir|
+	puts "Making archive for " + dir.to_s + "."
+	archive = dir.to_s + "-" + Date.today.to_s + ".tar.xz"
+	`tar -Jcf #{archive} #{dir}`
+	#puts "Moving backup ("+ archive +") to backup_dir."
+	`mv #{archive} ../#{backup_dir}/.`
+	#FileUtils.mv(archive, backup_dir, :suffix => Date.today.to_s)
+end
+
+# Now we can delete the old copies
+puts "Deleting old bundles..."
+Dir["*"].each {|d| FileUtils.rm_rf d }
+
+#puts "Purging duplicates in backup_dir to avoid clutter."
+#FileUtils.cd('../' + backup_dir, :verbose=>true)
+#File["*.tar.xz"].each do |archive|
+#	
+#end
+
+git_bundles.each do |url|
+  dir = url.split('/').last.gsub(/^vim-|\.git$/, '')
+  puts "  Unpacking #{url} into #{dir}"
+  `git clone #{url} #{dir}`
+  FileUtils.rm_rf(File.join(dir, ".git"))
+end
+
+vim_org_scripts.each do |name, script_id, script_type|
+  puts "  Downloading #{name}"
+  local_file = File.join(name, script_type, "#{name}.vim")
+  FileUtils.mkdir_p(File.dirname(local_file))
+  File.open(local_file, "w") do |file|
+    file << open("http://www.vim.org/scripts/download_script.php?src_id=#{script_id}").read
+  end
+end

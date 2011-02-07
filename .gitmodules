@@ -1,0 +1,39 @@
+[submodule "yankring"]
+	path = yankring
+	url = git://github.com/chrismetcalf/vim-yankring.git
+[submodule "securemodelines"]
+	path = securemodelines
+	url = git://github.com/ciaranm/securemodelines.git
+[submodule "tabular"]
+	path = tabular
+	url = git://github.com/godlygeek/tabular.git
+[submodule "nerdtree"]
+	path = nerdtree
+	url = git://github.com/scrooloose/nerdtree.git
+[submodule "visualstar"]
+	path = visualstar
+	url = git://github.com/thinca/vim-visualstar.git
+[submodule "tcomment_vim"]
+	path = tcomment_vim
+	url = git://github.com/tomtom/tcomment_vim.git
+[submodule "markdown"]
+	path = markdown
+	url = git://github.com/tpope/vim-markdown.git
+[submodule "ragtag"]
+	path = ragtag
+	url = git://github.com/tpope/vim-ragtag.git
+[submodule "repeat"]
+	path = repeat
+	url = git://github.com/tpope/vim-repeat.git
+[submodule "surround"]
+	path = surround
+	url = git://github.com/tpope/vim-surround.git
+[submodule "unimpaired"]
+	path = unimpaired
+	url = git://github.com/tpope/vim-unimpaired.git
+[submodule "vividchalk"]
+	path = vividchalk
+	url = git://github.com/tpope/vim-vividchalk.git
+[submodule "matchit"]
+	path = matchit
+	url = git://github.com/tsaleh/vim-matchit.git
