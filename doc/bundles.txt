@@ -1,6 +1,24 @@
 *bundles.txt*                    Bundles                      Version 0.1
 
 These are the bundles installed on your system, along with their
-versions and release dates.  Downloaded on 2011-02-07 21:53:27 +1100.
+versions and release dates.  Downloaded on 2011-02-07 22:07:15 +1100.
 
 A version number of 'n/a' means upstream hasn't tagged any releases.
+  - |yankring|                     n/a                    2010-09-26
+  - |securemodelines|              n/a                    2011-02-05
+  - |tabular|                      n/a                    2011-01-23
+  - |nerdtree|                     4.1.0-6-g7650cdc       2010-11-20
+  - |visualstar|                   v0.2.1                 2010-04-23
+  - |tcomment_vim|                 2.04-1-g81345c9        2011-01-26
+  - |markdown|                     n/a                    2010-10-24
+  - |ragtag|                       v2.0-6-ga6190de        2010-09-26
+  - |repeat|                       v1.0                   2008-04-25
+  - |surround|                     v1.90-5-gd9e6bfd       2011-01-23
+  - |unimpaired|                   v1.1-5-g2f4bb08        2011-01-23
+  - |vividchalk|                   v2.0                   2010-02-19
+  - |matchit|                      n/a                    2010-06-04
+  - |bufexplorer|                  n/a (Not Git)         
+  - |session|                      n/a (Not Git)         
+  - |latex-box|                    n/a (Not Git)         
+  - |utl|                          n/a (Not Git)         
+

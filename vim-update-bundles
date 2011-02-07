@@ -276,6 +276,7 @@ def create_new_vim_environment vimrc, starter_url, pathogen_url
   download_file pathogen_url, dotvim('autoload', 'pathogen.vim')
 end
 
+# Needed quick way to register bundles as submodules
 def git_submodule_register
   bundle_dir = dotvim('bundle')
   ensure_dir bundle_dir
@@ -327,11 +328,11 @@ if ensure_dir(dotvim) || !test(?f, dotvimrc)
   update_bundles_and_docs
   puts 'Done!  Now enable some plugins in your ~/.vimrc file.'
 else
-  # update_bundles_and_docs
-  # puts "updating helptags..."
+  update_bundles_and_docs
+  puts "updating helptags..."
   # looks like stock vim on a Mac always exits with 1, even when doing nothing
-  # run :vim, '-e', '-c', 'call pathogen#helptags()', '-c', 'q', :acceptable_exit_codes => [0, 1] unless ENV['TESTING']
-  # puts "done!  Start Vim and type ':help bundles' to see what you have installed."
-  git_submodule_register
+  run :vim, '-e', '-c', 'call pathogen#helptags()', '-c', 'q', :acceptable_exit_codes => [0, 1] unless ENV['TESTING']
+  puts "done!  Start Vim and type ':help bundles' to see what you have installed."
+  # git_submodule_register
 end
 
