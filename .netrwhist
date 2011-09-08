@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/robbie/.config/zsh'
+let g:netrw_dirhist_2='/home/robbie/.ncmpcpp'
+let g:netrw_dirhist_3='/home/robbie/.audacity-data'

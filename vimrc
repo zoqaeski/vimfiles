@@ -9,6 +9,7 @@
 "
 " Sections
 "	-> <url:#General Stuff>
+"		-> <url:#Bundles Installed>
 "	-> <url:#Interface>
 "	-> <url:#Status Line>
 "	-> <url:#Files, Backups and Undo>
@@ -20,7 +21,6 @@
 "	-> <url:#Filetype Settings>
 "	-> <url:#Useful Commands>
 "	-> <url:#Autocommands>
-"	-> <url:#Bundles Installed>
 "	-> <url:#Plugin Settings>
 "
 """"""""""""""""""""""""""""""""""""""""
@@ -28,23 +28,48 @@
 """"""""""""""""""""""""""""""""""""""""
 " => General Stuff
 """"""""""""""""""""""""""""""""""""""""
-" Some parts require a vim home to function
-let g:vimHome = strpart(&rtp, 0, stridx(&rtp, ','))
-
-function! MySys()
-	return "linux"
-endfunction
 
 " We DO NOT want Vi compatibility
 set nocompatible
 
-" Enable loading filetype and indentation plugins (Temporarily disabled to
-" test pathogen.
-"filetype plugin on
-"filetype indent on
 filetype off
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+
+" Vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" ==> Bundles Installed
+" The bundles I have installed are listed here for compatibility with vim-update-bundles.
+Bundle 'git://github.com/gmarik/vundle.git'
+Bundle 'git://github.com/chrismetcalf/vim-yankring.git'
+Bundle 'git://github.com/ciaranm/securemodelines.git'
+Bundle 'git://github.com/godlygeek/tabular.git'
+Bundle 'git://github.com/scrooloose/nerdtree.git'
+Bundle 'git://github.com/scrooloose/nerdcommenter.git'
+Bundle 'git://github.com/thinca/vim-visualstar.git'
+" Bundle 'git://github.com/tomtom/tcomment_vim.git'
+Bundle 'git://github.com/tpope/vim-markdown.git'
+Bundle 'git://github.com/tpope/vim-ragtag.git'
+Bundle 'git://github.com/tpope/vim-repeat.git'
+Bundle 'git://github.com/tpope/vim-surround.git'
+Bundle 'git://github.com/tpope/vim-unimpaired.git'
+Bundle 'git://github.com/tpope/vim-vividchalk.git'
+Bundle 'git://github.com/tsaleh/vim-matchit.git'
+Bundle 'git://github.com/xolox/vim-session.git'
+" The bundles I am not grabbing from Git are listed here:
+Bundle 'bufexplorer.zip'
+Bundle 'latex-box'
+Bundle 'utl'
+" #BUNDLE-NOTGIT: html-tools
+
+filetype plugin indent on
+
+" Some parts require a vim home to function
+let g:vimHome = strpart(&rtp, 0, stridx(&rtp, '/bundle'))
+
+function! MySys()
+	return "linux"
+endfunction
 
 " Map Leader for extra mappings and keybindings
 let mapleader = ","
@@ -138,7 +163,7 @@ set novisualbell
 syntax on
 
 " My own preferred colour scheme; I'm looking for a better one
-colorscheme zork 
+colorscheme zarniwoop
 
 if has('gui_running') 
 	set background=dark
@@ -450,6 +475,9 @@ set pastetoggle=<F11>
 " Tab stuff
 imap <S-Tab> <C-o><<
 
+" Transpose words, Emacs-style
+" TODO
+
 " TODO: Add a TaskList Toggle perhaps?
 
 
@@ -478,30 +506,6 @@ command! Clear norm gg"_dG
 " Moved to <url:./.vim/filetype.vim>
 
 """"""""""""""""""""""""""""""""""""""""
-" => Bundles Installed
-""""""""""""""""""""""""""""""""""""""""
-" The bundles I have installed are listed here for compatibility with vim-update-bundles.
-" BUNDLE: git://github.com/chrismetcalf/vim-yankring.git
-" BUNDLE: git://github.com/ciaranm/securemodelines.git
-" BUNDLE: git://github.com/godlygeek/tabular.git
-" BUNDLE: git://github.com/scrooloose/nerdtree.git
-" #BUNDLE: git://github.com/scrooloose/nerdcommenter.git
-" BUNDLE: git://github.com/thinca/vim-visualstar.git
-" BUNDLE: git://github.com/tomtom/tcomment_vim.git
-" BUNDLE: git://github.com/tpope/vim-markdown.git
-" BUNDLE: git://github.com/tpope/vim-ragtag.git
-" BUNDLE: git://github.com/tpope/vim-repeat.git
-" BUNDLE: git://github.com/tpope/vim-surround.git
-" BUNDLE: git://github.com/tpope/vim-unimpaired.git
-" BUNDLE: git://github.com/tpope/vim-vividchalk.git
-" BUNDLE: git://github.com/tsaleh/vim-matchit.git
-" The bundles I am not grabbing from Git are listed here:
-" BUNDLE-NOTGIT: bufexplorer
-" BUNDLE-NOTGIT: session
-" BUNDLE-NOTGIT: latex-box
-" BUNDLE-NOTGIT: utl
-
-""""""""""""""""""""""""""""""""""""""""
 " => Plugin Settings
 """"""""""""""""""""""""""""""""""""""""
 
@@ -527,3 +531,12 @@ exec "set runtimepath+=".g:vimHome."/ultisnips_rep"
 " ==> UTL
 let g:utl_cfg_hdl_scm_http_system = 'silent !xdg-open %u'  
 nnoremap <Leader>] :Utl<CR>
+
+" ==> HTML tools
+let g:do_xhtml_mappings = 'yes'
+let g:html_tag_case = 'lowercase'
+let g:no_html_toolbar = 'yes'
+let g:no_html_menu = 'yes'
+
+" ==> matchit
+let b:match_words = '‹:›,«:»,”:„,“:”,‘:’'
