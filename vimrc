@@ -56,10 +56,10 @@ Bundle 'git://github.com/tpope/vim-unimpaired.git'
 Bundle 'git://github.com/tpope/vim-vividchalk.git'
 Bundle 'git://github.com/tsaleh/vim-matchit.git'
 Bundle 'git://github.com/xolox/vim-session.git'
+Bundle 'git://github.com/vim-scripts/utl.vim.git'
 " The bundles I am not grabbing from Git are listed here:
 Bundle 'bufexplorer.zip'
 Bundle 'latex-box'
-Bundle 'utl'
 " #BUNDLE-NOTGIT: html-tools
 
 filetype plugin indent on
