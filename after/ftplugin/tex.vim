@@ -14,7 +14,7 @@
 " Use 2 spaces for <Tab> and :retab
 setlocal tabstop=2
 setlocal softtabstop=2
-setlocal noexpandtab
+setlocal expandtab
 setlocal smarttab
 
 " Use indents of 4 spaces

@@ -1,0 +1,81 @@
+""""""""""""""""""""""""""""""""
+" VUNDLE CONFIGURATION
+"""""""""""""""""""""""""""""""
+
+set nocompatible
+
+filetype off
+
+" Vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Vundle plugin manager
+Bundle 'gmarik/vundle'
+
+" Vim Misc dependency for xolox scripts
+Bundle 'xolox/vim-misc'
+" Vim Shell
+Bundle 'xolox/vim-shell'
+" Notes!
+Bundle 'xolox/vim-notes'
+" Session management
+Bundle 'xolox/vim-session'
+
+" Vim Yankring
+Bundle 'chrismetcalf/vim-yankring'
+
+" Secure mode line support
+Bundle 'ciaranm/securemodelines'
+
+" Table generation
+Bundle 'godlygeek/tabular'
+
+" NERD tree file browser
+Bundle 'scrooloose/nerdtree'
+" NERD comment
+Bundle 'scrooloose/nerdcommenter'
+" Syntax checking
+Bundle 'scrooloose/syntastic'
+
+" Star searching in visual mode
+Bundle 'thinca/vim-visualstar'
+
+" Git wrapper for vim
+Bundle 'tpope/vim-fugitive'
+" Markdown editing in vim
+Bundle 'tpope/vim-markdown'
+" Mappings for XML/HTML editing
+Bundle 'tpope/vim-ragtag'
+" Advanced repeating commands
+Bundle 'tpope/vim-repeat'
+" Surround text mappings
+Bundle 'tpope/vim-surround'
+" Bracket mappings
+Bundle 'tpope/vim-unimpaired'
+
+" Gundo
+Bundle 'sjl/gundo.vim'
+
+" Matching mappings
+Bundle 'tsaleh/vim-matchit'
+
+" Universal text linking
+Bundle 'vim-scripts/utl.vim'
+
+
+" Buffer explorer
+"Bundle 'bufexplorer.zip'
+" LaTeX tools
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
+"Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+
+" #BUNDLE-NOTGIT: html-tools
+" Bundles I don't want are down here
+" Bundle 'git://github.com/tomtom/tcomment_vim.git'
+" GPG plugin for vim
+"Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
+
+filetype plugin indent on
+
+" vim: ft=vim

@@ -9,7 +9,6 @@
 "
 " Sections
 "	-> <url:#General Stuff>
-"		-> <url:#Bundles Installed>
 "	-> <url:#Interface>
 "	-> <url:#Status Line>
 "	-> <url:#Files, Backups and Undo>
@@ -26,43 +25,11 @@
 """"""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""
-" => General Stuff
+" +> General Stuff
 """"""""""""""""""""""""""""""""""""""""
 
-" We DO NOT want Vi compatibility
-set nocompatible
-
-filetype off
-
-" Vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" ==> Bundles Installed
-" The bundles I have installed are listed here for compatibility with vim-update-bundles.
-Bundle 'git://github.com/gmarik/vundle.git'
-Bundle 'git://github.com/chrismetcalf/vim-yankring.git'
-Bundle 'git://github.com/ciaranm/securemodelines.git'
-Bundle 'git://github.com/godlygeek/tabular.git'
-Bundle 'git://github.com/scrooloose/nerdtree.git'
-Bundle 'git://github.com/scrooloose/nerdcommenter.git'
-Bundle 'git://github.com/thinca/vim-visualstar.git'
-" Bundle 'git://github.com/tomtom/tcomment_vim.git'
-Bundle 'git://github.com/tpope/vim-markdown.git'
-Bundle 'git://github.com/tpope/vim-ragtag.git'
-Bundle 'git://github.com/tpope/vim-repeat.git'
-Bundle 'git://github.com/tpope/vim-surround.git'
-Bundle 'git://github.com/tpope/vim-unimpaired.git'
-Bundle 'git://github.com/tpope/vim-vividchalk.git'
-Bundle 'git://github.com/tsaleh/vim-matchit.git'
-Bundle 'git://github.com/xolox/vim-session.git'
-" The bundles I am not grabbing from Git are listed here:
-Bundle 'bufexplorer.zip'
-Bundle 'latex-box'
-Bundle 'utl'
-" #BUNDLE-NOTGIT: html-tools
-
-filetype plugin indent on
+" VUNDLE!
+source ~/.vim/vundlerc
 
 " Some parts require a vim home to function
 let g:vimHome = strpart(&rtp, 0, stridx(&rtp, '/bundle'))
@@ -76,9 +43,6 @@ let mapleader = ","
 let g:mapleader = ","
 let maplocalleader = ","
 let g:maplocalleader = ","
-
-" Quick Saving
-nmap <Leader>w :w<CR>
 
 " Quick Editing and Sourcing of ~/.vimrc
 nnoremap <Leader>s :source $MYVIMRC<CR>
@@ -108,10 +72,11 @@ set modeline
 set modelines=10
 
 """"""""""""""""""""""""""""""""""""""""
-" => Interface
+" +> Interface
 """"""""""""""""""""""""""""""""""""""""
 " Minimum number of lines to keep above/below the cursor
 set scrolloff=4
+set sidescrolloff=0
 
 " Command <Tab> completion, list matches and complete the longest common part, then, cycle through the matches
 set wildmenu
@@ -119,6 +84,12 @@ set wildmode=list:longest,full
 
 " Ignore these file types when opening
 set wildignore=*.bak,*~,*.jpg,*.gif,*.png,*.pdf,*.class,*.pyc,*.o,*.obj,*.swp
+
+" Browse menus from command line
+source $VIMRUNTIME/menu.vim
+set cpo-=<
+set wcm=<C-Z>
+map <F4> :emenu <C-Z>
 
 if has('cmdline_info')
 	" Show the ruler
@@ -163,33 +134,20 @@ set novisualbell
 syntax on
 
 " My own preferred colour scheme; I'm looking for a better one
-colorscheme zarniwoop
+let g:solarized_contrast="high"    "default value is normal
+
+" Change background
+"call togglebg#map("<F12>")
+set background=dark
+
+colorscheme default
 
 if has('gui_running') 
-	set background=dark
-	" GUI Options
-	" (a) Autoselect in VISUAL mode
-	" (c) Console dialogs instead of popups 
-	" (g) Grey-out inactive menu items
-	" (i) Use a Vim icon
-	" (m) Display the menu bar
-	" (rR) Right hand scrollbar is always present
-	set guioptions=acgimrR
-	" (lL) Left hand scrollbar is never present
-	set guioptions-=lL
-	" (e) Never display GTK+ tabs, but always display a tab line
-	set guioptions-=e
-	set showtabline=2
-	" (t) Never display tear-off menu items
-	" (T) Never display toolbar
-	set guioptions-=tT
-	" Fixed window width
-	set columns=132
-	set lines=40
-	" 
-	"set guifont=Droid\ Sans\ Mono\ 11
-	set guifont=DejaVu\ Sans\ Mono\ 11
+	source ~/.gvimrc
 endif
+
+" Always show tab line
+set showtabline=2
 
 " STOP UNDERLINING THE CURRENT LINE!!!
 set nocursorline
@@ -232,7 +190,7 @@ set nrformats=octal,hex,alpha
 
 
 """"""""""""""""""""""""""""""""""""""""
-" => Status Line
+" +> Status Line
 """"""""""""""""""""""""""""""""""""""""
 " always show a status line
 set laststatus=2
@@ -255,7 +213,7 @@ set statusline+=\ %P                            " Percentage
 
 
 """"""""""""""""""""""""""""""""""""""""
-" => Files, Backups and Undo
+" +> Files, Backups and Undo
 """"""""""""""""""""""""""""""""""""""""
 " Turn Backup off: reduces clutter
 set backup
@@ -279,7 +237,7 @@ au BufWritePre /tmp/* setlocal noundofile
 
 
 """"""""""""""""""""""""""""""""""""""""
-" => Text/Tab/Indentation
+" +> Text/Tab/Indentation
 """"""""""""""""""""""""""""""""""""""""
 " Use 4 spaces for <Tab> and :retab
 set tabstop=4
@@ -298,13 +256,14 @@ set smartindent
 set shiftround
 
 " Wrap long lines
-set wrap
+set nowrap
 set textwidth=0
 set linebreak
+map <F2> :set wrap!<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""
-" => Visual Mode Mappings
+" +> Visual Mode Mappings
 """"""""""""""""""""""""""""""""""""""""
 " Really useful!
 "  In visual mode when you press * or # to search for the current selection
@@ -350,7 +309,7 @@ endfunction
 
 
 """"""""""""""""""""""""""""""""""""""""
-" => Command Mode Mappings
+" +> Command Mode Mappings
 """"""""""""""""""""""""""""""""""""""""
 " Smart mappings on command line
 cno $h e ~/
@@ -400,7 +359,7 @@ endfunction
 
 
 """"""""""""""""""""""""""""""""""""""""
-" => Moving Around, Tabs and Buffers
+" +> Moving Around, Tabs and Buffers
 """"""""""""""""""""""""""""""""""""""""
 " Searching
 "map <space> / " Not sure if I want this
@@ -408,20 +367,26 @@ endfunction
 noremap <silent> <Leader><CR> :set hlsearch! hlsearch?<CR>
 
 " Close the current buffer
+nnoremap <Leader>bc :close<CR>
 nnoremap <Leader>bd :BClose<CR>
+nnoremap <Leader>bD :BClose<CR>:close<CR>
 
 " Switch between buffers quickly
 nnoremap gb :bnext<CR>
 nnoremap gB :bprevious<CR>
+nmap <Leader>bl :buffers<CR>
 
 " Tab commands
-map <Leader>tn :tabnew<CR>
-map <Leader>te :tabedit
-map <Leader>tc :tabclose<CR>
-map <Leader>tm :tabmove
+nmap <Leader>tn :tabnew<CR>
+nmap <Leader>te :tabedit
+nmap <Leader>tc :tabclose<CR>
+nmap <Leader>tm :tabmove
+nmap <Leader>tM :tabmove<CR>
+nmap <Leader>t> :tabmove +1<CR>
+nmap <Leader>t< :tabmove -1<CR>
 
 " When pressing <leader>cd switch to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>
+nmap <leader>cd :cd %:p:h<cr>
 
 " Stop QuickFix window from borking my tab pages
 set switchbuf=usetab
@@ -449,7 +414,7 @@ endfunction
 
 
 """"""""""""""""""""""""""""""""""""""""
-" => Editing Mappings
+" +> Editing Mappings
 """"""""""""""""""""""""""""""""""""""""
 " Insert blank lines
 noremap <Leader>o o<Esc>k
@@ -480,19 +445,18 @@ imap <S-Tab> <C-o><<
 
 " TODO: Add a TaskList Toggle perhaps?
 
-
 """"""""""""""""""""""""""""""""""""""""
-" => Filetype Settings
+" +> Filetype Settings
 """"""""""""""""""""""""""""""""""""""""
-" ==> LaTeX
+" ++> LaTeX
 let g:tex_flavor='latex'
 let g:tex_gotoerror=0
 
-" ==> XML
+" ++> XML
 let xml_use_xhtml = 1
 
 """"""""""""""""""""""""""""""""""""""""
-" => Useful Commands
+" +> Useful Commands
 """""""""""""""""""""""""""""""""""""""
 " Diff original file
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
@@ -500,19 +464,19 @@ command! Scratch tabnew | set bt=nofile
 command! Clear norm gg"_dG
 
 """"""""""""""""""""""""""""""""""""""""
-" => Autocommands
+" +> Autocommands
 """""""""""""""""""""""""""""""""""""""
 " I may expand these in future
 " Moved to <url:./.vim/filetype.vim>
 
 """"""""""""""""""""""""""""""""""""""""
-" => Plugin Settings
+" +> Plugin Settings
 """"""""""""""""""""""""""""""""""""""""
 
-" ==> NERDTree
+" ++> NERDTree
 nnoremap <Leader>n :NERDTreeToggle %:p:h<CR>
 
-" ==> YankRing
+" ++> YankRing
 let g:yankring_max_history = 100
 let g:yankring_max_display = 200
 let g:yankring_min_element_length = 1
@@ -525,18 +489,27 @@ let g:yankring_replace_n_nkey = '<M-n>'
 nnoremap Y :<C-U>YRYankCount 'y$'<CR>
 noremap <Leader>y :YRShow<CR>
 
-" ==> UltiSnips
+" ++> UltiSnips
 exec "set runtimepath+=".g:vimHome."/ultisnips_rep"
 
-" ==> UTL
+" ++> UTL
 let g:utl_cfg_hdl_scm_http_system = 'silent !xdg-open %u'  
 nnoremap <Leader>] :Utl<CR>
 
-" ==> HTML tools
+" ++> HTML tools
 let g:do_xhtml_mappings = 'yes'
 let g:html_tag_case = 'lowercase'
 let g:no_html_toolbar = 'yes'
 let g:no_html_menu = 'yes'
 
-" ==> matchit
+" ++> matchit
 let b:match_words = '‹:›,«:»,”:„,“:”,‘:’'
+
+" ++> Notes
+let g:notes_directory = '~/documents/notes'
+let g:notes_suffix = '.txt'
+
+" ++> Shell
+let g:shell_mappings_enabled = 0
+let g:shell_fullscreen_items = 'mT'
+nnoremap <F6> :Open<CR>
