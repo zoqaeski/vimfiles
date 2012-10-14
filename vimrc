@@ -196,20 +196,21 @@ set nrformats=octal,hex,alpha
 set laststatus=2
 
 " A SUPER STATUS LINE!!
-set statusline=                                 " Clears status line
-set statusline+=\ %<                            " Separator, truncate
-set statusline+=\ (%n)                          " Buffer
-set statusline+=\ %f                            " File (relative path)
-set statusline+=\ %M                            " Modified + -
-set statusline+=\ %R%H%W                        " RO/HLP/PRV
-set statusline+=\ %=                            " Separator left/right
-set statusline+=\ [                             " Start group
-set statusline+=%{strlen(&ft)?&ft:'none'}/      " File type
-set statusline+=%{&fileformat}/                 " File format
-set statusline+=%{(&fenc==\"\"?&enc:&fenc)}     " File encoding
-set statusline+=]                               " End group
-set statusline+=\ %l:%c%V                       " Line, column, virtual column
-set statusline+=\ %P                            " Percentage
+set statusline=                             " Clears status line
+set statusline+=\ %<                        " Separator, truncate
+set statusline+=\ (%n)                      " Buffer
+set statusline+=\ %f                        " File (relative path)
+set statusline+=\ %M                        " Modified + -
+set statusline+=\ %R%H%W                    " RO/HLP/PRV
+set statusline+=\ %{fugitive#statusline()}  " Fugitive status line
+set statusline+=\ %=                        " Separator left/right
+set statusline+=\ [                         " Start group
+set statusline+=%{strlen(&ft)?&ft:'none'}/  " File type
+set statusline+=%{&fileformat}/             " File format
+set statusline+=%{(&fenc==\"\"?&enc:&fenc)} " File encoding
+set statusline+=]                           " End group
+set statusline+=\ %l:%c%V                   " Line, column, virtual column
+set statusline+=\ %P                        " Percentage
 
 
 """"""""""""""""""""""""""""""""""""""""
@@ -475,6 +476,7 @@ command! Clear norm gg"_dG
 
 " ++> NERDTree
 nnoremap <Leader>n :NERDTreeToggle %:p:h<CR>
+nnoremap <Leader>N :NERDTreeToggle<CR>
 
 " ++> YankRing
 let g:yankring_max_history = 100
@@ -513,3 +515,7 @@ let g:notes_suffix = '.txt'
 let g:shell_mappings_enabled = 0
 let g:shell_fullscreen_items = 'mT'
 nnoremap <F6> :Open<CR>
+
+" ++> Syntastic
+let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [], 'passive_filetypes': [] }
+let g:syntastic_quiet_warnings=1

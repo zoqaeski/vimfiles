@@ -8,21 +8,22 @@ set background=dark
 " (i) Use a Vim icon
 " (m) Display the menu bar
 " (rR) Right hand scrollbar is always present
-set guioptions=aci
+set guioptions=cim
 " (lL) Left hand scrollbar is never present
-set guioptions-=lL
+set guioptions-=l
+set guioptions-=L
 " (e) Never display GTK+ tabs, but always display a tab line
-set guioptions-=em
-set showtabline=2
+set guioptions-=e
 " (t) Never display tear-off menu items
 " (T) Never display toolbar
-set guioptions-=tT
+set guioptions-=t
+set guioptions-=T
 
 " Fixed window width
-set columns=112
-set lines=28
+set columns=128
+set lines=32
 " Resize X window to default size
-nmap <Leader><S-s> :set columns=112 lines=28<CR>
+nmap <Leader><S-s> :set columns=128 lines=32<CR>
 
 " Fonts
 "set guifont=Droid\ Sans\ Mono\ 11
