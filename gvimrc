@@ -9,6 +9,7 @@ set background=dark
 " (m) Display the menu bar
 " (rR) Right hand scrollbar is always present
 set guioptions=cim
+" The following options override the defaults if somehow they get inserted.
 " (lL) Left hand scrollbar is never present
 set guioptions-=l
 set guioptions-=L

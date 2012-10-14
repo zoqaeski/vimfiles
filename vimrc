@@ -476,7 +476,7 @@ command! Clear norm gg"_dG
 
 " ++> NERDTree
 nnoremap <Leader>n :NERDTreeToggle %:p:h<CR>
-nnoremap <Leader>N :NERDTreeToggle<CR>
+nnoremap <Leader>N :NERDTree cwd<CR>
 
 " ++> YankRing
 let g:yankring_max_history = 100
