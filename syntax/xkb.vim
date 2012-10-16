@@ -1,9 +1,9 @@
 " Vim syntax file
-" This is a GENERATED FILE. Please always refer to source file at the URI below.
 " Language: XKB (X Keyboard Extension) components
-" Maintainer: David Ne\v{c}as (Yeti) <yeti@physics.muni.cz>
-" Last Change: 2001-04-26
-" URI: http://physics.muni.cz/~yeti/download/xkb.vim
+" Authors: 
+"	David Nečas (Yeti) <yeti@physics.muni.cz>
+"	Robbie Smith <zoqaeski@gmail.com>
+" URI: http://opensource.apple.com/source/vim/vim-6/vim/runtime/syntax/xkb.vim
 
 
 " Setup
