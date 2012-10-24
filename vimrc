@@ -28,11 +28,17 @@
 " +> General Stuff
 """"""""""""""""""""""""""""""""""""""""
 
+set nocompatible
+filetype off
+
 " VUNDLE!
 source ~/.vim/vundlerc
 
+filetype plugin indent on
+
 " Some parts require a vim home to function
-let g:vimHome = strpart(&rtp, 0, stridx(&rtp, '/bundle'))
+let g:vimHome = "~/.vim/"
+"let g:vimHome = strpart(&rtp, 0, stridx(&rtp, '/bundle'))
 
 function! MySys()
 	return "linux"
