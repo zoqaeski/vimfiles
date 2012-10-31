@@ -36,6 +36,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " gist
+Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
 " Gundo
 "Bundle 'sjl/gundo.vim'

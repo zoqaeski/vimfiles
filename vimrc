@@ -223,8 +223,8 @@ set statusline+=\ %P                        " Percentage
 " +> Files, Backups and Undo
 """"""""""""""""""""""""""""""""""""""""
 " Turn Backup off: reduces clutter
-set backup
-set writebackup
+set nobackup
+set nowritebackup
 exec "set backupdir=".g:vimHome."/tmp/backup//,/tmp//"
 au BufWritePre * let &bex = '-' . strftime("%Y%m%d-%H%M%S") . '.vimbackup'
 
@@ -525,3 +525,6 @@ nnoremap <F6> :Open<CR>
 " ++> Syntastic
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [], 'passive_filetypes': [] }
 let g:syntastic_quiet_warnings=1
+
+" ++> Gist
+let g:github_user = 'zoqaeski'
