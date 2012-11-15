@@ -391,6 +391,8 @@ nmap <Leader>tm :tabmove
 nmap <Leader>tM :tabmove<CR>
 nmap <Leader>t> :tabmove +1<CR>
 nmap <Leader>t< :tabmove -1<CR>
+nmap <C-Tab> :tabnext<CR>
+nmap <C-S-Tab> :tabprevious<CR>
 
 " When pressing <leader>cd switch to the directory of the open buffer
 nmap <leader>cd :cd %:p:h<cr>
@@ -516,6 +518,8 @@ let b:match_words = '‹:›,«:»,”:„,“:”,‘:’'
 " ++> Notes
 let g:notes_directory = '~/documents/notes'
 let g:notes_suffix = '.txt'
+"highlight link notesShortHeading Normal
+"highlight link notesVimCmd Normal
 
 " ++> Shell
 let g:shell_mappings_enabled = 0
