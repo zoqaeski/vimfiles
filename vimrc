@@ -237,7 +237,7 @@ set updatecount=200
 
 " Persistent Undo
 exec "set undodir=".g:vimHome."/tmp/undo//"
-set undofile
+set noundofile
 set undolevels=1000
 set undoreload=10000
 au BufWritePre /tmp/* setlocal noundofile
