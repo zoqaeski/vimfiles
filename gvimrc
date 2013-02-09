@@ -28,5 +28,5 @@ nmap <Leader><S-s> :set columns=128 lines=32<CR>
 
 " Fonts
 "set guifont=Droid\ Sans\ Mono\ 11
-set guifont=DejaVu\ Sans\ Mono\ 11
+set guifont=Droid\ Sans\ Mono\ 11
 
