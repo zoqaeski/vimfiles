@@ -64,6 +64,9 @@ set viminfo='20,\"50,:50,/50
 
 " Session options
 set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
+let g:session_autosave = 'no'
+let g:session_autoload = 'no'
+let g:session_command_aliases = 1
 
 " IMPORTANT: grep will sometimes skip displaying the file name if you
 " search in a singe file. This will confuse Latex-Suite. Set your grep

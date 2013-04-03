@@ -11,9 +11,9 @@ Bundle 'gmarik/vundle'
 
 " Xolox
 "Bundle 'xolox/vim-misc'
-"Bundle 'xolox/vim-shell'
+Bundle 'xolox/vim-shell'
 Bundle 'xolox/vim-notes'
-"Bundle 'xolox/vim-session'
+Bundle 'xolox/vim-session'
 
 " Vim Yankring
 Bundle 'vim-scripts/YankRing.vim'
