@@ -519,15 +519,15 @@ let g:no_html_menu = 'yes'
 let b:match_words = '‹:›,«:»,”:„,“:”,‘:’'
 
 " ++> Notes
-let g:notes_directory = '~/documents/notes'
+let g:notes_directories = ['~/documents/notes']
 let g:notes_suffix = '.txt'
 "highlight link notesShortHeading Normal
 "highlight link notesVimCmd Normal
 
 " ++> Shell
-let g:shell_mappings_enabled = 0
-let g:shell_fullscreen_items = 'mT'
-nnoremap <F6> :Open<CR>
+"let g:shell_mappings_enabled = 0
+"let g:shell_fullscreen_items = 'mT'
+"nnoremap <F6> :Open<CR>
 
 " ++> Syntastic
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [], 'passive_filetypes': [] }
