@@ -29,6 +29,7 @@ Bundle 'scrooloose/nerdcommenter'
 " tpope
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-repeat'
