@@ -1,7 +1,9 @@
 # .gitignore
 # Things git should ignore
 sessions/
+bundle/
 tmp/
+.cache/
 Removed-Bundles/
 yankring_history_v2.txt
 .netrwhist
