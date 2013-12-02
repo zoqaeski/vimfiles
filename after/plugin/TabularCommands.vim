@@ -20,3 +20,6 @@ AddTabularPattern! first_colon /^[^:]*\zs/l2
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
+AddTabularPipeline! multiple_spaces_right_first / \{2,}/
+    \ map(a:lines, "substitute(v:val, ' \{2,}', '  ', 'g')")
+    \   | tabular#TabularizeStrings(a:lines, '  ', 'r0l0')

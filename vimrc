@@ -7,7 +7,7 @@
 "
 """"""""""""""""""""""""""""""""""""""""
 
-" detect OS {{{
+" OS detection {{{
   let s:is_windows = has('win32') || has('win64')
   let s:is_cygwin = has('win32unix')
   let s:is_macvim = has('gui_macvim')
@@ -131,8 +131,8 @@ endfunction "}}}
 " }}}
 
 " Basic Configuration {{{
-set timeoutlen=300                                               " mapping timeout
-set ttimeoutlen=50                                               " keycode timeout
+set timeoutlen=1500                                              " mapping timeout
+set ttimeoutlen=-1                                               " keycode timeout
 
 set mouse=a                                                      " enable mouse
 set mousehide                                                    " hide when characters are typed
@@ -311,8 +311,8 @@ set winaltkeys=no
 " Core Plugins {{{
 "NeoBundle 'bling/vim-airline' "{{{
 "let g:airline#extensions#tabline#enabled = 1
-"let g:airline_left_sep = '▶'
-"let g:airline_right_sep = '◀'
+"let g:airline_left_sep = '>'
+"let g:airline_right_sep = '<'
 "let g:airline#extensions#tabline#left_alt_sep='¦'
 "}}}
 NeoBundle 'matchit.zip'
@@ -327,6 +327,7 @@ vmap <c-up> [egv
 vmap <c-down> ]egv
 "}}}
 NeoBundleDepends 'Shougo/vimproc'
+NeoBundleDepends 'xolox/vim-misc'
 "}}}
 
 " Web Plugins {{{
@@ -366,16 +367,46 @@ nnoremap <silent> <leader>gV :Gitv!<CR>
 "}}}
 
 " Completion plugins {{{
-NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
-let g:neocomplcache_enable_at_startup=1
-let g:neocomplcache_temporary_dir='~/.vim/.cache/neocomplcache'
-let g:neocomplcache_enable_fuzzy_completion=1
+NeoBundle 'Shougo/neocomplete.vim' "{{{
+let g:neocomplete#enable_at_startup = 0
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#max_list = 15
+
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "<C-n>" : "<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+" Enable Omni Completion
+augroup neocomplete_omni_complete
+  autocmd!
+  autocmd FileType css        setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html       setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType markdown   setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType xml        setlocal omnifunc=xmlcomplete#CompleteTags
+  autocmd FileType python     setlocal omnifunc=pythoncomplete#Complete
+augroup END
+
+"" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+	let g:neocomplete#sources#omni#input_patterns = {}
+endif
+
+let g:neocomplete#sources#omni#input_patterns.tex = '\\\a\+'
+let g:neocomplete#sources#buffer#max_keyword_width = 0
+
 "}}}
 "}}}
 
 " Editing plugins {{{
 NeoBundle 'terryma/vim-expand-region'
-NeoBundle 'terryma/vim-multiple-cursors'
+"NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'scrooloose/nerdcommenter'
 "NeoBundle 'chrisbra/NrrwRgn'
 NeoBundle 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
@@ -387,18 +418,18 @@ let g:session_autosave = 'no'
 let g:session_autoload = 'no'
 let g:session_command_aliases = 1
 "}}}
-"NeoBundle 'vim-scripts/YankRing.vim' "{{{
-"let g:yankring_max_history = 100
-"let g:yankring_max_display = 200
-"let g:yankring_min_element_length = 1
-"let g:yankring_ignore_operator = 'g~ gu gU ! = gq g? > < zf g@'
-"let g:yankring_history_dir = g:vimHome
-"let g:yankring_history_file = 'yankring_history'
-"let g:yankring_replace_n_pkey = '<M-p>'
-"let g:yankring_replace_n_nkey = '<M-n>'
-""noremap Y y$
-"nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-"noremap <Leader>y :YRShow<CR>
+NeoBundle 'vim-scripts/YankRing.vim' "{{{
+let g:yankring_max_history = 100
+let g:yankring_max_display = 200
+let g:yankring_min_element_length = 1
+let g:yankring_ignore_operator = 'g~ gu gU ! = gq g? > < zf g@'
+let g:yankring_history_dir = g:vimHome
+let g:yankring_history_file = 'yankring_history'
+let g:yankring_replace_n_pkey = '<M-p>'
+let g:yankring_replace_n_nkey = '<M-n>'
+"noremap Y y$
+nnoremap Y :<C-U>YRYankCount 'y$'<CR>
+noremap <Leader>y :YRShow<CR>
 NeoBundle 'kshenoy/vim-signature'
 "}}}
 
@@ -416,12 +447,12 @@ NeoBundle 'kshenoy/vim-signature'
 "let g:ctrlp_reuse_window='startify'
 "let g:ctrlp_extensions=['funky']
 "if executable('ag')
-	"let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
+" "let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
 "endif
-
+"
 "nmap \ [ctrlp]
 "nnoremap [ctrlp] <nop>
-
+"
 "nnoremap [ctrlp]t :CtrlPBufTag<CR>
 "nnoremap [ctrlp]T :CtrlPTag<CR>
 "nnoremap [ctrlp]l :CtrlPLine<CR>
@@ -470,28 +501,27 @@ endif
 function! s:unite_settings()
 	nmap <buffer> Q <plug>(unite_exit)
 	nmap <buffer> <esc> <plug>(unite_exit)
-	imap <buffer> <esc> <plug>(unite_exit)
 endfunction
 autocmd FileType unite call s:unite_settings()
 
 nmap <space> [unite]
 nnoremap [unite] <nop>
 
-nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec/async buffer file_mru file bookmark<CR><c-u>
-nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize file file_rec/async<CR><c-u>
+nnoremap <silent> [unite]<space> :<C-u>Unite -no-split -buffer-name=mixed file_rec/async buffer file_mru file bookmark<CR><c-u>
+nnoremap <silent> [unite]f :<C-u>Unite -no-split file file_rec/async<CR><c-u>
+nnoremap <silent> [unite]b :<C-u>Unite -no-split -buffer-name=buffers buffer<CR>
 nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
-nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<CR>
-nnoremap <silent> [unite]b :<C-u>Unite -auto-resize -buffer-name=buffers buffer<CR>
+nnoremap <silent> [unite]l :<C-u>Unite -buffer-name=line line<CR>
 nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<CR>
 nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<CR>
 nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<CR>
 "}}}
 NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}} "{{{
-	nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<CR>
-	"}}}
-	NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}} "{{{
-	nnoremap <silent> [unite]h :<C-u>Unite -auto-resize -buffer-name=help help<CR>
-	"}}}
+nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<CR>
+"}}}
+"NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}} "{{{
+"nnoremap <silent> [unite]h :<C-u>Unite -auto-resize -buffer-name=help help<CR>
+"}}}
 	NeoBundleLazy 'Shougo/junkfile.vim', {'autoload':{'commands':'JunkfileOpen','unite_sources':['junkfile','junkfile/new']}} "{{{
 	let g:junkfile#directory=expand("~/.vim/.cache/junk")
 	nnoremap <silent> [unite]j :<C-u>Unite -auto-resize -buffer-name=junk junkfile junkfile/new<CR>
@@ -523,6 +553,8 @@ let g:notes_suffix = '.txt'
 nmap <F2> :set wrap!<CR>
 " Toggle highlight search
 nmap <Leader>h :set hlsearch!<CR>
+" Unset last search pattern
+nnoremap <CR> :noh<CR><CR>
 " change cursor position in insert mode
 inoremap <C-h> <left>
 inoremap <C-l> <right>
@@ -560,8 +592,8 @@ nnoremap zM zM:echo &foldlevel<CR>
 " }}}
 
 " screen line scroll
-nnoremap <silent> j gj
-nnoremap <silent> k gk
+"nnoremap <silent> j gj
+"nnoremap <silent> k gk
 
 " Visual mode mappings {{{
 " reselect visual block after indent
@@ -577,14 +609,6 @@ map <Leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
 
 " Select last thing pasted
 nnoremap gV `[v`]
-
-"  In visual mode when you press * or # to search for the current selection
-vnoremap <silent> * :call VisualSearch('f')<CR>
-vnoremap <silent> # :call VisualSearch('b')<CR>
-
-" When you press gv you vimgrep after the selected text
-vnoremap <silent> gv :call VisualSearch('gv')<CR>
-map <Leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
 
 " Select last thing pasted
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
