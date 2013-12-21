@@ -259,7 +259,7 @@ let g:solarized_contrast="high"    "default value is normal
 " Change background
 "call togglebg#map("<F12>")
 set background=dark
-colorscheme default
+colorscheme zarniwoop
 
 if has('gui_running') 
 	source ~/.gvimrc
@@ -405,12 +405,15 @@ let g:neocomplete#sources#buffer#max_keyword_width = 0
 "}}}
 
 " Editing plugins {{{
-NeoBundle 'terryma/vim-expand-region'
+"NeoBundle 'terryma/vim-expand-region'
 "NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'scrooloose/nerdcommenter'
 "NeoBundle 'chrisbra/NrrwRgn'
-NeoBundle 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
-nmap <Leader>a& :Tabularize /&<CR>
+"NeoBundle 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
+"nmap <Leader>a& :Tabularize /&<CR>
+"}}}
+NeoBundle 'junegunn/vim-easy-align' "{{{
+vmap <CR> <Plug>(EasyAlign)
 "}}}
 NeoBundle 'xolox/vim-session' "{{{
 set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
@@ -538,6 +541,7 @@ NeoBundle 'xolox/vim-notes' "{{{
 let g:notes_directories = ['~/documents/notes', '~/documents/work']
 let g:notes_suffix = '.txt'
 "}}}
+NeoBundle 'altercation/vim-colors-solarized'
 "}}}
 
 "" tpope {{{
@@ -549,12 +553,8 @@ let g:notes_suffix = '.txt'
 "}}}
 
 " Key mappings {{{
-" Toggle wrapping
-nmap <F2> :set wrap!<CR>
-" Toggle highlight search
-nmap <Leader>h :set hlsearch!<CR>
 " Unset last search pattern
-nnoremap <CR> :noh<CR><CR>
+nnoremap <Silent> <CR> :noh<CR><CR>
 " change cursor position in insert mode
 inoremap <C-h> <left>
 inoremap <C-l> <right>
