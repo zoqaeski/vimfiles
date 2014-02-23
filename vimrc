@@ -554,7 +554,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 
 " Key mappings {{{
 " Unset last search pattern
-nnoremap <Silent> <CR> :noh<CR><CR>
+nnoremap <CR> :noh<CR><CR>
 " change cursor position in insert mode
 inoremap <C-h> <left>
 inoremap <C-l> <right>
@@ -662,7 +662,8 @@ let xml_use_xhtml = 1
 """""""""""""""""""""
 " Diff original file
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-command! Scratch tabnew | set bt=nofile
+command! Scratch new | set bt=nofile
+command! ScratchTab tabnew | set bt=nofile
 command! Clear norm gg"_dG
 
 " autocmd {{{
