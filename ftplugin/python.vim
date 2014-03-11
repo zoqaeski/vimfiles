@@ -7,4 +7,4 @@ setlocal softtabstop=4
 setlocal tabstop=4
 "setlocal textwidth=79
 setlocal wrap
-
+setlocal foldmethod=indent

@@ -193,6 +193,12 @@ set incsearch                                                    " incremental s
 set ignorecase                                                   " ignore case for searching
 set smartcase                                                    " do case-sensitive if there's a capital letter
 
+" Remember things between sessions
+" '20  - remember marks for 20 previous files
+" \"50 - save 50 lines for each register
+" :50  - remember 50 items in command-line history 
+set viminfo='20,\"50,:50,/50
+
 " IMPORTANT: grep will sometimes skip displaying the file name if you
 " search in a singe file. This will confuse Latex-Suite. Set your grep
 " program to always generate a file-name.
@@ -321,13 +327,13 @@ NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'tpope/vim-unimpaired' "{{{
-nmap <c-up> [e
-nmap <c-down> ]e
-vmap <c-up> [egv
-vmap <c-down> ]egv
+nmap <C-Up> [e
+nmap <C-Down> ]e
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
 "}}}
-NeoBundleDepends 'Shougo/vimproc'
-NeoBundleDepends 'xolox/vim-misc'
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'xolox/vim-misc'
 "}}}
 
 " Web Plugins {{{
@@ -338,6 +344,10 @@ NeoBundleDepends 'xolox/vim-misc'
 NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}} "{{{
 let g:pymode_rope=0
 "}}}
+"}}}
+
+" Haskell Plugins {{{
+NeoBundleLazy 'eagletmt/ghcmod-vim', {'autoload':{'filetypes':['haskell']}}
 "}}}
 
 " LaTeX plugins {{{
@@ -351,19 +361,19 @@ let g:tex_gotoerror=0
 NeoBundle 'tpope/vim-fugitive' "{{{
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR>
+"nnoremap <silent> <leader>gc :Gcommit<CR>
 "nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>gl :Glog<CR>
-nnoremap <silent> <leader>gp :Git push<CR>
-nnoremap <silent> <leader>gw :Gwrite<CR>
-nnoremap <silent> <leader>gr :Gremove<CR>
+"nnoremap <silent> <leader>gl :Glog<CR>
+"nnoremap <silent> <leader>gp :Git push<CR>
+"nnoremap <silent> <leader>gw :Gwrite<CR>
+"nnoremap <silent> <leader>gr :Gremove<CR>
 autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
 autocmd BufReadPost fugitive://* set bufhidden=delete
 "}}}
-NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'], 'autoload':{'commands':'Gitv'}} "{{{
-nnoremap <silent> <leader>gv :Gitv<CR>
-nnoremap <silent> <leader>gV :Gitv!<CR>
-"}}}
+"NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'], 'autoload':{'commands':'Gitv'}} "{{{
+"nnoremap <silent> <leader>gv :Gitv<CR>
+"nnoremap <silent> <leader>gV :Gitv!<CR>
+""}}}
 "}}}
 
 " Completion plugins {{{
@@ -409,12 +419,11 @@ let g:neocomplete#sources#buffer#max_keyword_width = 0
 "NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'scrooloose/nerdcommenter'
 "NeoBundle 'chrisbra/NrrwRgn'
-"NeoBundle 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
-"nmap <Leader>a& :Tabularize /&<CR>
+NeoBundle 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
 "}}}
-NeoBundle 'junegunn/vim-easy-align' "{{{
-vmap <CR> <Plug>(EasyAlign)
-"}}}
+"NeoBundle 'junegunn/vim-easy-align' "{{{
+"vmap <CR> <Plug>(EasyAlign)
+""}}}
 NeoBundle 'xolox/vim-session' "{{{
 set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
 let g:session_autosave = 'no'
@@ -433,35 +442,11 @@ let g:yankring_replace_n_nkey = '<M-n>'
 "noremap Y y$
 nnoremap Y :<C-U>YRYankCount 'y$'<CR>
 noremap <Leader>y :YRShow<CR>
-NeoBundle 'kshenoy/vim-signature'
 "}}}
 
 "}}}
 
 " Navigation plugins {{{
-"NeoBundle 'kien/ctrlp.vim', { 'depends': 'tacahiroy/ctrlp-funky' } "{{{
-"let g:ctrlp_clear_cache_on_exit=1
-"let g:ctrlp_max_height=40
-"let g:ctrlp_show_hidden=0
-"let g:ctrlp_follow_symlinks=1
-"let g:ctrlp_working_path_mode=0
-"let g:ctrlp_max_files=20000
-"let g:ctrlp_cache_dir='~/.vim/.cache/ctrlp'
-"let g:ctrlp_reuse_window='startify'
-"let g:ctrlp_extensions=['funky']
-"if executable('ag')
-" "let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
-"endif
-"
-"nmap \ [ctrlp]
-"nnoremap [ctrlp] <nop>
-"
-"nnoremap [ctrlp]t :CtrlPBufTag<CR>
-"nnoremap [ctrlp]T :CtrlPTag<CR>
-"nnoremap [ctrlp]l :CtrlPLine<CR>
-"nnoremap [ctrlp]o :CtrlPFunky<CR>
-"nnoremap [ctrlp]b :CtrlPBuffer<CR>
-"}}}
 NeoBundleLazy 'scrooloose/nerdtree', {'autoload':{'commands':['NERDTreeToggle','NERDTreeFind']}} "{{{
 let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=0
@@ -486,7 +471,7 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 let g:unite_data_directory='~/.vim/.cache/unite'
-let g:unite_enable_start_insert=1
+let g:unite_enable_start_insert=0
 let g:unite_source_history_yank_enable=1
 let g:unite_source_rec_max_cache_files=5000
 let g:unite_prompt='» '
@@ -522,13 +507,7 @@ nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<CR>
 NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}} "{{{
 nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<CR>
 "}}}
-"NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}} "{{{
-"nnoremap <silent> [unite]h :<C-u>Unite -auto-resize -buffer-name=help help<CR>
-"}}}
-	NeoBundleLazy 'Shougo/junkfile.vim', {'autoload':{'commands':'JunkfileOpen','unite_sources':['junkfile','junkfile/new']}} "{{{
-	let g:junkfile#directory=expand("~/.vim/.cache/junk")
-	nnoremap <silent> [unite]j :<C-u>Unite -auto-resize -buffer-name=junk junkfile junkfile/new<CR>
-	"}}}
+NeoBundleLazy 'Shougo/neomru.vim'
 "}}}
 
 " Other plugins {{{
@@ -541,7 +520,7 @@ NeoBundle 'xolox/vim-notes' "{{{
 let g:notes_directories = ['~/documents/notes', '~/documents/work']
 let g:notes_suffix = '.txt'
 "}}}
-NeoBundle 'altercation/vim-colors-solarized'
+"NeoBundle 'altercation/vim-colors-solarized'
 "}}}
 
 "" tpope {{{
@@ -582,6 +561,7 @@ cnoremap <C-N> <Down>
 " Shortcuts
 cnoremap $h e ~/
 cnoremap $c e <C-\>eCurrentFileDir("e")<CR>
+nnoremap <Leader>cd :cd %:p:h<CR>
 " }}}
 
 " folds {{{
@@ -590,10 +570,6 @@ nnoremap zm zm:echo &foldlevel<CR>
 nnoremap zR zR:echo &foldlevel<CR>
 nnoremap zM zM:echo &foldlevel<CR>
 " }}}
-
-" screen line scroll
-"nnoremap <silent> j gj
-"nnoremap <silent> k gk
 
 " Visual mode mappings {{{
 " reselect visual block after indent
@@ -633,8 +609,7 @@ nnoremap <C-S-Tab> :tabprevious<CR>
 
 " Buffer commands {{{
 nnoremap <Leader>bc :close<CR>
-nnoremap <Leader>bd :BClose<CR>
-nnoremap <Leader>bD :BClose<CR>:close<CR>
+nnoremap <Leader>bd :bdelete<CR>
 nnoremap <Leader>bo :only<CR>
 " Switch between buffers quickly
 nnoremap gb :bnext<CR>
@@ -645,12 +620,6 @@ nnoremap <silent> Q :call CloseWindowOrKillBuffer()<CR>
 "}}}
 
 " }}}
-
-" Remember things between sessions
-" '20  - remember marks for 20 previous files
-" \"50 - save 50 lines for each register
-" :50  - remember 50 items in command-line history 
-set viminfo='20,\"50,:50,/50
 
 " No place holders for
 let g:Imap_UsePlaceHolders=0
@@ -676,18 +645,9 @@ command! Clear norm gg"_dG
   autocmd FileType js,scss,css autocmd BufWritePre <buffer> call StripTrailingWhitespace()
   autocmd FileType css,scss setlocal foldmethod=marker foldmarker={,}
   autocmd FileType css,scss nnoremap <silent> <leader>S vi{:sort<CR>
-  autocmd FileType python setlocal foldmethod=indent
-  autocmd FileType markdown setlocal nolist
-  autocmd FileType vim setlocal fdm=indent keywordprg=:help
 "}}}
 "}}}
 
-
-" ++> HTML tools
-let g:do_xhtml_mappings = 'yes'
-let g:html_tag_case = 'lowercase'
-let g:no_html_toolbar = 'yes'
-let g:no_html_menu = 'yes'
 
 " Finish loading {{{
 filetype plugin indent on
