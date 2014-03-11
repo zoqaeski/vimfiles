@@ -8,3 +8,4 @@ setlocal tabstop=4
 "setlocal textwidth=79
 setlocal wrap
 setlocal foldmethod=indent
+setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
