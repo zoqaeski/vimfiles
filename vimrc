@@ -30,10 +30,6 @@ filetype plugin indent on
 " Functions {{{
 """""""""""""""
 
-function! MySys() "{{{
-	return "linux"
-endfunction "}}}
-
 function! EnsureExists(path) "{{{
 	if !isdirectory(expand(a:path))
 		call mkdir(expand(a:path))
@@ -43,23 +39,6 @@ endfunction "}}}
 function! Cwd() "{{{
   let cwd = getcwd()
   return "e " . cwd 
-endfunction "}}}
-
-function! DeleteTillSlash() "{{{
-	let g:cmd = getcmdline()
-	if MySys() == "linux" || MySys() == "mac"
-		let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
-	else
-		let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
-	endif
-	if g:cmd == g:cmd_edited
-		if MySys() == "linux" || MySys() == "mac"
-			let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
-		else
-			let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
-		endif
-	endif
-	return g:cmd_edited
 endfunction "}}}
 
 function! CurrentFileDir(cmd) "{{{
@@ -128,6 +107,11 @@ function! CloseWindowOrKillBuffer() "{{{
 	endif
 endfunction "}}}
 
+function! ScratchEdit(cmd, options) "{{{
+	exe a:cmd tempname()
+	setl buftype=nofile bufhidden=wipe nobuflisted
+	if !empty(a:options) | exe 'setl' a:options | endif
+endfunction "}}}
 " }}}
 
 " Basic Configuration {{{
@@ -631,9 +615,11 @@ let xml_use_xhtml = 1
 """""""""""""""""""""
 " Diff original file
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-command! Scratch new | set bt=nofile
-command! ScratchTab tabnew | set bt=nofile
 command! Clear norm gg"_dG
+command! -bar -nargs=* Sedit call ScratchEdit('edit', <q-args>)
+command! -bar -nargs=* Ssplit call ScratchEdit('split', <q-args>)
+command! -bar -nargs=* Svsplit call ScratchEdit('vsplit', <q-args>)
+command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
 
 " autocmd {{{
   " go back to previous position of cursor if any
