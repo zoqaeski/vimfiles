@@ -1,9 +1,14 @@
-""""""""""""""""""""""""""""""""""""""""
-"
-" ~/.vimrc
+"   /|||        /||||                                                              
+"   ||||        |/|||                                                              
+"   |/|||       /|||   /|||                                                       
+"    |/|||     /|||   |///     /|||||  /|||||    /||/|||||||    /|||||||     
+"     |/|||   /|||     /|||  /|||///|||||///||| |/|||/////|||  /|||//// 
+"      |/||| /|||     |/||| |/||| |//|||  |/||| |/|||   |///  |/|||        
+"       |/||||||      |/||| |/|||  |/|||  |/||| |/|||         |/|||        
+"        |/||||       |/||| |/|||  |/|||  |/||| |/|||          |/|||||||
+"         |///        |///  |///   |///   |///  |///            |////// 
 "
 " Somewhat inspired by the bling.vim distribution at https://github.com/bling/dotvim
-" I have no idea what some of this does o_O
 "
 """"""""""""""""""""""""""""""""""""""""
 
@@ -129,7 +134,7 @@ set autoread                                                     " auto reload i
 set fileformats+=unix,dos,mac                                    " add mac to auto-detection of file format line endings
 set nrformats=octal,hex,alpha
 set showcmd
-set tags=tags;/
+set tags=.git/tags,tags
 set showfulltag
 set modeline
 set modelines=5
@@ -183,18 +188,14 @@ set smartcase                                                    " do case-sensi
 " :50  - remember 50 items in command-line history 
 set viminfo='20,\"50,:50,/50
 
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
 "if executable('ack')
 "	set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
 "	set grepformat=%f:%l:%c:%m
 "endif
-"if executable('ag')
-"	set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
-"	set grepformat=%f:%l:%c:%m
-"endif
+if executable('ag')
+	set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
+	set grepformat=%f:%l:%c:%m
+endif
 let mapleader = ","
 let g:mapleader = ","
 let maplocalleader = ","
@@ -299,23 +300,12 @@ set winaltkeys=no
 
 " Plugins {{{
 " Core Plugins {{{
-"NeoBundle 'bling/vim-airline' "{{{
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline_left_sep = '>'
-"let g:airline_right_sep = '<'
-"let g:airline#extensions#tabline#left_alt_sep='¦'
-"}}}
 NeoBundle 'matchit.zip'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'tpope/vim-eunuch'
-NeoBundle 'tpope/vim-unimpaired' "{{{
-nmap <C-Up> [e
-nmap <C-Down> ]e
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
-"}}}
+NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'xolox/vim-misc'
 "}}}
@@ -325,9 +315,8 @@ NeoBundle 'xolox/vim-misc'
 " }}}
 
 " Python Plugins {{{
-NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}} "{{{
+NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}}
 let g:pymode_rope=0
-"}}}
 "}}}
 
 " Haskell Plugins {{{
@@ -342,7 +331,7 @@ let g:tex_gotoerror=0
 "}}}
 
 " SCM (git, hg, etc) plugins {{{
-NeoBundle 'tpope/vim-fugitive' "{{{
+NeoBundle 'tpope/vim-fugitive'
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
 "nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -353,15 +342,13 @@ nnoremap <silent> <leader>gd :Gdiff<CR>
 "nnoremap <silent> <leader>gr :Gremove<CR>
 autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
 autocmd BufReadPost fugitive://* set bufhidden=delete
-"}}}
-"NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'], 'autoload':{'commands':'Gitv'}} "{{{
+"NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'], 'autoload':{'commands':'Gitv'}}
 "nnoremap <silent> <leader>gv :Gitv<CR>
 "nnoremap <silent> <leader>gV :Gitv!<CR>
-""}}}
 "}}}
 
 " Completion plugins {{{
-NeoBundle 'Shougo/neocomplete.vim' "{{{
+NeoBundle 'Shougo/neocomplete.vim'
 let g:neocomplete#enable_at_startup = 0
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#max_list = 15
@@ -394,8 +381,6 @@ endif
 
 let g:neocomplete#sources#omni#input_patterns.tex = '\\\a\+'
 let g:neocomplete#sources#buffer#max_keyword_width = 0
-
-"}}}
 "}}}
 
 " Editing plugins {{{
@@ -403,18 +388,15 @@ let g:neocomplete#sources#buffer#max_keyword_width = 0
 "NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'scrooloose/nerdcommenter'
 "NeoBundle 'chrisbra/NrrwRgn'
-NeoBundle 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
-"}}}
-"NeoBundle 'junegunn/vim-easy-align' "{{{
+NeoBundle 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}}
+"NeoBundle 'junegunn/vim-easy-align'
 "vmap <CR> <Plug>(EasyAlign)
-""}}}
-NeoBundle 'xolox/vim-session' "{{{
+NeoBundle 'xolox/vim-session'
 set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
 let g:session_autosave = 'no'
 let g:session_autoload = 'no'
 let g:session_command_aliases = 1
-"}}}
-NeoBundle 'vim-scripts/YankRing.vim' "{{{
+NeoBundle 'vim-scripts/YankRing.vim'
 let g:yankring_max_history = 100
 let g:yankring_max_display = 200
 let g:yankring_min_element_length = 1
@@ -428,10 +410,8 @@ nnoremap Y :<C-U>YRYankCount 'y$'<CR>
 noremap <Leader>y :YRShow<CR>
 "}}}
 
-"}}}
-
 " Navigation plugins {{{
-NeoBundleLazy 'scrooloose/nerdtree', {'autoload':{'commands':['NERDTreeToggle','NERDTreeFind']}} "{{{
+NeoBundleLazy 'scrooloose/nerdtree', {'autoload':{'commands':['NERDTreeToggle','NERDTreeFind']}}
 let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=0
 let NERDTreeShowLineNumbers=1
@@ -441,11 +421,12 @@ let NERDTreeIgnore=['\.git','\.hg']
 let NERDTreeBookmarksFile='~/.vim/.cache/NERDTreeBookmarks'
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
-"}}}
+NeoBundleLazy 'mileszs/ack.vim', {'autoload':{'commands':['Ack']}}
+let g:ackprg = 'ag --nogroup --nocolor --column'
 "}}}
 
 " Unite plugins and settings {{{
-NeoBundle 'Shougo/unite.vim' "{{{
+NeoBundle 'Shougo/unite.vim'
 let bundle = neobundle#get('unite.vim')
 function! bundle.hooks.on_source(bundle)
 	call unite#filters#matcher_default#use(['matcher_fuzzy'])
@@ -479,31 +460,28 @@ autocmd FileType unite call s:unite_settings()
 nmap <space> [unite]
 nnoremap [unite] <nop>
 
-nnoremap <silent> [unite]<space> :<C-u>Unite -no-split -buffer-name=mixed file_rec/async buffer file_mru file bookmark<CR><c-u>
-nnoremap <silent> [unite]f :<C-u>Unite -no-split file file_rec/async<CR><c-u>
+nnoremap <silent> [unite]<space> :<C-u>Unite -no-split -start-insert -buffer-name=mixed file_rec/async:! buffer tab file_mru file bookmark<CR>
+nnoremap <silent> [unite]f :<C-u>Unite -no-split -start-insert file file_rec/async:!<CR>
 nnoremap <silent> [unite]b :<C-u>Unite -no-split -buffer-name=buffers buffer<CR>
+nnoremap <silent> [unite]t :<C-u>Unite -no-split -buffer-name=tabs tab<CR>
 nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
 nnoremap <silent> [unite]l :<C-u>Unite -buffer-name=line line<CR>
-nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<CR>
+nnoremap <silent> [unite]/ :<C-u>Unite -no-split -start-insert -buffer-name=search grep:.<CR>
 nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<CR>
-nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<CR>
-"}}}
-NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}} "{{{
+"nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<CR>
+NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}}
 nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<CR>
-"}}}
-NeoBundleLazy 'Shougo/neomru.vim'
+NeoBundleLazy 'Shougo/neomru.vim', {'autoload':{'unite_sources':'file_mru'}}
 "}}}
 
 " Other plugins {{{
 NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
-"NeoBundle 'scrooloose/syntastic' "{{{
+"NeoBundle 'scrooloose/syntastic' 
 "let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [], 'passive_filetypes': [] }
 "let g:syntastic_quiet_warnings=1
-"}}}
-NeoBundle 'xolox/vim-notes' "{{{
+NeoBundle 'xolox/vim-notes'
 let g:notes_directories = ['~/documents/notes', '~/documents/work']
 let g:notes_suffix = '.txt'
-"}}}
 "NeoBundle 'altercation/vim-colors-solarized'
 "}}}
 
