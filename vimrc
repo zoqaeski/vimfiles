@@ -13,11 +13,10 @@
 """"""""""""""""""""""""""""""""""""""""
 
 " OS detection {{{
-  let s:is_windows = has('win32') || has('win64')
-  let s:is_cygwin = has('win32unix')
-  let s:is_macvim = has('gui_macvim')
-"let g:vimHome = strpart(&rtp, 0, stridx(&rtp, '/bundle'))
-  let g:vimHome = "~/.vim/"
+let s:is_windows = has('win32') || has('win64')
+let s:is_cygwin = has('win32unix')
+let s:is_macvim = has('gui_macvim')
+let g:vimHome = '~/.vim'
 "}}}
 
 " Setup {{{
@@ -117,6 +116,25 @@ function! ScratchEdit(cmd, options) "{{{
 	setl buftype=nofile bufhidden=wipe nobuflisted
 	if !empty(a:options) | exe 'setl' a:options | endif
 endfunction "}}}
+
+function! ToggleVExplorer() "{{{
+	if exists("t:expl_buf_num")
+		let expl_win_num = bufwinnr(t:expl_buf_num)
+		if expl_win_num != -1
+			let cur_win_nr = winnr()
+			exec expl_win_num . 'wincmd w'
+			close
+			exec cur_win_nr . 'wincmd w'
+			unlet t:expl_buf_num
+		else
+			unlet t:expl_buf_num
+		endif
+	else
+		exec '1wincmd w'
+		Vexplore
+		let t:expl_buf_num = bufnr("%")
+	endif
+endfunction "}}}
 " }}}
 
 " Basic Configuration {{{
@@ -196,10 +214,6 @@ if executable('ag')
 	set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
 	set grepformat=%f:%l:%c:%m
 endif
-let mapleader = ","
-let g:mapleader = ","
-let maplocalleader = ","
-let g:maplocalleader = ","
 " }}}
 
 " Files, Backups and Undo {{{
@@ -226,7 +240,7 @@ exec "set dir=".g:vimHome."/.cache/swap/"
 " Write swap file to disk after every 50 characters
 set updatecount=200
 
-call EnsureExists('~/.vim/.cache')
+call EnsureExists(g:vimHome.'/.cache')
 call EnsureExists(&undodir)
 call EnsureExists(&backupdir)
 call EnsureExists(&directory)
@@ -411,16 +425,6 @@ noremap <Leader>y :YRShow<CR>
 "}}}
 
 " Navigation plugins {{{
-NeoBundleLazy 'scrooloose/nerdtree', {'autoload':{'commands':['NERDTreeToggle','NERDTreeFind']}}
-let NERDTreeShowHidden=1
-let NERDTreeQuitOnOpen=0
-let NERDTreeShowLineNumbers=1
-let NERDTreeChDirMode=0
-let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.git','\.hg']
-let NERDTreeBookmarksFile='~/.vim/.cache/NERDTreeBookmarks'
-nnoremap <Leader>n :NERDTreeToggle<CR>
-nnoremap <Leader>N :NERDTreeFind<CR>
 NeoBundleLazy 'mileszs/ack.vim', {'autoload':{'commands':['Ack']}}
 let g:ackprg = 'ag --nogroup --nocolor --column'
 "}}}
@@ -493,7 +497,30 @@ let g:notes_suffix = '.txt'
 
 "}}}
 
+" Additional Settings {{{
+""""""""""""""""""""""""
+" Hit enter in the file browser to open the selected
+" file with :vsplit to the right of the browser.
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+
+" Default to tree mode
+let g:netrw_liststyle=3
+
+" No place holders for
+let g:Imap_UsePlaceHolders=0
+
+" XML default to XHTML
+let xml_use_xhtml = 1
+"}}}
+
 " Key mappings {{{
+
+let mapleader = '\'
+let g:mapleader = '\'
+let maplocalleader = '\'
+let g:maplocalleader = '\'
+
 " Unset last search pattern
 nnoremap <CR> :noh<CR><CR>
 " change cursor position in insert mode
@@ -501,6 +528,9 @@ inoremap <C-h> <left>
 inoremap <C-l> <right>
 " Tab stuff
 imap <S-Tab> <C-o><<
+
+" Open NetRW with C-e
+map <silent> <C-e> :call ToggleVExplorer()<CR>
 
 " sane regex {{{
 nnoremap / /\v
@@ -583,11 +613,6 @@ nnoremap <silent> Q :call CloseWindowOrKillBuffer()<CR>
 
 " }}}
 
-" No place holders for
-let g:Imap_UsePlaceHolders=0
-
-" ++> XML
-let xml_use_xhtml = 1
 
 " Useful Commands {{{
 """""""""""""""""""""
