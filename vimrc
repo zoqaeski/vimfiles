@@ -335,7 +335,12 @@ let g:pymode_rope=0
 "}}}
 
 " Haskell Plugins {{{
+NeoBundleLazy 'dag/vim2hs', {'autoload':{'filetypes':['haskell']}}
+NeoBundleLazy 'lukerandall/haskellmode-vim', {'autoload':{'filetypes':['haskell']}}
 NeoBundleLazy 'eagletmt/ghcmod-vim', {'autoload':{'filetypes':['haskell']}}
+NeoBundleLazy 'eagletmt/neco-ghc', {'autoload':{'filetypes':['haskell']}}
+"NeoBundleLazy 'travitch/hasksyn', {'autoload':{'filetypes':['haskell']}}
+let g:haddock_browser="/usr/bin/luakit"
 "}}}
 
 " LaTeX plugins {{{
@@ -387,6 +392,7 @@ augroup neocomplete_omni_complete
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType xml        setlocal omnifunc=xmlcomplete#CompleteTags
   autocmd FileType python     setlocal omnifunc=pythoncomplete#Complete
+	autocmd FileType haskell    setlocal omnifunc=necoghc#omnifunc
 augroup END
 
 "" Enable heavy omni completion.
@@ -459,6 +465,8 @@ endif
 function! s:unite_settings()
 	nmap <buffer> Q <plug>(unite_exit)
 	nmap <buffer> <esc> <plug>(unite_exit)
+	imap <silent><buffer><expr> <C-i> unite#do_action('split')
+	imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
 endfunction
 autocmd FileType unite call s:unite_settings()
 
@@ -487,7 +495,7 @@ NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
 NeoBundle 'xolox/vim-notes'
 let g:notes_directories = ['~/documents/notes', '~/documents/work']
 let g:notes_suffix = '.txt'
-"NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'altercation/vim-colors-solarized'
 "}}}
 
 "" tpope {{{
@@ -613,7 +621,6 @@ nnoremap <silent> Q :call CloseWindowOrKillBuffer()<CR>
 "}}}
 
 " }}}
-
 
 " Useful Commands {{{
 """""""""""""""""""""
