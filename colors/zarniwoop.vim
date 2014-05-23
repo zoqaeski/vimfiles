@@ -273,7 +273,6 @@ exe "hi! PreProc"        .s:fmt_none   .s:fg_magenta .s:bg_none
 "        PreCondit       preprocessor #if, #else, #endif, etc.
 
 exe "hi! Type"           .s:fmt_none   .s:fg_yellow .s:bg_none
-"       *Type            int, long, char, etc.
 "        StorageClass    static, register, volatile, etc.
 "        Structure       struct, union, enum, etc.
 "        Typedef         A typedef
