@@ -535,6 +535,7 @@ nnoremap <CR> :noh<CR><CR>
 " change cursor position in insert mode
 inoremap <C-h> <left>
 inoremap <C-l> <right>
+
 " Tab stuff
 imap <S-Tab> <C-o><<
 
