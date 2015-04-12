@@ -37,7 +37,7 @@ let colors_name = "zarniwoop"
 " Mode
 if has("gui_running")
 	let s:vmode = "gui"
-	let s:base03 = "#1A1C20"
+	let s:base03 = "#111214"
 	let s:base02 = "#25282E"
 	let s:base01 = "#4F5561"
 	let s:base00 = "#59606E"
@@ -313,7 +313,7 @@ exe "hi! Todo"           .s:fmt_bold   .s:fg_magenta.s:bg_none
 "endif
 exe "hi! StatusLine"     .s:fmt_none   .s:fg_base1  .s:bg_base02 .s:fmt_revb
 exe "hi! StatusLineNC"   .s:fmt_none   .s:fg_base00 .s:bg_base02 .s:fmt_revb
-exe "hi! Visual"         .s:fmt_none   .s:fg_base01 .s:bg_base03 .s:fmt_revb
+exe "hi! Visual"         .s:fmt_none   .s:fg_blue   .s:bg_base3  .s:fmt_revb
 exe "hi! Directory"      .s:fmt_none   .s:fg_blue   .s:bg_none
 exe "hi! ErrorMsg"       .s:fmt_revr   .s:fg_red    .s:bg_none
 exe "hi! IncSearch"      .s:fmt_stnd   .s:fg_orange .s:bg_none
