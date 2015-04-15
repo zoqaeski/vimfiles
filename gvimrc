@@ -21,12 +21,12 @@ set guioptions-=t
 set guioptions-=T
 
 " Fixed window width
-set columns=128
-set lines=32
+set columns=144
+set lines=48
 " Resize X window to default size
-nmap <Leader><S-s> :set columns=128 lines=32<CR>
+nmap <Leader><S-s> :set columns=144 lines=48<CR>
 
 " Fonts
 "set guifont=Droid\ Sans\ Mono\ 11
-set guifont=DejaVu\ Sans\ Mono\ 11
+set guifont=DejaVu\ Sans\ Mono\ 12
 

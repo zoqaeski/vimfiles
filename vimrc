@@ -27,10 +27,210 @@ if s:is_windows
 	set rtp+=~/.vim
 endif
 set rtp+=~/.vim/bundle/neobundle.vim
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
-filetype plugin indent on
 " }}}
+
+" Plugins {{{
+" Core Plugins {{{
+NeoBundle 'matchit.zip'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-dispatch'
+NeoBundle 'tpope/vim-eunuch'
+NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'xolox/vim-misc'
+"}}}
+
+" Web Plugins {{{
+" -nil-
+" }}}
+
+" Python Plugins {{{
+NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}}
+let g:pymode_rope=0
+"}}}
+
+" Haskell Plugins {{{
+NeoBundleLazy 'dag/vim2hs', {'autoload':{'filetypes':['haskell']}}
+NeoBundleLazy 'lukerandall/haskellmode-vim', {'autoload':{'filetypes':['haskell']}}
+NeoBundleLazy 'eagletmt/ghcmod-vim', {'autoload':{'filetypes':['haskell']}}
+NeoBundleLazy 'eagletmt/neco-ghc', {'autoload':{'filetypes':['haskell']}}
+"NeoBundleLazy 'travitch/hasksyn', {'autoload':{'filetypes':['haskell']}}
+let g:haddock_browser="/usr/bin/luakit"
+"}}}
+
+" LaTeX plugins {{{
+NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {'autoload':{'filetypes':['tex']}}
+let g:LatexBox_latexmk_async = 1
+let g:LatexBox_quickfix = 2
+let g:LatexBox_show_warnings = 0
+let g:LatexBox_Folding = 1
+let g:tex_flavor = 'latex'
+let g:tex_gotoerror = 0
+"NeoBundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+"}}}
+
+" SCM (git, hg, etc) plugins {{{
+NeoBundle 'tpope/vim-fugitive'
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+"nnoremap <silent> <leader>gc :Gcommit<CR>
+"nnoremap <silent> <leader>gb :Gblame<CR>
+"nnoremap <silent> <leader>gl :Glog<CR>
+"nnoremap <silent> <leader>gp :Git push<CR>
+"nnoremap <silent> <leader>gw :Gwrite<CR>
+"nnoremap <silent> <leader>gr :Gremove<CR>
+autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
+autocmd BufReadPost fugitive://* set bufhidden=delete
+"NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'], 'autoload':{'commands':'Gitv'}}
+"nnoremap <silent> <leader>gv :Gitv<CR>
+"nnoremap <silent> <leader>gV :Gitv!<CR>
+"}}}
+
+" Completion plugins {{{
+NeoBundle 'Shougo/neocomplete.vim'
+let g:neocomplete#enable_at_startup = 0
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#max_list = 15
+
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "<C-n>" : "<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+" Enable Omni Completion
+augroup neocomplete_omni_complete
+  autocmd!
+  autocmd FileType css        setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html       setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType markdown   setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType xml        setlocal omnifunc=xmlcomplete#CompleteTags
+  autocmd FileType python     setlocal omnifunc=pythoncomplete#Complete
+	autocmd FileType haskell    setlocal omnifunc=necoghc#omnifunc
+augroup END
+
+"" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+	let g:neocomplete#sources#omni#input_patterns = {}
+endif
+
+let g:neocomplete#sources#omni#input_patterns.tex = '\\\a\+'
+let g:neocomplete#sources#buffer#max_keyword_width = 0
+"}}}
+
+" Editing plugins {{{
+"NeoBundle 'terryma/vim-expand-region'
+"NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'scrooloose/nerdcommenter'
+"NeoBundle 'chrisbra/NrrwRgn'
+NeoBundle 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}}
+"NeoBundle 'junegunn/vim-easy-align'
+"vmap <CR> <Plug>(EasyAlign)
+NeoBundle 'xolox/vim-session'
+set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
+let g:session_autosave = 'no'
+let g:session_autoload = 'no'
+let g:session_command_aliases = 1
+NeoBundle 'vim-scripts/YankRing.vim'
+let g:yankring_max_history = 100
+let g:yankring_max_display = 200
+let g:yankring_min_element_length = 1
+let g:yankring_ignore_operator = 'g~ gu gU ! = gq g? > < zf g@'
+let g:yankring_history_dir = g:vimHome
+let g:yankring_history_file = 'yankring_history'
+let g:yankring_replace_n_pkey = '<M-p>'
+let g:yankring_replace_n_nkey = '<M-n>'
+"noremap Y y$
+nnoremap Y :<C-U>YRYankCount 'y$'<CR>
+noremap <Leader>y :YRShow<CR>
+"}}}
+
+" Navigation plugins {{{
+NeoBundleLazy 'mileszs/ack.vim', {'autoload':{'commands':['Ack']}}
+let g:ackprg = 'ag --nogroup --nocolor --column'
+"}}}
+
+" Unite plugins and settings {{{
+NeoBundle 'Shougo/unite.vim'
+let bundle = neobundle#get('unite.vim')
+function! bundle.hooks.on_source(bundle)
+	call unite#filters#matcher_default#use(['matcher_fuzzy'])
+	call unite#filters#sorter_default#use(['sorter_rank'])
+	call unite#custom#profile('files', 'context.smartcase', 1)
+	call unite#custom#source('line,outline','matchers','matcher_fuzzy')
+endfunction
+
+let g:unite_data_directory='~/.vim/.cache/unite'
+let g:unite_enable_start_insert=0
+let g:unite_source_history_yank_enable=1
+let g:unite_source_rec_max_cache_files=5000
+let g:unite_prompt='» '
+
+if executable('ag')
+	let g:unite_source_grep_command='ag'
+	let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
+	let g:unite_source_grep_recursive_opt=''
+elseif executable('ack')
+	let g:unite_source_grep_command='ack'
+	let g:unite_source_grep_default_opts='--no-heading --no-color -a -C4'
+	let g:unite_source_grep_recursive_opt=''
+endif
+
+function! s:unite_settings()
+	nmap <buffer> Q <plug>(unite_exit)
+	nmap <buffer> <esc> <plug>(unite_exit)
+	imap <silent><buffer><expr> <C-i> unite#do_action('split')
+	imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+endfunction
+autocmd FileType unite call s:unite_settings()
+
+nmap <space> [unite]
+nnoremap [unite] <nop>
+
+nnoremap <silent> [unite]<space> :<C-u>Unite -no-split -start-insert -buffer-name=mixed file_rec/async:! buffer tab file_mru file bookmark<CR>
+nnoremap <silent> [unite]f :<C-u>Unite -no-split -start-insert file file_rec/async:!<CR>
+nnoremap <silent> [unite]b :<C-u>Unite -no-split -buffer-name=buffers buffer<CR>
+nnoremap <silent> [unite]t :<C-u>Unite -no-split -buffer-name=tabs tab<CR>
+nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
+nnoremap <silent> [unite]l :<C-u>Unite -buffer-name=line line<CR>
+nnoremap <silent> [unite]/ :<C-u>Unite -no-split -start-insert -buffer-name=search grep:.<CR>
+nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<CR>
+"nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<CR>
+NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}}
+nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<CR>
+NeoBundleLazy 'Shougo/neomru.vim', {'autoload':{'unite_sources':'file_mru'}}
+"}}}
+
+" Other plugins {{{
+NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
+"NeoBundle 'scrooloose/syntastic' 
+"let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [], 'passive_filetypes': [] }
+"let g:syntastic_quiet_warnings=1
+"NeoBundle 'xolox/vim-notes'
+"let g:notes_directories = ['~/documents/notes', '~/documents/work']
+"let g:notes_suffix = '.txt'
+"NeoBundle 'altercation/vim-colors-solarized'
+"}}}
+
+"" tpope {{{
+"NeoBundle 'tpope/vim-abolish'
+"NeoBundle 'tpope/vim-haml'
+"NeoBundle 'tpope/vim-ragtag'
+""}}}
+
+NeoBundleCheck
+call neobundle#end()
+filetype plugin indent on
+syntax enable
+"}}}
 
 " Functions {{{
 """""""""""""""
@@ -313,199 +513,6 @@ set winaltkeys=no
 
 " }}}
 
-" Plugins {{{
-" Core Plugins {{{
-NeoBundle 'matchit.zip'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-dispatch'
-NeoBundle 'tpope/vim-eunuch'
-NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'xolox/vim-misc'
-"}}}
-
-" Web Plugins {{{
-" -nil-
-" }}}
-
-" Python Plugins {{{
-NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}}
-let g:pymode_rope=0
-"}}}
-
-" Haskell Plugins {{{
-NeoBundleLazy 'dag/vim2hs', {'autoload':{'filetypes':['haskell']}}
-NeoBundleLazy 'lukerandall/haskellmode-vim', {'autoload':{'filetypes':['haskell']}}
-NeoBundleLazy 'eagletmt/ghcmod-vim', {'autoload':{'filetypes':['haskell']}}
-NeoBundleLazy 'eagletmt/neco-ghc', {'autoload':{'filetypes':['haskell']}}
-"NeoBundleLazy 'travitch/hasksyn', {'autoload':{'filetypes':['haskell']}}
-let g:haddock_browser="/usr/bin/luakit"
-"}}}
-
-" LaTeX plugins {{{
-NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {'autoload':{'filetypes':['tex']}}
-let g:tex_flavor='latex'
-let g:tex_gotoerror=0
-"NeoBundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
-"}}}
-
-" SCM (git, hg, etc) plugins {{{
-NeoBundle 'tpope/vim-fugitive'
-nnoremap <silent> <leader>gs :Gstatus<CR>
-nnoremap <silent> <leader>gd :Gdiff<CR>
-"nnoremap <silent> <leader>gc :Gcommit<CR>
-"nnoremap <silent> <leader>gb :Gblame<CR>
-"nnoremap <silent> <leader>gl :Glog<CR>
-"nnoremap <silent> <leader>gp :Git push<CR>
-"nnoremap <silent> <leader>gw :Gwrite<CR>
-"nnoremap <silent> <leader>gr :Gremove<CR>
-autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
-autocmd BufReadPost fugitive://* set bufhidden=delete
-"NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'], 'autoload':{'commands':'Gitv'}}
-"nnoremap <silent> <leader>gv :Gitv<CR>
-"nnoremap <silent> <leader>gV :Gitv!<CR>
-"}}}
-
-" Completion plugins {{{
-NeoBundle 'Shougo/neocomplete.vim'
-let g:neocomplete#enable_at_startup = 0
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#max_list = 15
-
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "<C-n>" : "<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-" Enable Omni Completion
-augroup neocomplete_omni_complete
-  autocmd!
-  autocmd FileType css        setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html       setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType markdown   setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType xml        setlocal omnifunc=xmlcomplete#CompleteTags
-  autocmd FileType python     setlocal omnifunc=pythoncomplete#Complete
-	autocmd FileType haskell    setlocal omnifunc=necoghc#omnifunc
-augroup END
-
-"" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-	let g:neocomplete#sources#omni#input_patterns = {}
-endif
-
-let g:neocomplete#sources#omni#input_patterns.tex = '\\\a\+'
-let g:neocomplete#sources#buffer#max_keyword_width = 0
-"}}}
-
-" Editing plugins {{{
-"NeoBundle 'terryma/vim-expand-region'
-"NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'scrooloose/nerdcommenter'
-"NeoBundle 'chrisbra/NrrwRgn'
-NeoBundle 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}}
-"NeoBundle 'junegunn/vim-easy-align'
-"vmap <CR> <Plug>(EasyAlign)
-NeoBundle 'xolox/vim-session'
-set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
-let g:session_autosave = 'no'
-let g:session_autoload = 'no'
-let g:session_command_aliases = 1
-NeoBundle 'vim-scripts/YankRing.vim'
-let g:yankring_max_history = 100
-let g:yankring_max_display = 200
-let g:yankring_min_element_length = 1
-let g:yankring_ignore_operator = 'g~ gu gU ! = gq g? > < zf g@'
-let g:yankring_history_dir = g:vimHome
-let g:yankring_history_file = 'yankring_history'
-let g:yankring_replace_n_pkey = '<M-p>'
-let g:yankring_replace_n_nkey = '<M-n>'
-"noremap Y y$
-nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-noremap <Leader>y :YRShow<CR>
-"}}}
-
-" Navigation plugins {{{
-NeoBundleLazy 'mileszs/ack.vim', {'autoload':{'commands':['Ack']}}
-let g:ackprg = 'ag --nogroup --nocolor --column'
-"}}}
-
-" Unite plugins and settings {{{
-NeoBundle 'Shougo/unite.vim'
-let bundle = neobundle#get('unite.vim')
-function! bundle.hooks.on_source(bundle)
-	call unite#filters#matcher_default#use(['matcher_fuzzy'])
-	call unite#filters#sorter_default#use(['sorter_rank'])
-	call unite#set_profile('files', 'smartcase', 1)
-	call unite#custom#source('line,outline','matchers','matcher_fuzzy')
-endfunction
-
-let g:unite_data_directory='~/.vim/.cache/unite'
-let g:unite_enable_start_insert=0
-let g:unite_source_history_yank_enable=1
-let g:unite_source_rec_max_cache_files=5000
-let g:unite_prompt='» '
-
-if executable('ag')
-	let g:unite_source_grep_command='ag'
-	let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
-	let g:unite_source_grep_recursive_opt=''
-elseif executable('ack')
-	let g:unite_source_grep_command='ack'
-	let g:unite_source_grep_default_opts='--no-heading --no-color -a -C4'
-	let g:unite_source_grep_recursive_opt=''
-endif
-
-function! s:unite_settings()
-	nmap <buffer> Q <plug>(unite_exit)
-	nmap <buffer> <esc> <plug>(unite_exit)
-	imap <silent><buffer><expr> <C-i> unite#do_action('split')
-	imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-endfunction
-autocmd FileType unite call s:unite_settings()
-
-nmap <space> [unite]
-nnoremap [unite] <nop>
-
-nnoremap <silent> [unite]<space> :<C-u>Unite -no-split -start-insert -buffer-name=mixed file_rec/async:! buffer tab file_mru file bookmark<CR>
-nnoremap <silent> [unite]f :<C-u>Unite -no-split -start-insert file file_rec/async:!<CR>
-nnoremap <silent> [unite]b :<C-u>Unite -no-split -buffer-name=buffers buffer<CR>
-nnoremap <silent> [unite]t :<C-u>Unite -no-split -buffer-name=tabs tab<CR>
-nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
-nnoremap <silent> [unite]l :<C-u>Unite -buffer-name=line line<CR>
-nnoremap <silent> [unite]/ :<C-u>Unite -no-split -start-insert -buffer-name=search grep:.<CR>
-nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<CR>
-"nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<CR>
-NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}}
-nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<CR>
-NeoBundleLazy 'Shougo/neomru.vim', {'autoload':{'unite_sources':'file_mru'}}
-"}}}
-
-" Other plugins {{{
-NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
-"NeoBundle 'scrooloose/syntastic' 
-"let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [], 'passive_filetypes': [] }
-"let g:syntastic_quiet_warnings=1
-NeoBundle 'xolox/vim-notes'
-let g:notes_directories = ['~/documents/notes', '~/documents/work']
-let g:notes_suffix = '.txt'
-NeoBundle 'altercation/vim-colors-solarized'
-"}}}
-
-"" tpope {{{
-"NeoBundle 'tpope/vim-abolish'
-"NeoBundle 'tpope/vim-haml'
-"NeoBundle 'tpope/vim-ragtag'
-""}}}
-
-"}}}
-
 " Additional Settings {{{
 """"""""""""""""""""""""
 " Hit enter in the file browser to open the selected
@@ -605,6 +612,8 @@ nnoremap <Leader>te :tabedit
 nnoremap <Leader>tc :tabclose<CR>
 nnoremap <Leader>tm :tabmove
 nnoremap <Leader>tM :tabmove<CR>
+nnoremap <Leader>> :tabmove +1<CR>
+nnoremap <Leader>< :tabmove -1<CR>
 nnoremap <C-Tab> :tabnext<CR>
 nnoremap <C-S-Tab> :tabprevious<CR>
 "}}}
@@ -645,13 +654,5 @@ command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
   autocmd FileType css,scss nnoremap <silent> <leader>S vi{:sort<CR>
 "}}}
 "}}}
-
-
-" Finish loading {{{
-filetype plugin indent on
-syntax enable
-NeoBundleCheck
-"}}}
-
 
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0
