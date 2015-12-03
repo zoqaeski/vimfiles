@@ -39,8 +39,17 @@ NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'Shougo/vimproc'
 NeoBundle 'xolox/vim-misc'
+
+NeoBundle 'Shougo/vimproc', {
+\ 'build' : {
+\     'windows' : 'tools\\update-dll-mingw',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make -f make_mac.mak',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
 "}}}
 
 " Web Plugins {{{
@@ -48,8 +57,8 @@ NeoBundle 'xolox/vim-misc'
 " }}}
 
 " Python Plugins {{{
-NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}}
-let g:pymode_rope=0
+"NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}}
+"let g:pymode_rope=0
 "}}}
 
 " Haskell Plugins {{{
@@ -76,12 +85,12 @@ let g:tex_gotoerror = 0
 NeoBundle 'tpope/vim-fugitive'
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
-"nnoremap <silent> <leader>gc :Gcommit<CR>
-"nnoremap <silent> <leader>gb :Gblame<CR>
-"nnoremap <silent> <leader>gl :Glog<CR>
-"nnoremap <silent> <leader>gp :Git push<CR>
-"nnoremap <silent> <leader>gw :Gwrite<CR>
-"nnoremap <silent> <leader>gr :Gremove<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR>
+nnoremap <silent> <leader>gb :Gblame<CR>
+nnoremap <silent> <leader>gl :Glog<CR>
+nnoremap <silent> <leader>gp :Git push<CR>
+nnoremap <silent> <leader>gw :Gwrite<CR>
+nnoremap <silent> <leader>gr :Gremove<CR>
 autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
 autocmd BufReadPost fugitive://* set bufhidden=delete
 "NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'], 'autoload':{'commands':'Gitv'}}
@@ -90,21 +99,24 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 "}}}
 
 "" Completion plugins {{{
-if !has('nvim')
-	NeoBundle 'Shougo/neocomplete.vim'
-	let g:neocomplete#enable_at_startup = 0
+NeoBundle 'Shougo/neocomplete.vim', {
+	\ 'depends' : 'Shougo/context_filetype.vim',
+	\ 'disabled' : !has('lua')
+	\}
+
+	let g:neocomplete#enable_at_startup = 1
 	let g:neocomplete#enable_smart_case = 1
 	let g:neocomplete#max_list = 15
 
-	"" <TAB>: completion.
-	inoremap <expr><TAB>  pumvisible() ? "<C-n>" : "<TAB>"
-	"" <C-h>, <BS>: close popup and delete backword char.
-	inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-	inoremap <expr><C-y>  neocomplete#close_popup()
-	inoremap <expr><C-e>  neocomplete#cancel_popup()
-	" Close popup by <Space>.
-	"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+	""" <TAB>: completion.
+	"inoremap <expr><TAB>  pumvisible() ? "<C-n>" : "<TAB>"
+	""" <C-h>, <BS>: close popup and delete backword char.
+	"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+	"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+	"inoremap <expr><C-y>  neocomplete#close_popup()
+	"inoremap <expr><C-e>  neocomplete#cancel_popup()
+	"" Close popup by <Space>.
+	""inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
 	"" Enable Omni Completion
 	augroup neocomplete_omni_complete
@@ -125,17 +137,13 @@ if !has('nvim')
 
 	let g:neocomplete#sources#omni#input_patterns.tex = '\\\a\+'
 	let g:neocomplete#sources#buffer#max_keyword_width = 0
-endif
 ""}}}
 
 " Editing plugins {{{
 "NeoBundle 'terryma/vim-expand-region'
 "NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'scrooloose/nerdcommenter'
-"NeoBundle 'chrisbra/NrrwRgn'
-NeoBundle 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}}
-"NeoBundle 'junegunn/vim-easy-align'
-"vmap <CR> <Plug>(EasyAlign)
+NeoBundle 'godlygeek/tabular' 
 NeoBundle 'xolox/vim-session'
 set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
 let g:session_autosave = 'no'
@@ -150,7 +158,6 @@ let g:yankring_history_dir = g:vimHome
 let g:yankring_history_file = 'yankring_history'
 let g:yankring_replace_n_pkey = '<M-p>'
 let g:yankring_replace_n_nkey = '<M-n>'
-"noremap Y y$
 nnoremap Y :<C-U>YRYankCount 'y$'<CR>
 noremap <Leader>y :YRShow<CR>
 "}}}
@@ -158,6 +165,7 @@ noremap <Leader>y :YRShow<CR>
 " Navigation plugins {{{
 NeoBundleLazy 'mileszs/ack.vim', {'autoload':{'commands':['Ack']}}
 let g:ackprg = 'ag --nogroup --nocolor --column'
+NeoBundle 'scrooloose/nerdtree'
 "}}}
 
 " Unite plugins and settings {{{
@@ -170,7 +178,7 @@ function! bundle.hooks.on_source(bundle)
 	call unite#custom#source('line,outline','matchers','matcher_fuzzy')
 endfunction
 
-let g:unite_data_directory='~/.vim/.cache/unite'
+let g:unite_data_directory='~/.config/nvim/.cache/unite'
 let g:unite_enable_start_insert=0
 let g:unite_source_history_yank_enable=1
 let g:unite_source_rec_max_cache_files=5000
@@ -219,7 +227,6 @@ NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
 "NeoBundle 'xolox/vim-notes'
 "let g:notes_directories = ['~/documents/notes', '~/documents/work']
 "let g:notes_suffix = '.txt'
-"NeoBundle 'altercation/vim-colors-solarized'
 "}}}
 
 "" tpope {{{
@@ -349,7 +356,7 @@ set mousehide                                                    " hide when cha
 set history=1000                                                 " number of command lines to remember
 set ttyfast                                                      " assume fast terminal connection
 set viewoptions=folds,options,cursor,unix,slash                  " unix/windows compatibility
-set encoding=utf-8                                               " set encoding for text
+"set encoding=utf-8                                               " set encoding for text
 set hidden                                                       " allow buffer switching without saving
 set autoread                                                     " auto reload if file saved externally
 set fileformats+=unix,dos,mac                                    " add mac to auto-detection of file format line endings
@@ -408,6 +415,10 @@ set smartcase                                                    " do case-sensi
 " \"50 - save 50 lines for each register
 " :50  - remember 50 items in command-line history 
 set viminfo='20,\"50,:50,/50
+
+if exists('+shada')
+	set shada='100,f1,<50,:100,s100
+endif
 
 "if executable('ack')
 "	set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
@@ -663,7 +674,7 @@ command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
     \  exe 'normal! g`"zvzz' |
     \ endif
 
-  autocmd FileType js,scss,css autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+  "autocmd FileType js,scss,css autocmd BufWritePre <buffer> call StripTrailingWhitespace()
   autocmd FileType css,scss setlocal foldmethod=marker foldmarker={,}
   autocmd FileType css,scss nnoremap <silent> <leader>S vi{:sort<CR>
 "}}}
