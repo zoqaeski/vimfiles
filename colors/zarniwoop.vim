@@ -14,18 +14,18 @@ let s:terms_italic=[
             \"gnome-terminal"
             \]
 
-if has("gui_running")
-    let s:terminal_italic=1 " TODO: could refactor to not require this at all
-else
-    let s:terminal_italic=0 " terminals will be guilty until proven compatible
-    for term in s:terms_italic
-        if $TERM_PROGRAM =~ term
-            let s:terminal_italic=1
-        endif
-    endfor
-endif
+" if has("gui_running")
+"     let s:terminal_italic=1 " TODO: could refactor to not require this at all
+" else
+     let s:terminal_italic=0 " terminals will be guilty until proven compatible
+     for term in s:terms_italic
+         if $TERM_PROGRAM =~ term
+             let s:terminal_italic=1
+         endif
+     endfor
+" endif
 
-"set background=dark
+set background=dark
 
 hi clear
 
@@ -35,7 +35,7 @@ endif
 let colors_name = "zarniwoop"
 
 " Mode
-if has("gui_running")
+" if has("gui_running")
 	let s:vmode = "gui"
 	let s:base03 = "#111214"
 	let s:base02 = "#25282E"
@@ -50,18 +50,20 @@ if has("gui_running")
 	"let s:green = "#23994A"
 	let s:green = "#25A650"
 	let s:brightgreen = "#2BBF5C"
-	let s:orange = "#FC8000"
-	let s:yellow = "#FCA000"
+	let s:yellow = "#FC8000"
+	let s:brightyellow = "#FCA000"
 	let s:blue = "#3577BF"
 	let s:brightblue = "#4497F2"
 	let s:magenta = "#A6539E"
-	let s:violet  = "#D96DCD"
+	let s:brightmagenta  = "#D96DCD"
 	"let s:cyan = "#058A8C"
 	"let s:cyan = "#059799"
 	"let s:cyan = "#06A3A6"
 	let s:cyan = "#06B0B3"
 	let s:brightcyan = "#07BDBF"
-else
+	let s:back = "NONE"
+" else
+if !has("nvim")
 	let s:vmode = "cterm"
 	let s:bright      = "* term=bold cterm=bold"
 	let s:base03      = "DarkGray" 
@@ -72,24 +74,18 @@ else
 	let s:base1       = "LightGray"
 	let s:base2       = "LightGray"
 	let s:base3       = "White"    
-
 	let s:red = "DarkRed"
 	let s:brightred = "LightRed"
 	let s:green = "DarkGreen"
 	let s:brightgreen = "LightGreen"
-	let s:orange = "DarkYellow"
-	let s:yellow = "LightYellow"
+	let s:yellow = "DarkYellow"
+	let s:brightyellow = "LightYellow"
 	let s:blue = "DarkBlue"
 	let s:brightblue = "LightBlue"
 	let s:magenta = "DarkMagenta"
-	let s:violet  = "LightMagenta"
+	let s:brightmagenta  = "LightMagenta"
 	let s:cyan = "DarkCyan"
 	let s:brightcyan = "LightCyan"
-endif
-
-if has("gui_running")
-	let s:back = s:base03
-else
 	let s:back = "NONE"
 endif
 
@@ -118,68 +114,91 @@ else
     let s:i           = ",italic"
 endif
 
+if has("nvim")
+	" s:base03
+	" s:base02
+	" s:base01
+	" s:base00
+	" s:base0
+	" s:base1
+	" s:base2
+	" s:base3
+	" s:red
+	" s:brightred
+	" s:green
+	" s:brightgreen
+	" s:yellow
+	" s:brightyellow
+	" s:blue
+	" s:brightblue
+	" s:magenta
+	" s:brightmagenta
+	" s:cyan
+	" s:brightcyan
+	" s:back
+let g:terminal_color_0 = s:base0
+let g:terminal_color_1 = s:red
+let g:terminal_color_2 = s:green
+let g:terminal_color_3 = s:yellow
+let g:terminal_color_4 = s:blue
+let g:terminal_color_5 = s:magenta
+let g:terminal_color_6 = s:cyan
+let g:terminal_color_7 = s:base2
+let g:terminal_color_8 = s:base3
+let g:terminal_color_9 = s:brightred
+let g:terminal_color_10 = s:brightgreen
+let g:terminal_color_11 = s:brightyellow
+let g:terminal_color_12 = s:brightblue
+let g:terminal_color_13 = s:brightmagenta
+let g:terminal_color_14 = s:brightcyan
+let g:terminal_color_15 = s:base3
+let g:terminal_color_16 = s:base2
+endif
+
 " General colours
 " --------------
 "  TODO: tweak the lighter colours to have less saturation?
 							
 let s:cursor	=	"#858385"
 
-if &background == "light"
-    let s:temp03 = s:base03
-    let s:temp02 = s:base02
-    let s:temp01 = s:base01
-    let s:temp00 = s:base00
-    let s:base03 = s:base3
-    let s:base02 = s:base2
-    let s:base01 = s:base1
-    let s:base00 = s:base0
-    let s:base0  = s:temp00
-    let s:base1  = s:temp01
-    let s:base2  = s:temp02
-    let s:base3  = s:temp03
-    if (s:back != "NONE")
-        let s:back = s:base03
-    endif
-endif
-
 " Highlighting primitives
-exe "let s:bg_none      = ' ".s:vmode."bg=".s:none   ."'"
-exe "let s:bg_back      = ' ".s:vmode."bg=".s:back   ."'"
-exe "let s:bg_base03    = ' ".s:vmode."bg=".s:base03 ."'"
-exe "let s:bg_base02    = ' ".s:vmode."bg=".s:base02 ."'"
-exe "let s:bg_base01    = ' ".s:vmode."bg=".s:base01 ."'"
-exe "let s:bg_base00    = ' ".s:vmode."bg=".s:base00 ."'"
-exe "let s:bg_base0     = ' ".s:vmode."bg=".s:base0  ."'"
-exe "let s:bg_base1     = ' ".s:vmode."bg=".s:base1  ."'"
-exe "let s:bg_base2     = ' ".s:vmode."bg=".s:base2  ."'"
-exe "let s:bg_base3     = ' ".s:vmode."bg=".s:base3  ."'"
-exe "let s:bg_green     = ' ".s:vmode."bg=".s:green  ."'"
-exe "let s:bg_yellow    = ' ".s:vmode."bg=".s:yellow ."'"
-exe "let s:bg_orange    = ' ".s:vmode."bg=".s:orange ."'"
-exe "let s:bg_red       = ' ".s:vmode."bg=".s:red    ."'"
-exe "let s:bg_magenta   = ' ".s:vmode."bg=".s:magenta."'"
-exe "let s:bg_violet    = ' ".s:vmode."bg=".s:violet ."'"
-exe "let s:bg_blue      = ' ".s:vmode."bg=".s:blue   ."'"
-exe "let s:bg_cyan      = ' ".s:vmode."bg=".s:cyan   ."'"
+exe "let s:bg_none      = ' ".s:vmode."bg=".s:none          ."'"
+exe "let s:bg_back      = ' ".s:vmode."bg=".s:back          ."'"
+exe "let s:bg_base03    = ' ".s:vmode."bg=".s:base03        ."'"
+exe "let s:bg_base02    = ' ".s:vmode."bg=".s:base02        ."'"
+exe "let s:bg_base01    = ' ".s:vmode."bg=".s:base01        ."'"
+exe "let s:bg_base00    = ' ".s:vmode."bg=".s:base00        ."'"
+exe "let s:bg_base0     = ' ".s:vmode."bg=".s:base0         ."'"
+exe "let s:bg_base1     = ' ".s:vmode."bg=".s:base1         ."'"
+exe "let s:bg_base2     = ' ".s:vmode."bg=".s:base2         ."'"
+exe "let s:bg_base3     = ' ".s:vmode."bg=".s:base3         ."'"
+exe "let s:bg_green     = ' ".s:vmode."bg=".s:green         ."'"
+exe "let s:bg_yellow    = ' ".s:vmode."bg=".s:brightyellow  ."'"
+exe "let s:bg_orange    = ' ".s:vmode."bg=".s:yellow        ."'"
+exe "let s:bg_red       = ' ".s:vmode."bg=".s:red           ."'"
+exe "let s:bg_magenta   = ' ".s:vmode."bg=".s:magenta       ."'"
+exe "let s:bg_violet    = ' ".s:vmode."bg=".s:brightmagenta ."'"
+exe "let s:bg_blue      = ' ".s:vmode."bg=".s:blue          ."'"
+exe "let s:bg_cyan      = ' ".s:vmode."bg=".s:cyan          ."'"
 
-exe "let s:fg_none      = ' ".s:vmode."fg=".s:none   ."'"
-exe "let s:fg_back      = ' ".s:vmode."fg=".s:back   ."'"
-exe "let s:fg_base03    = ' ".s:vmode."fg=".s:base03 ."'"
-exe "let s:fg_base02    = ' ".s:vmode."fg=".s:base02 ."'"
-exe "let s:fg_base01    = ' ".s:vmode."fg=".s:base01 ."'"
-exe "let s:fg_base00    = ' ".s:vmode."fg=".s:base00 ."'"
-exe "let s:fg_base0     = ' ".s:vmode."fg=".s:base0  ."'"
-exe "let s:fg_base1     = ' ".s:vmode."fg=".s:base1  ."'"
-exe "let s:fg_base2     = ' ".s:vmode."fg=".s:base2  ."'"
-exe "let s:fg_base3     = ' ".s:vmode."fg=".s:base3  ."'"
-exe "let s:fg_green     = ' ".s:vmode."fg=".s:green  ."'"
-exe "let s:fg_yellow    = ' ".s:vmode."fg=".s:yellow ."'"
-exe "let s:fg_orange    = ' ".s:vmode."fg=".s:orange ."'"
-exe "let s:fg_red       = ' ".s:vmode."fg=".s:red    ."'"
-exe "let s:fg_magenta   = ' ".s:vmode."fg=".s:magenta."'"
-exe "let s:fg_violet    = ' ".s:vmode."fg=".s:violet ."'"
-exe "let s:fg_blue      = ' ".s:vmode."fg=".s:blue   ."'"
-exe "let s:fg_cyan      = ' ".s:vmode."fg=".s:cyan   ."'"
+exe "let s:fg_none      = ' ".s:vmode."fg=".s:none          ."'"
+exe "let s:fg_back      = ' ".s:vmode."fg=".s:back          ."'"
+exe "let s:fg_base03    = ' ".s:vmode."fg=".s:base03        ."'"
+exe "let s:fg_base02    = ' ".s:vmode."fg=".s:base02        ."'"
+exe "let s:fg_base01    = ' ".s:vmode."fg=".s:base01        ."'"
+exe "let s:fg_base00    = ' ".s:vmode."fg=".s:base00        ."'"
+exe "let s:fg_base0     = ' ".s:vmode."fg=".s:base0         ."'"
+exe "let s:fg_base1     = ' ".s:vmode."fg=".s:base1         ."'"
+exe "let s:fg_base2     = ' ".s:vmode."fg=".s:base2         ."'"
+exe "let s:fg_base3     = ' ".s:vmode."fg=".s:base3         ."'"
+exe "let s:fg_green     = ' ".s:vmode."fg=".s:green         ."'"
+exe "let s:fg_yellow    = ' ".s:vmode."fg=".s:brightyellow  ."'"
+exe "let s:fg_orange    = ' ".s:vmode."fg=".s:yellow        ."'"
+exe "let s:fg_red       = ' ".s:vmode."fg=".s:red           ."'"
+exe "let s:fg_magenta   = ' ".s:vmode."fg=".s:magenta       ."'"
+exe "let s:fg_violet    = ' ".s:vmode."fg=".s:brightmagenta ."'"
+exe "let s:fg_blue      = ' ".s:vmode."fg=".s:blue          ."'"
+exe "let s:fg_cyan      = ' ".s:vmode."fg=".s:cyan          ."'"
 
 exe "let s:fmt_none     = ' ".s:vmode."=NONE".          " term=NONE".    "'"
 exe "let s:fmt_bold     = ' ".s:vmode."=NONE".s:b.      " term=NONE".s:b."'"
@@ -194,45 +213,45 @@ exe "let s:fmt_stnd     = ' ".s:vmode."=NONE".s:s.      " term=NONE".s:s."'"
 exe "let s:fmt_revr     = ' ".s:vmode."=NONE".s:r.      " term=NONE".s:r."'"
 exe "let s:fmt_revb     = ' ".s:vmode."=NONE".s:r.s:b.  " term=NONE".s:r.s:b."'"
 
-if has("gui_running")
-    exe "let s:sp_none      = ' guisp=".s:none   ."'"
-    exe "let s:sp_back      = ' guisp=".s:back   ."'"
-    exe "let s:sp_base03    = ' guisp=".s:base03 ."'"
-    exe "let s:sp_base02    = ' guisp=".s:base02 ."'"
-    exe "let s:sp_base01    = ' guisp=".s:base01 ."'"
-    exe "let s:sp_base00    = ' guisp=".s:base00 ."'"
-    exe "let s:sp_base0     = ' guisp=".s:base0  ."'"
-    exe "let s:sp_base1     = ' guisp=".s:base1  ."'"
-    exe "let s:sp_base2     = ' guisp=".s:base2  ."'"
-    exe "let s:sp_base3     = ' guisp=".s:base3  ."'"
-    exe "let s:sp_green     = ' guisp=".s:green  ."'"
-    exe "let s:sp_yellow    = ' guisp=".s:yellow ."'"
-    exe "let s:sp_orange    = ' guisp=".s:orange ."'"
-    exe "let s:sp_red       = ' guisp=".s:red    ."'"
-    exe "let s:sp_magenta   = ' guisp=".s:magenta."'"
-    exe "let s:sp_violet    = ' guisp=".s:violet ."'"
-    exe "let s:sp_blue      = ' guisp=".s:blue   ."'"
-    exe "let s:sp_cyan      = ' guisp=".s:cyan   ."'"
-else
-    let s:sp_none      = ""
-    let s:sp_back      = ""
-    let s:sp_base03    = ""
-    let s:sp_base02    = ""
-    let s:sp_base01    = ""
-    let s:sp_base00    = ""
-    let s:sp_base0     = ""
-    let s:sp_base1     = ""
-    let s:sp_base2     = ""
-    let s:sp_base3     = ""
-    let s:sp_green     = ""
-    let s:sp_yellow    = ""
-    let s:sp_orange    = ""
-    let s:sp_red       = ""
-    let s:sp_magenta   = ""
-    let s:sp_violet    = ""
-    let s:sp_blue      = ""
-    let s:sp_cyan      = ""
-endif
+"if has("gui_running")
+    exe "let s:sp_none      = ' guisp=".s:none          ."'"
+    exe "let s:sp_back      = ' guisp=".s:back          ."'"
+    exe "let s:sp_base03    = ' guisp=".s:base03        ."'"
+    exe "let s:sp_base02    = ' guisp=".s:base02        ."'"
+    exe "let s:sp_base01    = ' guisp=".s:base01        ."'"
+    exe "let s:sp_base00    = ' guisp=".s:base00        ."'"
+    exe "let s:sp_base0     = ' guisp=".s:base0         ."'"
+    exe "let s:sp_base1     = ' guisp=".s:base1         ."'"
+    exe "let s:sp_base2     = ' guisp=".s:base2         ."'"
+    exe "let s:sp_base3     = ' guisp=".s:base3         ."'"
+    exe "let s:sp_green     = ' guisp=".s:green         ."'"
+    exe "let s:sp_yellow    = ' guisp=".s:brightyellow  ."'"
+    exe "let s:sp_orange    = ' guisp=".s:yellow        ."'"
+    exe "let s:sp_red       = ' guisp=".s:red           ."'"
+    exe "let s:sp_magenta   = ' guisp=".s:magenta       ."'"
+    exe "let s:sp_violet    = ' guisp=".s:brightmagenta ."'"
+    exe "let s:sp_blue      = ' guisp=".s:blue          ."'"
+    exe "let s:sp_cyan      = ' guisp=".s:cyan          ."'"
+"else
+"    let s:sp_none      = ""
+"    let s:sp_back      = ""
+"    let s:sp_base03    = ""
+"    let s:sp_base02    = ""
+"    let s:sp_base01    = ""
+"    let s:sp_base00    = ""
+"    let s:sp_base0     = ""
+"    let s:sp_base1     = ""
+"    let s:sp_base2     = ""
+"    let s:sp_base3     = ""
+"    let s:sp_green     = ""
+"    let s:sp_yellow    = ""
+"    let s:sp_orange    = ""
+"    let s:sp_red       = ""
+"    let s:sp_magenta   = ""
+"    let s:sp_violet    = ""
+"    let s:sp_blue      = ""
+"    let s:sp_cyan      = ""
+"endif
 
 " Basic highlighting"{{{
 " ---------------------------------------------------------------------
@@ -344,17 +363,17 @@ exe "hi! FoldColumn"     .s:fmt_none   .s:fg_base0  .s:bg_base02
 "exe "hi! DiffDelete"     .s:fmt_bold   .s:fg_red    .s:bg_none
 "exe "hi! DiffText"       .s:fmt_undr   .s:fg_blue   .s:bg_none   .s:sp_blue
 "else " normal
-if has("gui_running")
-	exe "hi! DiffAdd"        .s:fmt_bold   .s:fg_green  .s:bg_base02 .s:sp_green
-	exe "hi! DiffChange"     .s:fmt_bold   .s:fg_yellow .s:bg_base02 .s:sp_yellow
-	exe "hi! DiffDelete"     .s:fmt_bold   .s:fg_red    .s:bg_base02
-	exe "hi! DiffText"       .s:fmt_bold   .s:fg_blue   .s:bg_base02 .s:sp_blue
-else
+" if has("gui_running")
+" 	exe "hi! DiffAdd"        .s:fmt_bold   .s:fg_green  .s:bg_base02 .s:sp_green
+" 	exe "hi! DiffChange"     .s:fmt_bold   .s:fg_yellow .s:bg_base02 .s:sp_yellow
+" 	exe "hi! DiffDelete"     .s:fmt_bold   .s:fg_red    .s:bg_base02
+" 	exe "hi! DiffText"       .s:fmt_bold   .s:fg_blue   .s:bg_base02 .s:sp_blue
+" else
 	exe "hi! DiffAdd"        .s:fmt_none   .s:fg_green  .s:bg_base02 .s:sp_green
 	exe "hi! DiffChange"     .s:fmt_none   .s:fg_yellow .s:bg_base02 .s:sp_yellow
 	exe "hi! DiffDelete"     .s:fmt_none   .s:fg_red    .s:bg_base02
 	exe "hi! DiffText"       .s:fmt_none   .s:fg_blue   .s:bg_base02 .s:sp_blue
-endif
+" endif
 "endif
 exe "hi! SignColumn"     .s:fmt_none   .s:fg_base0
 exe "hi! Conceal"        .s:fmt_none   .s:fg_blue   .s:bg_none
