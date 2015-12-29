@@ -228,16 +228,16 @@ endif
 " Unite plugins and settings ------------------------------------------------{{{
 
 NeoBundle 'Shougo/unite.vim'
-"let bundle = neobundle#get('unite.vim')
-"function! bundle.hooks.on_source(bundle)
-"endfunction
+let bundle = neobundle#get('unite.vim')
+function! bundle.hooks.on_source(bundle)
+	call unite#filters#matcher_default#use(['matcher_fuzzy'])
+	call unite#filters#sorter_default#use(['sorter_rank'])
+	call unite#custom#profile('files', 'context.smartcase', 1)
+	call unite#custom#source('line,outline','matchers','matcher_fuzzy')
+endfunction
 
 if neobundle#tap('unite.vim')
 	function! neobundle#hooks.on_source(bundle)
-		call unite#filters#matcher_default#use(['matcher_fuzzy'])
-		call unite#filters#sorter_default#use(['sorter_rank'])
-		call unite#custom#profile('files', 'context.smartcase', 1)
-		call unite#custom#source('line,outline','matchers','matcher_fuzzy')
 
 		let g:unite_data_directory='~/.config/nvim/.cache/unite'
 		let g:unite_enable_start_insert=0
@@ -245,13 +245,18 @@ if neobundle#tap('unite.vim')
 		let g:unite_source_rec_max_cache_files=5000
 		let g:unite_prompt='» '
 
+		" Unset unite grep arguments?
+		" let g:unite_source_grep_default_opts=''
+		" let g:unite_source_grep_recursive_opt=''
 		if executable('ag')
-			let g:unite_source_grep_command='ag'
-			let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
-			let g:unite_source_grep_recursive_opt=''
+			let g:unite_source_grep_command = 'ag'
+			let g:unite_source_grep_default_opts =
+						\ '-i --vimgrep --hidden --ignore ' .
+						\ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+			let g:unite_source_grep_recursive_opt = ''
 		elseif executable('ack')
 			let g:unite_source_grep_command='ack'
-			let g:unite_source_grep_default_opts='--no-heading --no-color -a -C4'
+			let g:unite_source_grep_default_opts='--no-heading --no-color -C4'
 			let g:unite_source_grep_recursive_opt=''
 		endif
 
@@ -656,13 +661,12 @@ if exists('+shada')
 	set shada='100,f1,<50,:100,s100
 endif
 
-"if executable('ack')
-"	set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
-"	set grepformat=%f:%l:%c:%m
-"endif
 if executable('ag')
 	set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
 	set grepformat=%f:%l:%c:%m
+elseif executable('ack')
+ 	set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
+ 	set grepformat=%f:%l:%c:%m
 endif
 " }}}
 
