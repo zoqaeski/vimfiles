@@ -140,17 +140,6 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'godlygeek/tabular' 
 
-NeoBundle 'xolox/vim-session'
-if neobundle#tap('vim-session')
-	function! neobundle#hooks.on_source(bundle)
-		set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
-		let g:session_autosave = 'no'
-		let g:session_autoload = 'no'
-		let g:session_command_aliases = 1
-	endfunction
-	call neobundle#untap()
-endif
-
 NeoBundle 'vim-scripts/YankRing.vim'
 if neobundle#tap('YankRing.vim')
 	function! neobundle#hooks.on_source(bundle)
@@ -438,9 +427,13 @@ NeoBundle 'xolox/vim-session'
 if neobundle#tap('vim-session')
 	function! neobundle#hooks.on_source(bundle)
 		set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
+		let g:session_autosave = 'no'
+		let g:session_autoload = 'no'
+		let g:session_command_aliases = 1
 	endfunction
 	call neobundle#untap()
 endif
+
 NeoBundle 'xolox/vim-misc'
 NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
 "NeoBundle 'scrooloose/syntastic' 
