@@ -7,3 +7,5 @@ tmp/
 Removed-Bundles/
 yankring_history_v2.txt
 .netrwhist
+shada/
+.init.vim-rplugin~
