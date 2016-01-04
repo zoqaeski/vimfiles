@@ -198,7 +198,7 @@ endif
 NeoBundle 'scrooloose/nerdtree', { 'augroup' : 'NERDTreeHijackNetrw'}
 if neobundle#tap('nerdtree')
 	function! neobundle#hooks.on_source(bundle)
-		map <C-\> :NERDTreeToggle<CR>
+		map <C-\><C-t> :NERDTreeToggle<CR>
 		"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 		let NERDTreeShowHidden=1
 		let g:NERDTreeWinSize=45
@@ -399,6 +399,7 @@ if neobundle#tap('vim-sayonara')
 	call neobundle#untap()
 endif
 NeoBundle 'gorodinskiy/vim-coloresque'
+NeoBundle 'chriskempson/base16-vim'
 "NeoBundle 'mhartington/oceanic-next'
 "NeoBundle 'ryanoasis/vim-devicons'
 NeoBundle 'mattn/gist-vim', {'depends': 'mattn/webapi-vim'}
@@ -725,7 +726,8 @@ let g:solarized_contrast="high"    "default value is normal
 
 " Change background
 set background=dark
-colorscheme zarniwoop
+colorscheme base16-default
+let base16colorspace=256
 
 " This breaks things!
 "if has('gui_running') 
