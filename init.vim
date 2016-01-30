@@ -423,6 +423,7 @@ if neobundle#tap('vim-tmux-navigator')
 	endfunction
 	call neobundle#untap()
 endif
+NeoBundle 'tmux-plugins/vim-tmux'
 
 NeoBundle 'xolox/vim-session'
 if neobundle#tap('vim-session')
@@ -726,8 +727,8 @@ let g:solarized_contrast="high"    "default value is normal
 
 " Change background
 set background=dark
-colorscheme base16-default
 let base16colorspace=256
+colorscheme base16-default
 
 " This breaks things!
 "if has('gui_running') 
