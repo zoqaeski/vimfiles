@@ -314,12 +314,12 @@ if neobundle#tap('neocomplete.vim')
 		let g:neocomplete#max_list = 15
 
 		""" <TAB>: completion.
-		"inoremap <expr><TAB>  pumvisible() ? "<C-n>" : "<TAB>"
+		inoremap <expr><TAB>  pumvisible() ? "<C-n>" : "<TAB>"
 		""" <C-h>, <BS>: close popup and delete backword char.
-		"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-		"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-		"inoremap <expr><C-y>  neocomplete#close_popup()
-		"inoremap <expr><C-e>  neocomplete#cancel_popup()
+		inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+		inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+		inoremap <expr><C-y>  neocomplete#close_popup()
+		inoremap <expr><C-e>  neocomplete#cancel_popup()
 		"" Close popup by <Space>.
 		""inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 	endfunction
@@ -344,6 +344,13 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
 	let g:neocomplete#sources#omni#input_patterns.tex = '\\\a\+'
 	let g:neocomplete#sources#buffer#max_keyword_width = 0
 endif
+let g:neocomplete#sources#omni#input_patterns.tex =
+      \ '\v\\%('
+      \ . '\a*cite\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+      \ . '|\a*ref%(\s*\{[^}]*|range\s*\{[^,}]*%(}\{)?)'
+      \ . '|includegraphics\*?%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+      \ . '|%(include%(only)?|input)\s*\{[^}]*'
+      \ . ')'
 
 ""}}}
 
@@ -365,7 +372,7 @@ NeoBundleLazy 'eagletmt/neco-ghc', {'autoload':{'filetypes':['haskell']}}
 "}}}
 
 " LaTeX plugins -------------------------------------------------------------{{{
-NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {'autoload':{'filetypes':['tex']}}
+NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {'autoload':{'filetypes':['tex']}, 'disabled': 1}
 if neobundle#tap('LaTeX-Box')
 	function! neobundle#hooks.on_source(bundle)
 		let g:LatexBox_latexmk_async = 1
@@ -374,8 +381,26 @@ if neobundle#tap('LaTeX-Box')
 		let g:LatexBox_Folding = 1
 		let g:tex_flavor = 'latex'
 		let g:tex_gotoerror = 0
+    " Mappings
+    imap <buffer> [[     \begin{
+    imap <buffer> ]]     <Plug>LatexCloseCurEnv
+    nmap <buffer> <F5>   <Plug>LatexChangeEnv
+    vmap <buffer> <F7>   <Plug>LatexWrapSelection
+    vmap <buffer> <S-F7> <Plug>LatexEnvWrapSelection
+    imap <buffer> ((     \eqref{
 	endfunction
 	call neobundle#untap()
+endif
+NeoBundle 'lervag/vimtex', {'autoload':{'filetypes':['tex', 'latex']}}
+if neobundle#tap('vimtex')
+  function! neobundle#hooks.on_source(bundle)
+		let g:tex_flavor = 'latex'
+    let g:vimtex_format_enabled = 1
+    let g:vimtex_fold_enabled = 1
+    let g:vimtex_latexmk_background = 1
+		let g:vimtex_view_method = 'zathura'
+  endfunction
+  call neobundle#untap()
 endif
 "NeoBundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
 "}}}
