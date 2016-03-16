@@ -372,7 +372,7 @@ NeoBundleLazy 'eagletmt/neco-ghc', {'autoload':{'filetypes':['haskell']}}
 "}}}
 
 " LaTeX plugins -------------------------------------------------------------{{{
-NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {'autoload':{'filetypes':['tex']}, 'disabled': 1}
+NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {'autoload':{'filetypes':['tex']}}
 if neobundle#tap('LaTeX-Box')
 	function! neobundle#hooks.on_source(bundle)
 		let g:LatexBox_latexmk_async = 1
@@ -391,23 +391,38 @@ if neobundle#tap('LaTeX-Box')
 	endfunction
 	call neobundle#untap()
 endif
-NeoBundle 'lervag/vimtex', {'autoload':{'filetypes':['tex', 'latex']}}
-if neobundle#tap('vimtex')
-  function! neobundle#hooks.on_source(bundle)
-		let g:tex_flavor = 'latex'
-    let g:vimtex_format_enabled = 1
-    let g:vimtex_fold_enabled = 1
-    let g:vimtex_latexmk_background = 1
-		let g:vimtex_view_method = 'zathura'
-  endfunction
-  call neobundle#untap()
-endif
+" NeoBundle 'lervag/vimtex', {'autoload':{'filetypes':['tex', 'latex']}}
+" if neobundle#tap('vimtex')
+"   function! neobundle#hooks.on_source(bundle)
+" 		let g:tex_flavor = 'latex'
+"     let g:vimtex_format_enabled = 0
+"     let g:vimtex_fold_enabled = 1
+"     let g:vimtex_latexmk_background = 1
+" 		let g:vimtex_view_method = 'general'
+"   endfunction
+"   call neobundle#untap()
+" endif
 "NeoBundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
 "}}}
 
 " Other plugins -------------------------------------------------------------{{{
 NeoBundle 'matchit.zip'
 NeoBundle 'tpope/vim-surround'
+if neobundle#tap('vim-surround')
+  function! neobundle#hooks.on_source(bundle)
+    augroup latexSurround
+      autocmd!
+      autocmd FileType tex call s:latexSurround()
+    augroup END
+
+    function! s:latexSurround()
+      let b:surround_{char2nr("e")}
+            \ = "\\begin{\1environment: \1}\n\t\r\n\\end{\1\1}"
+      let b:surround_{char2nr("c")} = "\\\1command: \1{\r}"
+    endfunction
+  endfunction
+  call neobundle#untap()
+endif
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'tpope/vim-eunuch'
