@@ -216,80 +216,80 @@ endif
 
 " Unite plugins and settings ------------------------------------------------{{{
 
-NeoBundle 'Shougo/unite.vim'
-let bundle = neobundle#get('unite.vim')
-function! bundle.hooks.on_source(bundle)
-	call unite#filters#matcher_default#use(['matcher_fuzzy'])
-	call unite#filters#sorter_default#use(['sorter_rank'])
-	call unite#custom#profile('files', 'context.smartcase', 1)
-	call unite#custom#source('line,outline','matchers','matcher_fuzzy')
-endfunction
-
-if neobundle#tap('unite.vim')
-	function! neobundle#hooks.on_source(bundle)
-
-		let g:unite_data_directory='~/.config/nvim/.cache/unite'
-		let g:unite_enable_start_insert=0
-		let g:unite_source_history_yank_enable=1
-		let g:unite_source_rec_max_cache_files=5000
-		let g:unite_prompt='» '
-
-		" Unset unite grep arguments?
-		" let g:unite_source_grep_default_opts=''
-		" let g:unite_source_grep_recursive_opt=''
-		if executable('ag')
-			let g:unite_source_grep_command = 'ag'
-			let g:unite_source_grep_default_opts =
-						\ '-i --vimgrep --hidden --ignore ' .
-						\ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-			let g:unite_source_grep_recursive_opt = ''
-		elseif executable('ack')
-			let g:unite_source_grep_command='ack'
-			let g:unite_source_grep_default_opts='--no-heading --no-color -C4'
-			let g:unite_source_grep_recursive_opt=''
-		endif
-
-		function! s:unite_settings()
-			nmap <buffer> Q <plug>(unite_exit)
-			nmap <buffer> <esc> <plug>(unite_exit)
-			imap <silent><buffer><expr> <C-i> unite#do_action('split')
-			imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-		endfunction
-		autocmd FileType unite call s:unite_settings()
-
-		nmap <space> [unite]
-		nnoremap [unite] <nop>
-
-		if has('win32') || has('win64')
-			nnoremap <silent> [unite]<space> :<C-u>Unite -resume -buffer-name=mixed -start-insert -no-restore file_rec:! buffer file_mru bookmark<cr><C-u>
-			nnoremap <silent> [unite]f :<C-u>Unite -resume -buffer-name=files -start-insert -no-restore file_rec:!<cr><C-u>
-		elseif has('nvim')
-			nnoremap <silent> [unite]<space> :<C-u>Unite -no-split -start-insert -buffer-name=mixed file_rec/neovim:! buffer tab file_mru file bookmark<CR><C-u>
-			nnoremap <silent> [unite]f :<C-u>Unite -no-split -start-insert file file_rec/neovim<CR><C-u>
-		else
-			nnoremap <silent> [unite]<space> :<C-u>Unite -resume -buffer-name=mixed -start-insert -no-restore file_rec/async:! buffer file_mru bookmark<cr><C-u>
-			nnoremap <silent> [unite]f :<C-u>Unite -resume -buffer-name=files -start-insert -no-restore file_rec/async:!<cr><C-u>
-		endif
-
-		nnoremap <silent> [unite]d :<C-u>Unite -resume -buffer-name=files -start-insert -no-restore -default-action=lcd directory<cr><C-u>
-		" nnoremap <silent> [unite]e :<C-u>Unite -resume -buffer-name=files -start-insert -no-restore neomru/file<cr><C-u>
-
-		nnoremap <silent> [unite]l :<C-u>Unite -resume -buffer-name=line -start-insert -no-restore line<cr><C-u>
-		nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
-		nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=buffers buffer<cr>
-		nnoremap <silent> [unite]/ :<C-u>Unite -buffer-name=search -no-quit grep:.<cr>
-		nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=mappings mapping<cr>
-		nnoremap <silent> [unite]s :<C-u>Unite -buffer-name=quick_buffers -quick-match buffer<cr>
-		nnoremap <silent> [unite]j :<C-u>Unite -buffer-name=jumps jump<cr>
-		nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=registers register<cr>
-		nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<CR>
-
-		NeoBundleLazy 'Shougo/neoyank.vim', {'autoload':{'unite_sources':'history/yank'}}
-		NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}}
-		NeoBundleLazy 'Shougo/neomru.vim', {'autoload':{'unite_sources':'file_mru'}}
-	endfunction
-	call neobundle#untap()
-endif
+NeoBundle 'Shougo/unite.vim', { 'disabled' : 1 }
+" let bundle = neobundle#get('unite.vim')
+" function! bundle.hooks.on_source(bundle)
+" 	call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" 	call unite#filters#sorter_default#use(['sorter_rank'])
+" 	call unite#custom#profile('files', 'context.smartcase', 1)
+" 	call unite#custom#source('line,outline','matchers','matcher_fuzzy')
+" endfunction
+"
+" if neobundle#tap('unite.vim')
+" 	function! neobundle#hooks.on_source(bundle)
+"
+" 		let g:unite_data_directory='~/.config/nvim/.cache/unite'
+" 		let g:unite_enable_start_insert=0
+" 		let g:unite_source_history_yank_enable=1
+" 		let g:unite_source_rec_max_cache_files=5000
+" 		let g:unite_prompt='» '
+"
+" 		" Unset unite grep arguments?
+" 		" let g:unite_source_grep_default_opts=''
+" 		" let g:unite_source_grep_recursive_opt=''
+" 		if executable('ag')
+" 			let g:unite_source_grep_command = 'ag'
+" 			let g:unite_source_grep_default_opts =
+" 						\ '-i --vimgrep --hidden --ignore ' .
+" 						\ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+" 			let g:unite_source_grep_recursive_opt = ''
+" 		elseif executable('ack')
+" 			let g:unite_source_grep_command='ack'
+" 			let g:unite_source_grep_default_opts='--no-heading --no-color -C4'
+" 			let g:unite_source_grep_recursive_opt=''
+" 		endif
+"
+" 		function! s:unite_settings()
+" 			nmap <buffer> Q <plug>(unite_exit)
+" 			nmap <buffer> <esc> <plug>(unite_exit)
+" 			imap <silent><buffer><expr> <C-i> unite#do_action('split')
+" 			imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+" 		endfunction
+" 		autocmd FileType unite call s:unite_settings()
+"
+" 		nmap <space> [unite]
+" 		nnoremap [unite] <nop>
+"
+" 		if has('win32') || has('win64')
+" 			nnoremap <silent> [unite]<space> :<C-u>Unite -resume -buffer-name=mixed -start-insert -no-restore file_rec:! buffer file_mru bookmark<cr><C-u>
+" 			nnoremap <silent> [unite]f :<C-u>Unite -resume -buffer-name=files -start-insert -no-restore file_rec:!<cr><C-u>
+" 		elseif has('nvim')
+" 			nnoremap <silent> [unite]<space> :<C-u>Unite -no-split -start-insert -buffer-name=mixed file_rec/neovim:! buffer tab file_mru file bookmark<CR><C-u>
+" 			nnoremap <silent> [unite]f :<C-u>Unite -no-split -start-insert file file_rec/neovim<CR><C-u>
+" 		else
+" 			nnoremap <silent> [unite]<space> :<C-u>Unite -resume -buffer-name=mixed -start-insert -no-restore file_rec/async:! buffer file_mru bookmark<cr><C-u>
+" 			nnoremap <silent> [unite]f :<C-u>Unite -resume -buffer-name=files -start-insert -no-restore file_rec/async:!<cr><C-u>
+" 		endif
+"
+" 		nnoremap <silent> [unite]d :<C-u>Unite -resume -buffer-name=files -start-insert -no-restore -default-action=lcd directory<cr><C-u>
+" 		" nnoremap <silent> [unite]e :<C-u>Unite -resume -buffer-name=files -start-insert -no-restore neomru/file<cr><C-u>
+"
+" 		nnoremap <silent> [unite]l :<C-u>Unite -resume -buffer-name=line -start-insert -no-restore line<cr><C-u>
+" 		nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
+" 		nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=buffers buffer<cr>
+" 		nnoremap <silent> [unite]/ :<C-u>Unite -buffer-name=search -no-quit grep:.<cr>
+" 		nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=mappings mapping<cr>
+" 		nnoremap <silent> [unite]s :<C-u>Unite -buffer-name=quick_buffers -quick-match buffer<cr>
+" 		nnoremap <silent> [unite]j :<C-u>Unite -buffer-name=jumps jump<cr>
+" 		nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=registers register<cr>
+" 		nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<CR>
+"
+" 		NeoBundleLazy 'Shougo/neoyank.vim', {'autoload':{'unite_sources':'history/yank'}}
+" 		NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}}
+" 		NeoBundleLazy 'Shougo/neomru.vim', {'autoload':{'unite_sources':'file_mru'}}
+" 	endfunction
+" 	call neobundle#untap()
+" endif
 "}}}
 
 "" Completion plugins -------------------------------------------------------{{{
@@ -376,6 +376,7 @@ NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {'autoload':{'filetypes':['tex']}}
 if neobundle#tap('LaTeX-Box')
 	function! neobundle#hooks.on_source(bundle)
 		let g:LatexBox_latexmk_async = 1
+    let g:LatexBox_latexmk_preview_continuously = 1
 		let g:LatexBox_quickfix = 2
 		let g:LatexBox_show_warnings = 0
 		let g:LatexBox_Folding = 1
@@ -430,6 +431,27 @@ NeoBundle 'tpope/vim-unimpaired'
 "NeoBundle 'wincent/terminus'
 NeoBundle 'junegunn/fzf', { 'dir': '~/.fzf' }
 NeoBundle 'junegunn/fzf.vim'
+if neobundle#tap('fzf.vim')
+	function! neobundle#hooks.on_source(bundle)
+		let g:fzf_action = {
+					\ 'ctrl-t': 'tab split',
+					\ 'ctrl-i': 'split',
+					\ 'ctrl-v': 'vsplit'}
+
+		nmap <space> [fzf]
+		nnoremap [fzf] <nop>
+		nnoremap <silent> [fzf]f :FZF -m<cr>
+		nnoremap <silent> [fzf]b :Buffers<cr>
+		nnoremap <silent> [fzf]h :History<cr>
+		nnoremap <silent> [fzf]l :Lines<cr>
+
+		imap <C-x><C-f> <plug>(fzf-complete-file-ag)
+		imap <C-x><C-l> <plug>(fzf-complete-line)
+
+	endfunction
+	call neobundle#untap()
+endif
+
 "NeoBundle 'ashisha/image.vim', { 'disabled' : !has('python') }
 NeoBundle 'mhinz/vim-sayonara'
 if neobundle#tap('vim-sayonara')
