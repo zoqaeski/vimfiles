@@ -462,8 +462,6 @@ if neobundle#tap('vim-sayonara')
 endif
 NeoBundle 'gorodinskiy/vim-coloresque'
 NeoBundle 'chriskempson/base16-vim'
-"NeoBundle 'mhartington/oceanic-next'
-"NeoBundle 'ryanoasis/vim-devicons'
 NeoBundle 'mattn/gist-vim', {'depends': 'mattn/webapi-vim'}
 
 " This plugin isn't needed because I've done the necessary mappings in my
@@ -491,7 +489,7 @@ NeoBundle 'xolox/vim-session'
 if neobundle#tap('vim-session')
 	function! neobundle#hooks.on_source(bundle)
 		set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
-		let g:session_autosave = 'no'
+		let g:session_autosave = 'yes'
 		let g:session_autoload = 'no'
 		let g:session_command_aliases = 1
 	endfunction
@@ -690,7 +688,8 @@ set wildignore+=*.aux,*.out                      " LaTeX intermediate files
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
-set wildignore+=*.sw?                            " Vim swap files
+" set wildignore+=*.sw?                            " Vim swap files - no
+" longer ignoring these as it could be useful for recovery
 set wildignore+=.DS_Store                        " OS X
 set wildignore+=*.luac                           " Lua byte code
 set wildignore+=*.pyc                            " Python byte code
@@ -760,7 +759,7 @@ set swapfile
 exec "set dir=".g:vimHome."/.cache/swap/"
 
 " Write swap file to disk after every 50 characters
-set updatecount=200
+set updatecount=50
 
 call EnsureExists(g:vimHome.'/.cache')
 call EnsureExists(&undodir)
