@@ -34,18 +34,19 @@ Plug 'Shougo/vimproc', {
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular' 
 
-Plug 'vim-scripts/YankRing.vim'
-		let g:yankring_max_history = 100
-		let g:yankring_max_display = 200
-		let g:yankring_min_element_length = 1
-		let g:yankring_ignore_operator = 'g~ gu gU ! = gq g? > < zf g@'
-		let g:yankring_history_dir = g:vimLocal
-		let g:yankring_history_file = 'yankring_history'
-		let g:yankring_replace_n_pkey = '<M-p>'
-		let g:yankring_replace_n_nkey = '<M-n>'
-		nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-		noremap <Leader>y :YRShow<CR>
+" Plug 'vim-scripts/YankRing.vim'
+" 		let g:yankring_max_history = 100
+" 		let g:yankring_max_display = 200
+" 		let g:yankring_min_element_length = 1
+" 		let g:yankring_ignore_operator = 'g~ gu gU ! = gq g? > < zf g@'
+" 		let g:yankring_history_dir = g:vimLocal
+" 		let g:yankring_history_file = 'yankring_history'
+" 		let g:yankring_replace_n_pkey = '<M-p>'
+" 		let g:yankring_replace_n_nkey = '<M-n>'
+" 		nnoremap Y :<C-U>YRYankCount 'y$'<CR>
+" 		noremap <Leader>y :YRShow<CR>
 "}}}
+Plug 'maxbrunsfeld/vim-yankstack'
 
 " SCM (git, hg, etc) plugins ------------------------------------------------{{{
 
@@ -71,7 +72,14 @@ Plug 'mileszs/ack.vim'
 
 " NERDTree ------------------------------------------------------------------{{{
 
-Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle', 'augroup' : 'NERDTreeHijackNetrw' }
+" Disable netrw as it is annoying
+" let g:loaded_netrw       = 1
+" let g:loaded_netrwPlugin = 1
+
+" Better fix: always load NERDTree (on-demand loading prevents it from
+" stealing focus from netrw)
+" Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle', 'augroup' : 'NERDTreeHijackNetrw' }
+Plug 'scrooloose/nerdtree'
 		map <C-\><C-t> :NERDTreeToggle<CR>
 		"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 		let NERDTreeShowHidden=1
@@ -205,8 +213,9 @@ nnoremap [fzf]t :Tags<CR>
 nnoremap [fzf]j :BTags<CR>
 nnoremap [fzf]m :Marks<CR>
 
-nnoremap [fzf]<S-c> :Commands<CR>
-nnoremap [fzf]<C-m> :Maps<CR>
+nnoremap [fzf]: :Commands<CR>
+nnoremap [fzf]<S-c> :Colors<CR>
+nnoremap [fzf]<S-m> :Maps<CR>
 nnoremap [fzf]<S-h> :Helptags<CR>
 command! -nargs=* -complete=file Ae :call s:fzf_ag_expand(<q-args>)
 

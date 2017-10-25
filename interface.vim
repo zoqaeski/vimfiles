@@ -15,8 +15,9 @@
 "
 """"""""""""""""""""""""""""""""""""""""
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+set termguicolors                                   "enable full colours in terminal
 set showmatch                                       "automatically highlight matching braces/brackets/etc.
 set matchtime=2                                     "tens of a second to show matching parentheses
 set relativenumber number
@@ -34,6 +35,7 @@ let g:solarized_contrast="high"    "default value is normal
 " Change background
 set background=dark
 let base16colorspace=256
+let g:base16_shell_path="~/.local/share/themes/base16/base16-shell"
 colorscheme base16-twilight
 
 " This breaks things!
