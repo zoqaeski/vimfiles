@@ -23,11 +23,17 @@ set matchtime=2                                     "tens of a second to show ma
 set relativenumber number
 set lazyredraw
 set laststatus=2
-set showmode
 set foldenable                                      "enable folds by default
 set foldmethod=syntax                               "fold via syntax of files
 set foldlevelstart=99                               "open all folds by default
 let g:xml_syntax_folding=1                          "enable xml folding
+
+" Only display the current mode if lightline is active and loaded. 
+if exists('#lightline')
+	set noshowmode
+else
+	set showmode
+end
 
 " My own preferred colour scheme; I'm looking for a better one
 let g:solarized_contrast="high"    "default value is normal
