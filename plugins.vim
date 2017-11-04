@@ -32,10 +32,18 @@ Plug 'sheerun/vim-polyglot'
 "}}}
 
 " Status line plugins -------------------------------------------------------{{{
+" Supposedly better status lines. If nothing else, they're certainly pretty.
+" Need to set noshowmode to hide it as the statusline updates
+set noshowmode
 
-" Supposedly better status line. If nothing else, it's certainly pretty.
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+"   let g:airline_extensions = []
+"   let g:airline_symbols_ascii = 0
+
 Plug 'itchyny/lightline.vim'
 	let g:lightline = {
+				\ 'colorscheme' : 'wombat',
 				\ 'active': {
 				\   'left': [ [ 'mode', 'paste' ],
 				\             [ 'gitbranch', 'filename', 'modified' ],
@@ -44,9 +52,9 @@ Plug 'itchyny/lightline.vim'
 				\ },
 				\ 'component_function': {
 				\   'gitbranch': 'fugitive#head',
-				\   'readonly': 'LightlineReadonly',
-				\   'fileformat': 'LightlineFileformat',
-				\   'filetype': 'LightlineFiletype',
+				\   'readonly': 'lightlinereadonly',
+				\   'fileformat': 'lightlinefileformat',
+				\   'filetype': 'lightlinefiletype',
 				\ },
 				\ 'component_type': {
 				\		'readonly': 'error',
@@ -88,6 +96,7 @@ Plug 'maxbrunsfeld/vim-yankstack'
 
 Plug 'matchit.zip'
 
+" Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-surround'
 		augroup latexSurround
 			autocmd!
@@ -159,6 +168,8 @@ nnoremap [fzf]d :call <SID>fzf('find -L . -type f ! -path "*.hg/*" ! -path "*.gi
 nnoremap [fzf]f :Files ~<CR>
 nnoremap [fzf]a :call <SID>fzf('find -L . -type f ! -path "*.hg/*" ! -path "*.git/*"', ':Files ~') <CR>
 nnoremap [fzf]g :GitFiles<CR>
+" Files in a specific directory
+nnoremap [fzf]<s-f> :Files<Space>
 " Lines in the current buffer
 nnoremap [fzf]l :BLines<CR>
 " Lines in all buffers
@@ -231,7 +242,8 @@ Plug 'scrooloose/nerdtree'
 " Completion plugins -------------------------------------------------------{{{
 
 Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
-	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#enable_at_startup = 0
+  let g:deoplete#complete_method = 'completefunc'
 
 Plug 'mattn/emmet-vim'
 		let g:user_emmet_mode='a'
@@ -245,7 +257,14 @@ Plug 'lervag/vimtex', {'for' : ['tex', 'latex']}
 		let g:tex_flavor = 'latex'
     let g:vimtex_format_enabled = 0
     let g:vimtex_fold_enabled = 1
-    let g:vimtex_latexmk_background = 1
+		let g:vimtex_compiler_method = 'arara'
+    let g:vimtex_compiler_arara = {
+        \ 'backend' : 'nvim',
+        \ 'background' : 1,
+        \ 'options' : ['-v'],
+        \}
+
+		let g:vimtex_view_automatic = 1
 		let g:vimtex_view_method = 'general'
 
 		" Not sure how to get this to work

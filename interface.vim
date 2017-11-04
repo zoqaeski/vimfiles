@@ -16,7 +16,7 @@
 """"""""""""""""""""""""""""""""""""""""
 
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 set termguicolors                                   "enable full colours in terminal
 set showmatch                                       "automatically highlight matching braces/brackets/etc.
 set matchtime=2                                     "tens of a second to show matching parentheses
@@ -29,11 +29,11 @@ set foldlevelstart=99                               "open all folds by default
 let g:xml_syntax_folding=1                          "enable xml folding
 
 " Only display the current mode if lightline is active and loaded. 
-if exists('#lightline')
-	set noshowmode
-else
-	set showmode
-end
+" if exists('#lightline')
+" 	set noshowmode
+" else
+" 	set showmode
+" end
 
 " My own preferred colour scheme; I'm looking for a better one
 let g:solarized_contrast="high"    "default value is normal
