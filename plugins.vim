@@ -94,7 +94,7 @@ Plug 'godlygeek/tabular'
 " Vim. 
 Plug 'maxbrunsfeld/vim-yankstack'
 
-Plug 'matchit.zip'
+Plug 'vim-scripts/matchit.zip'
 
 " Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-surround'
