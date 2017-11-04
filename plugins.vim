@@ -227,6 +227,7 @@ Plug 'mileszs/ack.vim'
 " stealing focus from netrw)
 Plug 'scrooloose/nerdtree'
 		map <C-\><C-t> :NERDTreeToggle<CR>
+		nmap <C-\><C-f> :NERDTreeFind<CR>
 		"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 		let NERDTreeShowHidden=1
 		let g:NERDTreeWinSize=45
