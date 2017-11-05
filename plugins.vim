@@ -46,15 +46,19 @@ Plug 'itchyny/lightline.vim'
 				\ 'colorscheme' : 'wombat',
 				\ 'active': {
 				\   'left': [ [ 'mode', 'paste' ],
-				\             [ 'gitbranch', 'filename', 'modified' ],
-				\							[ 'readonly' ] ],
-				\   'right': [['lineinfo'], ['percent'] ]
+				\             [ 'gitbranch', 'filename' ],
+				\             [ 'modified', 'readonly' ] ],
+				\   'right': [['lineinfo'], ['percent'], 
+				\             ['fileencoding', 'filetype']]
 				\ },
 				\ 'component_function': {
 				\   'gitbranch': 'fugitive#head',
-				\   'readonly': 'lightlinereadonly',
-				\   'fileformat': 'lightlinefileformat',
-				\   'filetype': 'lightlinefiletype',
+				\   'modified': 'LightlineMod',
+				\   'readonly': 'LightlineRO',
+				\   'filename': 'LightlineName',
+				\   'fileformat': 'LightlineFileformat',
+				\   'filetype': 'LightlineFiletype',
+				\   'fileencoding': 'LightlineEncoding',
 				\ },
 				\ 'component_type': {
 				\		'readonly': 'error',
@@ -62,8 +66,21 @@ Plug 'itchyny/lightline.vim'
 				\ }
 
 	" Custom functions for lightline.vim
-	function! LightlineReadonly()
-		return &readonly && &filetype !~# '\v(help|vimfiler|unite)' ? 'RO' : ''
+	" These were adapted from http://code.xero.nu/dotfiles
+	function! LightlineMod()
+		return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : ''
+	endfunction
+
+	function! LightlineRO()
+		return &ft !~? 'help\|vimfiler' && &readonly ? 'RO' : ''
+	endfunction
+
+	function! LightlineName()
+		let l:name = expand('%:t')
+		if l:name =~ 'NetrwTreeListing\|NERD_tree'
+			return ''
+		endif
+		return ('' != expand('%:t') ? expand('%:t') : '[none]') 
 	endfunction
 
 	function! LightlineFileformat()
@@ -71,7 +88,11 @@ Plug 'itchyny/lightline.vim'
 	endfunction
 
 	function! LightlineFiletype()
-		return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+		return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : '') : ''
+	endfunction
+
+	function! LightlineEncoding()
+		return winwidth(0) > 70 ? (strlen(&fenc) ? &enc : &enc) : ''
 	endfunction
 
 	" Update and show lightline but only if it's visible (e.g., not in Goyo)

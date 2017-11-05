@@ -36,13 +36,17 @@ let g:xml_syntax_folding=1                          "enable xml folding
 " end
 
 " My own preferred colour scheme; I'm looking for a better one
-let g:solarized_contrast="high"    "default value is normal
+" let g:solarized_contrast="high"    "default value is normal
 
 " Change background
-set background=dark
-let base16colorspace=256
-let g:base16_shell_path="~/.local/share/themes/base16/base16-shell"
-colorscheme base16-twilight
+" set background=dark
+" let base16colorspace=256
+" colorscheme base16-3024
+
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 " This breaks things!
 "if has('gui_running') 
