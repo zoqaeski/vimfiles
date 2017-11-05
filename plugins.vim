@@ -27,7 +27,9 @@ Plug 'Shougo/vimproc', {
 			\ }
 
 " Better language support?
+" THIS CONFLICTS WITH MANY THINGS. HERE BE DRAGONS
 Plug 'sheerun/vim-polyglot'
+  let g:polyglot_disabled = ['latex']
 
 "}}}
 
@@ -275,19 +277,10 @@ Plug 'mattn/emmet-vim'
 " LaTeX plugins -------------------------------------------------------------{{{
 
 " VimTex
-Plug 'lervag/vimtex', {'for' : ['tex', 'latex']}
+Plug 'lervag/vimtex'
 		let g:tex_flavor = 'latex'
-    let g:vimtex_format_enabled = 0
     let g:vimtex_fold_enabled = 1
 		let g:vimtex_compiler_method = 'arara'
-    let g:vimtex_compiler_arara = {
-        \ 'backend' : 'nvim',
-        \ 'background' : 1,
-        \ 'options' : ['-v'],
-        \}
-
-		let g:vimtex_view_automatic = 1
-		let g:vimtex_view_method = 'general'
 
 		" Not sure how to get this to work
 		" if !exists('g:deoplete#omni#input_patterns')
