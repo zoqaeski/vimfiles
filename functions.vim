@@ -61,48 +61,21 @@ function! VisualSearch(direction) range "{{{
 endfunction "}}}
 
 " Buffer closing
-" command! BClose call <SID>BufCloseCloseIt()
-" function! <SID>BufCloseCloseIt() "{{{
-" 	let l:currentBufNum = bufnr("%")
-" 	let l:alternateBufNum = bufnr("#")
-"
-" 	if buflisted(l:alternateBufNum)
-" 		buffer #
-" 	else
-" 		bnext
+" function! s:BufferEmpty() " {{{
+" 	let l:current = bufnr('%')
+" 	if ! getbufvar(l:current, '&modified')
+" 		enew
+" 		silent! execute 'bdelete '.l:current
 " 	endif
-"
-" 	if bufnr("%") == l:currentBufNum
-" 		new
-" 	endif
-"
-" 	if buflisted(l:currentBufNum)
-" 		execute("bdelete! ".l:currentBufNum)
-" 	endif
-" endfunction "}}}
+" endfunction " }}}
 
-" function! CloseWindowOrKillBuffer()
-" 	let number_of_windows_to_this_buffer = len(filter(range(1, winnr('$')), "winbufnr(v:val) == bufnr('%')"))
-"
-" 	" never bdelete a nerd tree
-" 	if matchstr(expand("%"), 'NERD') == 'NERD'
-" 		wincmd c
-" 		return
-" 	endif
-"
-" 	if number_of_windows_to_this_buffer > 1
-" 		wincmd c
-" 	else
-" 		bdelete
-" 	endif
-" endfunction
 
 " Creates a temporary working buffer
-function! ScratchEdit(cmd, options) "{{{
-	exe a:cmd tempname()
-	setl buftype=nofile bufhidden=wipe nobuflisted
-	if !empty(a:options) | exe 'setl' a:options | endif
-endfunction "}}}
+" function! ScratchEdit(cmd, options) "{{{
+" 	exe a:cmd tempname()
+" 	setl buftype=nofile bufhidden=wipe nobuflisted
+" 	if !empty(a:options) | exe 'setl' a:options | endif
+" endfunction "}}}
 
 " Identifies the syntax colouring item under the cursor
 function! <SID>SynStack()

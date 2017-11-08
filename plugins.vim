@@ -13,8 +13,10 @@
 "
 " Plugins
 "
-" This section contains all plugins and their associated sections. Whilst I
-" could split it into individual files, that seems like a lot of effort.
+" This section contains all plugins and their associated sections. 
+"
+" Plugins that contain a lot of settings (for the moment NERDTree, FZF, and
+" Lightline) source their own configurations
 "
 """"""""""""""""""""""""""""""""""""""""
 
@@ -26,83 +28,20 @@ Plug 'Shougo/vimproc', {
 			\ 'do' : 'make'
 			\ }
 
-" Better language support?
+" Better language support? Disabled for now
 " THIS CONFLICTS WITH MANY THINGS. HERE BE DRAGONS
-Plug 'sheerun/vim-polyglot'
-  let g:polyglot_disabled = ['latex']
+" Plug 'sheerun/vim-polyglot'
+  " let g:polyglot_disabled = ['latex']
 
 "}}}
 
 " Status line plugins -------------------------------------------------------{{{
 " Supposedly better status lines. If nothing else, they're certainly pretty.
 " Need to set noshowmode to hide it as the statusline updates
-set noshowmode
-
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-"   let g:airline_extensions = []
-"   let g:airline_symbols_ascii = 0
 
 Plug 'itchyny/lightline.vim'
-	let g:lightline = {
-				\ 'colorscheme' : 'wombat',
-				\ 'active': {
-				\   'left': [ [ 'mode', 'paste' ],
-				\             [ 'gitbranch', 'filename' ],
-				\             [ 'modified', 'readonly' ] ],
-				\   'right': [['lineinfo'], ['percent'], 
-				\             ['fileencoding', 'filetype']]
-				\ },
-				\ 'component_function': {
-				\   'gitbranch': 'fugitive#head',
-				\   'modified': 'LightlineMod',
-				\   'readonly': 'LightlineRO',
-				\   'filename': 'LightlineName',
-				\   'fileformat': 'LightlineFileformat',
-				\   'filetype': 'LightlineFiletype',
-				\   'fileencoding': 'LightlineEncoding',
-				\ },
-				\ 'component_type': {
-				\		'readonly': 'error',
-				\ },
-				\ }
-
-	" Custom functions for lightline.vim
-	" These were adapted from http://code.xero.nu/dotfiles
-	function! LightlineMod()
-		return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : ''
-	endfunction
-
-	function! LightlineRO()
-		return &ft !~? 'help\|vimfiler' && &readonly ? 'RO' : ''
-	endfunction
-
-	function! LightlineName()
-		let l:name = expand('%:t')
-		if l:name =~ 'NetrwTreeListing\|NERD_tree'
-			return ''
-		endif
-		return ('' != expand('%:t') ? expand('%:t') : '[none]') 
-	endfunction
-
-	function! LightlineFileformat()
-		return winwidth(0) > 70 ? &fileformat : ''
-	endfunction
-
-	function! LightlineFiletype()
-		return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : '') : ''
-	endfunction
-
-	function! LightlineEncoding()
-		return winwidth(0) > 70 ? (strlen(&fenc) ? &enc : &enc) : ''
-	endfunction
-
-	" Update and show lightline but only if it's visible (e.g., not in Goyo)
-	function! s:MaybeUpdateLightline()
-		if exists('#lightline')
-			call lightline#update()
-		end
-	endfunction
+" A light and configurable statusline/tabline plugin for Vim
+call SourceFile('plugins/lightline.vim')
 
 " }}}
 
@@ -115,7 +54,7 @@ Plug 'godlygeek/tabular'
 
 " Yankstack.vim is a lightweight implementation of the Emacs 'kill ring' for
 " Vim. 
-Plug 'maxbrunsfeld/vim-yankstack'
+" Plug 'maxbrunsfeld/vim-yankstack'
 
 Plug 'vim-scripts/matchit.zip'
 
@@ -132,10 +71,12 @@ Plug 'tpope/vim-surround'
 			let b:surround_{char2nr("c")} = "\\\1command: \1{\r}"
 		endfunction
 
-Plug 'tpope/vim-repeat'
+Plug 'kana/vim-repeat'
+" Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-sleuth'
 
 Plug 'easymotion/vim-easymotion'
 
@@ -144,123 +85,52 @@ Plug 'easymotion/vim-easymotion'
 " SCM (git, hg, etc) plugins ------------------------------------------------{{{
 
 Plug 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
-		nnoremap <silent> <leader>gs :Gstatus<CR>
-		nnoremap <silent> <leader>gd :Gdiff<CR>
-		nnoremap <silent> <leader>gc :Gcommit<CR>
-		nnoremap <silent> <leader>gb :Gblame<CR>
-		nnoremap <silent> <leader>gl :Glog<CR>
-		nnoremap <silent> <leader>gp :Git push<CR>
-		nnoremap <silent> <leader>gw :Gwrite<CR>
-		nnoremap <silent> <leader>gr :Gremove<CR>
-		autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
-		autocmd BufReadPost fugitive://* set bufhidden=delete
+" Git wrapper with many many many features, some of which I will probably
+" never use because I'm terrible at using Git.
+
+	nnoremap <Leader>gs :Gstatus<CR>
+	nnoremap <Leader>gd :Gdiff<CR>
+	nnoremap <Leader>gc :Gcommit<CR>
+	nnoremap <Leader>gb :Gblame<CR>
+	nnoremap <Leader>gl :Glog<CR>
+	nnoremap <Leader>gp :Git push<CR>
+	nnoremap <Leader>gw :Gwrite<CR>
+	nnoremap <Leader>gr :Gremove<CR>
+	autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
+	autocmd BufReadPost fugitive://* set bufhidden=delete
+
+Plug 'tpope/vim-rhubarb', { 'depends' : 'tpope/vim-fugitive' }
+" If fugitive.vim is the Git, rhubarb.vim is the Hub. Here's the full list of
+" features: 
+" - Enables :Gbrowse from fugitive.vim to open GitHub URLs.  
+" - Sets up :Git to use hub if installed rather than git.
+" - In commit messages, GitHub issues, issue URLs, and collaborators can be
+"   omni-completed (<C-X><C-O>, see :help compl-omni). This makes inserting
+"   those Closes #123 remarks slightly easier than copying and pasting from
+"   the browser.
 
 "}}}
 
 " Navigation plugins --------------------------------------------------------{{{
+
+" FZF is a fast fuzzy finder. TODO: Add some means of caching filesystem
+" searches.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
 Plug 'junegunn/fzf.vim'
-let g:fzf_action = {
-      \ 'ctrl-t': 'tab split',
-      \ 'ctrl-i': 'split',
-      \ 'ctrl-v': 'vsplit',
-      \ 'ctrl-a': 'argedit',
-      \ 'ctrl-o': '!runa'
-      \ }
-
-let g:fzf_layout = {"down":'~40%'}
-
-" Jump to existing window if possible
-let g:fzf_buffers_jump = 1
-
-nmap <c-p> [fzf]
-nnoremap [fzf] <nop>
-
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-imap <C-x><C-l> <plug>(fzf-complete-line)
-imap <c-x><c-k> <plug>(fzf-complete-word)
-
-" Files in the current directory
-nnoremap [fzf]p :Files<CR>
-" Files in the current buffer's directory except for scm
-nnoremap [fzf]d :call <SID>fzf('find -L . -type f ! -path "*.hg/*" ! -path "*.git/*"', ':Files %:p:h') <CR>
-" All files in the home directory execpt for scm
-nnoremap [fzf]f :Files ~<CR>
-nnoremap [fzf]a :call <SID>fzf('find -L . -type f ! -path "*.hg/*" ! -path "*.git/*"', ':Files ~') <CR>
-nnoremap [fzf]g :GitFiles<CR>
-" Files in a specific directory
-nnoremap [fzf]<s-f> :Files<Space>
-" Lines in the current buffer
-nnoremap [fzf]l :BLines<CR>
-" Lines in all buffers
-nnoremap [fzf]<S-l> :Lines<CR>
-" Switch between windows
-nnoremap [fzf]w :Windows<CR>
-" Switch between buffers
-nnoremap [fzf]b :Buffers<CR>
-" Search history
-nnoremap [fzf]h :History<CR>
-nnoremap [fzf]; :History:<CR>
-nnoremap [fzf]/ :History/<CR>
-" Snippets, tags and marks
-nnoremap [fzf]s :Snippets<CR>
-nnoremap [fzf]t :Tags<CR>
-nnoremap [fzf]j :BTags<CR>
-nnoremap [fzf]m :Marks<CR>
-
-nnoremap [fzf]: :Commands<CR>
-nnoremap [fzf]<S-c> :Colors<CR>
-nnoremap [fzf]<S-m> :Maps<CR>
-nnoremap [fzf]<S-h> :Helptags<CR>
-command! -nargs=* -complete=file Ae :call s:fzf_ag_expand(<q-args>)
-
-let s:fzf_btags_cmd = 'ctags -f - --sort=no --excmd=number --c++-kinds=+p '
-let s:fzf_btags_options = {'options' : '--reverse -m -d "\t" --with-nth 1,4.. -n 1,-1 --prompt "BTags> "'}
-
-function! s:fzf(fzf_default_cmd, cmd)
-  let oldcmds = $FZF_DEFAULT_COMMAND | try
-    let $FZF_DEFAULT_COMMAND = a:fzf_default_cmd
-    execute a:cmd
-  finally | let $FZF_DEFAULT_COMMAND = oldcmds | endtry
-endfunction
-
-function! s:fzf_ag_raw(cmd)
-  call fzf#vim#ag_raw('--noheading '. a:cmd)
-endfunction
-
-" Some paths are ignored by git or hg; I need to use absolute path to avoid that.
-function! s:fzf_ag_expand(cmd)
-  let matches = matchlist(a:cmd, '\v(.{-})(\S*)\s*$')
-  " readlink, remove trailing linebreak
-  let ecmd = matches[1] . system("readlink -f " . matches[2])[0:-2]
-  call s:fzf_ag_raw(ecmd)
-endfunction
-
+call SourceFile('plugins/fzf.vim')
 
 Plug 'mileszs/ack.vim' 
 		let g:ackprg = 'ag --nogroup --nocolor --column'
-"}}}
-
-" NERDTree ------------------------------------------------------------------{{{
 
 " Always load NERDTree (on-demand loading prevents it from
 " stealing focus from netrw)
 Plug 'scrooloose/nerdtree'
-		map <C-\><C-t> :NERDTreeToggle<CR>
-		nmap <C-\><C-f> :NERDTreeFind<CR>
-		"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-		let NERDTreeShowHidden=1
-		let g:NERDTreeWinSize=45
-		let g:NERDTreeAutoDeleteBuffer=1
+call SourceFile('plugins/nerdtree.vim')
+" NERDTree settings are in after/plugin/nerdtree.vim, but putting the
+" functions there doesn't seem to help either
 
-		"NERDTree File highlighting
-		function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-			exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-			exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-		endfunction
+Plug 'MattesGroeger/vim-bookmarks'
+
 "}}}
 
 " Completion plugins -------------------------------------------------------{{{
@@ -314,9 +184,16 @@ Plug 'eagletmt/neco-ghc', { 'for' : 'haskell' }
 "Plug 'wincent/terminus'
 "Plug 'ashisha/image.vim', { 'disabled' : !has('python') }
 Plug 'mhinz/vim-sayonara'
-		nnoremap <silent> Q :Sayonara<CR>
+" Quit with 'q', and make macros use 'Q'
+nnoremap <silent> q :Sayonara<CR>
+nnoremap Q q
+nnoremap gQ @q
+
+
 Plug 'gorodinskiy/vim-coloresque'
+
 Plug 'chriskempson/base16-vim'
+
 Plug 'mattn/gist-vim', {'depends': 'mattn/webapi-vim'}
 
 " Not sure what this plugin does, so it's being commented out for the time
@@ -344,6 +221,11 @@ Plug 'tpope/vim-markdown', { 'for' : 'markdown' }
 "Plug 'tpope/vim-abolish'
 "Plug 'tpope/vim-haml'
 "Plug 'tpope/vim-ragtag'
+
+Plug 'rhysd/accelerated-jk'
+	nmap j <Plug>(accelerated_jk_gj)
+	nmap k <Plug>(accelerated_jk_gk)
+
 
 "}}}
 

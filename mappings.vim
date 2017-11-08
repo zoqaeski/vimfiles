@@ -14,38 +14,69 @@
 " Key mappings 
 "
 " This section is only used for key mappings that aren't associated with
-" plugin functions.
+" plugin functions. I do need a way to somehow merge the mappings from the
+" plugins to here while avoiding conflicts with existing files.
 "
 """"""""""""""""""""""""""""""""""""""""
 
+" Convenient editing mappings ---------------------------------------------{{{
 " Unset last search pattern
-nnoremap <CR> :noh<CR><CR>
+nnoremap <Space> :nohlsearch<CR><Space>
 " change cursor position in insert mode
 inoremap <C-h> <left>
 inoremap <C-l> <right>
 
-" Tab stuff
-imap <S-Tab> <C-o><<
+" Change current word in a repeatable manner
+nnoremap cn *``cgn
+nnoremap cN *``cgN
 
-" Syntax highlight checking
-nnoremap <leader>e :call <SID>SynStack()<CR>
+" Change selected word in a repeatable manner
+vnoremap <expr> cn "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
+vnoremap <expr> cN "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
+
+" Repeat paragraph
+nnoremap cp yap<S-}>p
+
+" Indent paragraph
+nnoremap <leader>a =ip
+
+" Duplicate lines
+nnoremap yd m`YP``
+vnoremap yd YPgv
+
+" Drag current line/s vertically and auto-indent
+vnoremap mk :m-2<CR>gv=gv
+vnoremap mj :m'>+<CR>gv=gv
+noremap  mk :m-2<CR>
+noremap  mj :m+<CR>
+
+" Source line and selection in vim
+vnoremap <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
+nnoremap <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
+
+" }}}
 
 " Folding -------------------------------------------------------------------{{{
+
 nnoremap zr zr:echo &foldlevel<CR>
 nnoremap zm zm:echo &foldlevel<CR>
 nnoremap zR zR:echo &foldlevel<CR>
 nnoremap zM zM:echo &foldlevel<CR>
+
 " }}}
 
 " Sane regex. Always be very magic ------------------------------------------{{{
+
 " nnoremap / /\v
 " vnoremap / /\v
 " nnoremap ? ?\v
 " vnoremap ? ?\v
 " nnoremap :s/ :s/\v
+
 " }}}
 
 " Command-line mappings -----------------------------------------------------{{{
+
 nnoremap :: q:
 nnoremap // q/
 nnoremap ?? q?
@@ -58,7 +89,7 @@ cnoremap <C-N> <Down>
 " Shortcuts
 cnoremap $h e ~/
 cnoremap $c e <C-\>eCurrentFileDir("e")<CR>
-nnoremap <Leader>cd :cd %:p:h<CR>
+
 " }}}
 
 " Insert-mode mappings ------------------------------------------------------{{{
@@ -74,7 +105,11 @@ nnoremap <Leader>cd :cd %:p:h<CR>
 
 " Visual mode mappings ------------------------------------------------------{{{
 
-" reselect visual block after indent
+" Use tab to indent in visual mode
+vnoremap <Tab> >gv|
+vnoremap <S-Tab> <gv
+
+" Reselect visual block after indent
 vnoremap < <gv
 vnoremap > >gv
 
@@ -96,7 +131,44 @@ nnoremap gV `[v`]
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 "}}}
 
-" Shortcuts for windows -----------------------------------------------------{{{
+" Windows and Buffers -------------------------------------------------------{{{
+
+" Toggle between windows
+nmap <Tab> <C-w>w
+nmap <S-Tab> <C-w>W
+
+" Window-control prefix
+nmap      s [window]
+nnoremap  [window]   <nop>
+
+nnoremap <silent> [window]i  :<C-u>split<CR>
+nnoremap <silent> [window]v  :<C-u>vsplit<CR>
+nnoremap <silent> [window]t  :tabnew<CR>
+nnoremap <silent> [window]o  :<C-u>only<CR>
+nnoremap <silent> [window]b  :ls<CR>
+nnoremap <silent> [window]B  :ls<CR>:e #
+nnoremap <silent> [window]q  :close<CR>
+nnoremap <silent> [window]Q  :bdelete<CR>
+
+" Split current buffer, go to previous window and previous buffer
+nnoremap <silent> [window]sv :split<CR>:wincmd p<CR>:e#<CR>
+nnoremap <silent> [window]sg :vsplit<CR>:wincmd p<CR>:e#<CR>
+
+" Moving between windows and buffers
+nnoremap <silent> [window]h <C-w>h
+nnoremap <silent> [window]j <C-w>j
+nnoremap <silent> [window]k <C-w>k
+nnoremap <silent> [window]l <C-w>l
+
+nnoremap <silent> [window]n :bnext<CR>
+nnoremap <silent> [window]N :bprevious<CR>
+
+nnoremap <silent> [window]H <C-w>H
+nnoremap <silent> [window]J <C-w>J
+nnoremap <silent> [window]K <C-w>K
+nnoremap <silent> [window]L <C-w>L
+
+" Quick moving between windows using ALT-
 if has('nvim')
 	" tnoremap <esc> <C-\><C-n><esc>
 	tnoremap <A-h> <C-\><C-n><C-w>h
@@ -107,36 +179,21 @@ if has('nvim')
 	nnoremap <A-j> <C-w>j
 	nnoremap <A-k> <C-w>k
 	nnoremap <A-l> <C-w>l
-else
-	nnoremap <C-h> <C-w>h
-	nnoremap <C-j> <C-w>j
-	nnoremap <C-k> <C-w>k
-	nnoremap <C-l> <C-w>l
 endif
-"}}}
 
-" Tab mappings --------------------------------------------------------------{{{
-nnoremap <Leader>tn :tabnew<CR>
-nnoremap <Leader>te :tabedit
-nnoremap <Leader>tc :tabclose<CR>
-nnoremap <Leader>tm :tabmove
-nnoremap <Leader>tM :tabmove<CR>
+
+" Tab mappings
+nnoremap <silent> g0 :<C-u>tabfirst<CR>
+nnoremap <silent> g$ :<C-u>tablast<CR>
+nnoremap <silent> gn :<C-u>tabnext<CR>
+nnoremap <silent> gN :<C-u>tabprevious<CR>
 nnoremap <Leader>> :tabmove +1<CR>
 nnoremap <Leader>< :tabmove -1<CR>
-nnoremap <C-Tab> :tabnext<CR>
-nnoremap <C-S-Tab> :tabprevious<CR>
-"}}}
 
-" Buffer mappings -----------------------------------------------------------{{{
-nnoremap <Leader>bc :close<CR>
-nnoremap <Leader>bd :bdelete<CR>
-nnoremap <Leader>bo :only<CR>
-" Switch between buffers quickly
-nnoremap gb :bnext<CR>
-nnoremap gB :bprevious<CR>
-nnoremap <Leader>bl :ls<CR>:e #
-"}}}
+" When pressing <leader>cd switch to the directory of the open buffer
+map <Leader>cd :lcd %:p:h<CR>:pwd<CR>
 
 " }}}
+
 
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :

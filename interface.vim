@@ -10,62 +10,54 @@
 " repo  : https://github.com/zoqaeski/vimfiles
 "
 """"""""""""""""""""""""""""""""""""""""
-"
 " User Interface
+""""""""""""""""""""""""""""""""""""""""
+" 
+" Settings specific to the user interface. These have been moved to a separate
+" file because the colour schemes are dependent on plugins, and wouldn't
+" otherwise be loaded.
 "
 """"""""""""""""""""""""""""""""""""""""
 
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-set termguicolors                                   "enable full colours in terminal
-set showmatch                                       "automatically highlight matching braces/brackets/etc.
-set matchtime=2                                     "tens of a second to show matching parentheses
-set relativenumber number
-set lazyredraw
-set laststatus=2
-set foldenable                                      "enable folds by default
-set foldmethod=syntax                               "fold via syntax of files
-set foldlevelstart=99                               "open all folds by default
-let g:xml_syntax_folding=1                          "enable xml folding
+" User Interface {{{
+" --------------
+set noshowmode                                     " Don't show the mode in the command window
+set termguicolors                                  " Enable full colours in terminal
+set relativenumber number                          " Display relative line numbers
+set lazyredraw                                     " Don't redraw screen whilst executing macros
+set laststatus=2                                   " Always show status line
+set foldenable                                     " Enable folds by default
+set foldmethod=syntax                              " Fold via syntax of files
+set foldlevelstart=99                              " Open all folds by default
+set showtabline=2                                  " Always show tab line
+set nocursorline                                   " STOP UNDERLINING THE CURRENT LINE!!!
+set noshowcmd                                      " Don't show partial command in bottom corner
 
-" Only display the current mode if lightline is active and loaded. 
-" if exists('#lightline')
-" 	set noshowmode
-" else
-" 	set showmode
-" end
-
-" My own preferred colour scheme; I'm looking for a better one
-" let g:solarized_contrast="high"    "default value is normal
-
-" Change background
-" set background=dark
-" let base16colorspace=256
-" colorscheme base16-3024
-
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
-
-" This breaks things!
-"if has('gui_running') 
-"	source ~/.gvimrc
-"endif
+" Allow lots of tab pages -- 100 should be plenty
+set tabpagemax=100
+" Disable menu activation behaviour
+set winaltkeys=no
 
 if has('cmdline_info')
 	" Show the ruler
 	set ruler
 	" a ruler on steroids
-	set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
+	" set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
 	" Show partial commands in status line and selected characters/lines in visual mode
 	set showcmd
 endif
 
+" Set colour scheme from Base16
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
-" Status Line ---------------------------------------------------------------{{{
+" }}}
 
-" always show a status line
+" Status Line {{{
+" -----------
+" Always show a status line
 set laststatus=2
 
 " A SUPER STATUS LINE!!
@@ -85,14 +77,6 @@ set statusline+=]                           " End group
 set statusline+=\ %l:%c%V                   " Line, column, virtual column
 set statusline+=\ %P                        " Percentage
 "}}}
-
-set showtabline=2 " Always show tab line
-set nocursorline " STOP UNDERLINING THE CURRENT LINE!!!
-
-" Allow lots of tab pages -- 100 should be plenty
-set tabpagemax=100
-" Disable menu activation behaviour
-set winaltkeys=no
 
 
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :

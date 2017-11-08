@@ -10,82 +10,120 @@
 " repo  : https://github.com/zoqaeski/vimfiles
 "
 """"""""""""""""""""""""""""""""""""""""
-"
 " General
+""""""""""""""""""""""""""""""""""""""""
 "
-" General configuration options I haven't sorted anywhere else yet.
+" General configuration options for most editor behaviours.
 "
 """"""""""""""""""""""""""""""""""""""""
 
-set timeoutlen=1500                              " mapping timeout
-set ttimeoutlen=-1                               " keycode timeout
-
-set mouse=a                                      " enable mouse
-set mousehide                                    " hide when characters are typed
-set history=1000                                 " number of command lines to remember
-set viewoptions=folds,options,cursor,unix,slash  " unix/windows compatibility
-"set encoding=utf-8                              " set encoding for text
-set hidden                                       " allow buffer switching without saving
-set autoread                                     " auto reload if file saved externally
-set fileformats+=unix,dos,mac                    " add mac to auto-detection of file format line endings
-set nrformats=octal,hex,alpha                    
-set showcmd                                      
+" Behaviour {{{
+" ---------
+set nowrap                                         " No wrap by default
+set linebreak                                      " Break long lines at 'breakat'
+set breakat=\ \	;:,!?                              " Long lines break chars
+set nostartofline                                  " Cursor in same column for few commands
+set whichwrap+=h,l,<,>,[,],~                       " Move to following line on certain keys
+set listchars=tab:>-,trail:·,eol:$                               
+let &showbreak='>'                                              
+set splitbelow splitright                          " Splits open bottom right
+set switchbuf=useopen,usetab                       " Jump to the first open window in any tab
+set switchbuf+=vsplit                              " Switch buffer behavior to vsplit
+set backspace=indent,eol,start                     " Intuitive backspacing in insert mode
+set diffopt=filler,iwhite                          " Diff mode: show fillers, ignore white
 set tags=.git/tags,tags                          
-set showfulltag                                  
-set modeline                                     
-set modelines=5                                  
-set magic                                        
-set switchbuf=usetab                             
+set showfulltag                                    " Show tag and tidy search in completion
+set complete=.                                     " No wins, buffs, tags, include scanning
+set completeopt=menuone                            " Show menu even for one item
+set completeopt+=noselect                          " Do not select a match in the menu
+set virtualedit=block                              " Position cursor anywhere in visual block
+set report=0                                       " Always report changes for ':' commands
+set magic                                          " Always use magic regex
+set modeline                                       " Use modelines for file-specific settings
+set modelines=5                                    " Look for mode lines in top- and bottommost five lines
+set mouse=a                                        " Enable mouse in all places
+set mousehide                                      " hide when characters are typed
+set hidden                                         " Allow buffer switching without saving
+set autoread                                       " Auto reload if file saved externally
+set fileformats+=unix,dos,mac                      " Add mac to auto-detection of file format line endings
+set nrformats=octal,hex,alpha                      " Consider octal, hexadecimal and alphanumeric as numbers
+" Disable sounds
+set noerrorbells                                  
+set novisualbell                                   
+" }}}
 
-" whitespace                                     
-set shiftround                                   
-set backspace=indent,eol,start                   " allow backspacing everything in insert mode
-set autoindent                                   " automatically indent to match adjacent lines
-set smartindent                                  
-set noexpandtab                                  " spaces instead of tabs
-set smarttab                                     " use shiftwidth to enter tabs
-set tabstop=4                                    " number of spaces per tab for display
-set softtabstop=4                                " number of spaces per tab in insert mode
-set shiftwidth=4                                 " number of spaces when indenting
-set nolist                                       " highlight whitespace
-set listchars=tab:>-,trail:·,eol:$               
-set shiftround                                   
-set linebreak                                    
-let &showbreak='↪ '                              
-set nowrap                                       
-set textwidth=0                                  
+" Tabs, Indentation, and Whitespace {{{
+" ---------------------------------
+set textwidth=80                                   " Text width maximum chars before wrapping
+set tabstop=4                                      " The number of spaces a tab is
+set softtabstop=4                                  " While performing editing operations
+set shiftwidth=4                                   " Number of spaces to use in auto(indent)
+set smarttab                                       " Tab insert blanks according to 'shiftwidth'
+set autoindent                                     " Use same indenting on new lines
+set smartindent                                    " Smart autoindenting on new lines
+set noexpandtab                                    " Don't expand tabs to spaces.
+set shiftround                                     " Round indent to multiple of 'shiftwidth'
+set nolist                                         " Highlight whitespace
 
-set scrolloff=5                                  " always show content after scroll
-set scrolljump=5                                 " minimum number of lines to scroll
-set sidescrolloff=10                             " minimum number of characters to show left-right
-set display+=lastline                            
-set wildmenu                                     " show list for autocomplete
-set wildmode=list:longest,full
-set wildignorecase
-set wildignore+=.hg,.git,.svn                    " Version control
-set wildignore+=*.aux,*.out                      " LaTeX intermediate files
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.spl                            " compiled spelling word lists
-" set wildignore+=*.sw?                            " Vim swap files - no
-" longer ignoring these as it could be useful for recovery
-set wildignore+=.DS_Store                        " OS X
-set wildignore+=*.luac                           " Lua byte code
-set wildignore+=*.pyc                            " Python byte code
+" }}}
 
-set splitbelow
-set splitright
+" Timing {{{
+" ------
+set timeout ttimeout
+set timeoutlen=750                                 " Time out on mappings
+set updatetime=1000                                " Idle time to write swap and trigger CursorHold
+set ttimeoutlen=-1                                 " Keycode timeout
 
-" disable sounds
-set noerrorbells
-set novisualbell
+" }}}
 
-" searching
-set hlsearch                                                     " highlight searches
-set incsearch                                                    " incremental searching
-set ignorecase                                                   " ignore case for searching
-set smartcase                                                    " do case-sensitive if there's a capital letter
+" Searching {{{
+" ---------
+set hlsearch                                       " Highlight searches
+set incsearch                                      " Incremental searching
+set ignorecase                                     " Ignore case for searching
+set smartcase                                      " Do case-sensitive if there's a capital letter
+set wrapscan                                       " Searches wrap around the end of files
+set showmatch                                      " Jump to matching bracket
+set matchpairs+=<:>                                " Add HTML brackets to pair matching
+set matchtime=1                                    " Tenths of a second to show the matching paren
+set cpoptions-=m                                   " showmatch will wait 0.5s or until a char is typed
+"}}}
 
+" Wildmenu {{{
+" --------
+if has('wildmenu')
+	set wildmenu                                     " show list for autocomplete
+	set wildmode=list:longest,full
+	set wildoptions=tagfile
+	set wildignorecase
+	set wildignore+=.hg,.git,.svn                    " Version control
+	set wildignore+=*.aux,*.out                      " LaTeX intermediate files
+	set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+	set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+	set wildignore+=*.spl                            " compiled spelling word lists
+	" set wildignore+=*.sw?                          " Don't ignore Vim swap files
+	set wildignore+=.DS_Store                        " OS X
+	set wildignore+=*.luac                           " Lua byte code
+	set wildignore+=*.pyc                            " Python byte code
+endif
+" }}}
+
+" Session Saving {{{
+" --------------
+set sessionoptions-=blank
+set sessionoptions-=options
+set sessionoptions-=globals
+set sessionoptions-=help
+set sessionoptions+=tabpages
+
+" What to save for views
+set viewoptions-=options
+set viewoptions-=unix,slash
+" }}}
+
+" History Saving {{{
+" --------------
+set history=1000                                   " number of command lines to remember
 " Remember things between sessions
 " '20  - remember marks for 20 previous files
 " \"50 - save 50 lines for each register
@@ -95,19 +133,18 @@ set viminfo='20,\"50,:50,/50
 if exists('+shada')
 	set shada='100,f1,<50,:100,s100
 endif
-
-if executable('ag')
-	set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
-	set grepformat=%f:%l:%c:%m
-elseif executable('ack')
-	set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
-	set grepformat=%f:%l:%c:%m
-endif
 " }}}
+
+" Vim Directories {{{
+" ---------------
+set swapfile
+set directory=$VARPATH/swap//
+set viewdir=$VARPATH/view/
+set nospell spellfile=$CONFIGPATH/spell/en.utf-8.add
 
 " persistent undo
 if exists('+undofile')
-	exec "set undodir=".g:vimLocal."/undo/"
+	set undodir=$VARPATH/undo//
 	set noundofile
 	set undolevels=1000
 	set undoreload=10000
@@ -116,7 +153,7 @@ endif
 
 " Turn Backup off: reduces clutter
 if exists('+backup')
-	exec "set backupdir=".g:vimLocal."/backup/"
+	set backupdir=$VARPATH/backup/
 	set nobackup
 	set writebackup
 	set backupskip+=/tmp
@@ -130,16 +167,16 @@ if exists('+backup')
 	au BufWritePre * let &bex = '-' . strftime("%Y%m%d-%H%M%S") . '.vimbackup'
 endif
 
-" Swap file
-set swapfile
-exec "set dir=".g:vimLocal."/swap/"
-
 " Write swap file to disk after every 50 characters
 set updatecount=50
+" }}}
 
-call EnsureExists(g:vimLocal)
-call EnsureExists(&undodir)
-call EnsureExists(&backupdir)
-call EnsureExists(&directory)
+if executable('ag')
+	set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
+	set grepformat=%f:%l:%c:%m
+elseif executable('ack')
+	set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
+	set grepformat=%f:%l:%c:%m
+endif
 
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :
