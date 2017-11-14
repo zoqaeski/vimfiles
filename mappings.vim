@@ -179,6 +179,11 @@ if has('nvim')
 	nnoremap <A-j> <C-w>j
 	nnoremap <A-k> <C-w>k
 	nnoremap <A-l> <C-w>l
+	" Terminal split openings
+	nmap <C-t> [terminal]
+	nmap [terminal] <nop>
+	nnoremap [terminal]i :new term://zsh<CR>
+	nnoremap [terminal]v :vnew term://zsh<CR>
 endif
 
 
