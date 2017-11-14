@@ -125,7 +125,8 @@ Plug 'mileszs/ack.vim'
 " Always load NERDTree (on-demand loading prevents it from
 " stealing focus from netrw)
 Plug 'scrooloose/nerdtree'
-call SourceFile('plugins/nerdtree.vim')
+autocmd VimEnter * call SourceFile('plugins/nerdtree.vim')
+
 " NERDTree settings are in after/plugin/nerdtree.vim, but putting the
 " functions there doesn't seem to help either
 
@@ -151,6 +152,12 @@ Plug 'lervag/vimtex'
 		let g:tex_flavor = 'latex'
     let g:vimtex_fold_enabled = 1
 		let g:vimtex_compiler_method = 'arara'
+
+		let g:vimtex_compiler_arara = {
+					\ 'backend' : 'nvim',
+					\ 'background' : 1,
+					\ 'options' : ['--log'],
+					\}
 
 		" Not sure how to get this to work
 		" if !exists('g:deoplete#omni#input_patterns')
