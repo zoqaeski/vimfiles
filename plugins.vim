@@ -125,7 +125,8 @@ Plug 'mileszs/ack.vim'
 " Always load NERDTree (on-demand loading prevents it from
 " stealing focus from netrw)
 Plug 'scrooloose/nerdtree'
-autocmd VimEnter * call SourceFile('plugins/nerdtree.vim')
+call SourceFile('plugins/NERDTree.vim')
+" autocmd VimEnter * call SourceFile('extra/nerdtree.vim')
 
 " NERDTree settings are in after/plugin/nerdtree.vim, but putting the
 " functions there doesn't seem to help either
