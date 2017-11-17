@@ -125,11 +125,10 @@ Plug 'mileszs/ack.vim'
 " Always load NERDTree (on-demand loading prevents it from
 " stealing focus from netrw)
 Plug 'scrooloose/nerdtree'
+" NERDTree API settings are in after/plugin/NERDTree.vim, other settings are in
+" plugins/NERDTree.vim
 call SourceFile('plugins/NERDTree.vim')
-" autocmd VimEnter * call SourceFile('extra/nerdtree.vim')
 
-" NERDTree settings are in after/plugin/nerdtree.vim, but putting the
-" functions there doesn't seem to help either
 
 Plug 'MattesGroeger/vim-bookmarks'
 
@@ -153,6 +152,7 @@ Plug 'lervag/vimtex'
 		let g:tex_flavor = 'latex'
     let g:vimtex_fold_enabled = 1
 		let g:vimtex_compiler_method = 'arara'
+		let g:vimtex_quickfix_enabled = 1
 
 		let g:vimtex_compiler_arara = {
 					\ 'backend' : 'nvim',
