@@ -154,6 +154,6 @@ call SourceFile('general.vim')
 call SourceFile('plugins.vim')    " This sources settings specific to plugins as well
 call SourceFile('interface.vim')
 call SourceFile('mappings.vim')
-
+call SourceFile('filetypes.vim') " This should be in ftplugin, but I can't make it work
 
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :

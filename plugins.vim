@@ -129,8 +129,8 @@ Plug 'scrooloose/nerdtree'
 " plugins/NERDTree.vim
 call SourceFile('plugins/NERDTree.vim')
 
-
 Plug 'MattesGroeger/vim-bookmarks'
+call SourceFile('plugins/vim-bookmarks.vim')
 
 "}}}
 

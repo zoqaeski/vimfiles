@@ -1,16 +1,19 @@
-" Configuration for vim-latex-suite
+" Configuration for TeX files
 
-" No quote conversion. LaTeX does this for me.
-let g:Tex_SmartKeyQuote = 0
-
-" Compiler configuration
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_CompileRule_pdf = 'latexmk -quiet $*'
-let g:Tex_CompileRule_xelatex = 'latexmk -quiet $*'
-set iskeyword+=:
+setlocal iskeyword+=:
 
 " Formatting and indent
-set expandtab
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
+setlocal expandtab
+setlocal tabstop=2
+setlocal softtabstop=2
+setlocal shiftwidth=2
+
+
+" Disable error highlighting
+" let g:tex_no_error=1
+" let b:tex_stylish=1
+" let g:tex_stylish=1
+" let g:tex_fast="bcmprsSvV"
+"
+" " Automatic folding of TeX sections
+" let b:tex_fold_enabled=1
