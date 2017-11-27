@@ -71,11 +71,11 @@ endfunction "}}}
 
 
 " Creates a temporary working buffer
-" function! ScratchEdit(cmd, options) "{{{
-" 	exe a:cmd tempname()
-" 	setl buftype=nofile bufhidden=wipe nobuflisted
-" 	if !empty(a:options) | exe 'setl' a:options | endif
-" endfunction "}}}
+function! ScratchEdit(cmd, options) "{{{
+	exe a:cmd tempname()
+	setl buftype=nofile bufhidden=wipe nobuflisted
+	if !empty(a:options) | exe 'setl' a:options | endif
+endfunction "}}}
 
 " Identifies the syntax colouring item under the cursor
 function! <SID>SynStack()
@@ -109,22 +109,13 @@ endfunc
 " Diff original file
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 command! Clear norm gg"_dG
+
+" Scratch buffers
 command! -bar -nargs=* Sedit call ScratchEdit('edit', <q-args>)
 command! -bar -nargs=* Ssplit call ScratchEdit('split', <q-args>)
 command! -bar -nargs=* Svsplit call ScratchEdit('vsplit', <q-args>)
 command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
 
-" autocmd {{{
-" go back to previous position of cursor if any
-autocmd BufReadPost *
-			\ if line("'\"") > 0 && line("'\"") <= line("$") |
-			\  exe 'normal! g`"zvzz' |
-			\ endif
-
-"autocmd FileType js,scss,css autocmd BufWritePre <buffer> call StripTrailingWhitespace()
-autocmd FileType css,scss setlocal foldmethod=marker foldmarker={,}
-autocmd FileType css,scss nnoremap <silent> <leader>S vi{:sort<CR>
-"}}}
 "}}}
 
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :

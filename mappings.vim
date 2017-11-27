@@ -134,8 +134,9 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 " Windows and Buffers -------------------------------------------------------{{{
 
 " Toggle between windows
-nmap <Tab> <C-w>w
-nmap <S-Tab> <C-w>W
+" This breaks tab key for some reason :/
+" nmap <Tab> <C-w>w
+" nmap <S-Tab> <C-w>W
 
 " Window-control prefix
 nmap      s [window]
@@ -159,6 +160,8 @@ nnoremap <silent> [window]h <C-w>h
 nnoremap <silent> [window]j <C-w>j
 nnoremap <silent> [window]k <C-w>k
 nnoremap <silent> [window]l <C-w>l
+nnoremap <silent> [window]s  <C-w>w
+nnoremap <silent> [window]S  <C-w>W
 
 nnoremap <silent> [window]n :bnext<CR>
 nnoremap <silent> [window]N :bprevious<CR>

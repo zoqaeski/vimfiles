@@ -150,10 +150,11 @@ let g:loaded_2html_plugin = 1
 " }}}
 
 " All the things
-call SourceFile('general.vim')
+call SourceFile('general.vim')    " General settings
+call SourceFile('functions.vim')  " Useful functions and macros that don't belong anywhere else
 call SourceFile('plugins.vim')    " This sources settings specific to plugins as well
-call SourceFile('interface.vim')
-call SourceFile('mappings.vim')
-call SourceFile('filetypes.vim') " This should be in ftplugin, but I can't make it work
+call SourceFile('interface.vim')  " Interface settings
+call SourceFile('mappings.vim')   " Key mappings
+call SourceFile('filetype.vim')  " This should be in ftplugin, but I can't make it work
 
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :

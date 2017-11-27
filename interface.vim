@@ -38,6 +38,11 @@ set tabpagemax=100
 " Disable menu activation behaviour
 set winaltkeys=no
 
+" Wrapping and edge characters
+set fillchars=vert:│,fold:─
+set listchars=tab:\▏\ ,extends:⟫,precedes:⟪,nbsp:␣,trail:·,eol:$
+let &showbreak='>'                                              
+
 if has('cmdline_info')
 	" Show the ruler
 	set ruler

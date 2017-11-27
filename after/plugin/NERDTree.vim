@@ -40,6 +40,55 @@ function! s:_set_root(dir)
 endfunction
 " }}}
 
+" Plugin: Smart h/l navigation {{{
+" @see https://github.com/jballanc/nerdtree-space-keys
+" ---
+call NERDTreeAddKeyMap({
+	\ 'key':           'l',
+	\ 'callback':      s:SNR.'descendTree',
+	\ 'quickhelpText': 'open tree and go to first child',
+	\ 'scope':         'DirNode' })
+call NERDTreeAddKeyMap({
+	\ 'key':           'h',
+	\ 'callback':      s:SNR.'closeOrAscendTree',
+	\ 'quickhelpText': 'close dir or move to parent dir',
+	\ 'scope':         'DirNode' })
+call NERDTreeAddKeyMap({
+	\ 'key':           'h',
+	\ 'callback':      s:SNR.'ascendTree',
+	\ 'quickhelpText': 'move to parent dir',
+	\ 'scope':         'FileNode' })
+
+function! s:descendTree(dirnode)
+	call a:dirnode.open()
+	call b:NERDTree.render()
+	if a:dirnode.getChildCount() > 0
+		let chld = a:dirnode.getChildByIndex(0, 1)
+		call chld.putCursorHere(0, 0)
+	end
+endfunction
+
+function! s:closeOrAscendTree(dirnode)
+	if a:dirnode.isOpen
+		call a:dirnode.close()
+		call b:NERDTree.render()
+	else
+		call s:ascendTree(a:dirnode)
+	endif
+endfunction
+
+function! s:ascendTree(node)
+	let parent = a:node.parent
+	if parent != {}
+		call parent.putCursorHere(0, 0)
+		if parent.isOpen
+			call parent.close()
+			call b:NERDTree.render()
+		end
+	end
+endfunction
+" }}}
+
 " Plugin: Yank path {{{
 " -----------------
 call NERDTreeAddKeyMap({

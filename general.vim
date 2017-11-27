@@ -24,8 +24,6 @@ set linebreak                                      " Break long lines at 'breaka
 set breakat=\ \	;:,!?                              " Long lines break chars
 set nostartofline                                  " Cursor in same column for few commands
 set whichwrap+=h,l,<,>,[,],~                       " Move to following line on certain keys
-set listchars=tab:>-,trail:·,eol:$                               
-let &showbreak='>'                                              
 set splitbelow splitright                          " Splits open bottom right
 set switchbuf=useopen,usetab                       " Jump to the first open window in any tab
 set switchbuf+=vsplit                              " Switch buffer behavior to vsplit
@@ -70,7 +68,7 @@ set nolist                                         " Highlight whitespace
 " Timing {{{
 " ------
 set timeout ttimeout
-set timeoutlen=750                                 " Time out on mappings
+set timeoutlen=500                                " Time out on mappings
 set updatetime=1000                                " Idle time to write swap and trigger CursorHold
 set ttimeoutlen=-1                                 " Keycode timeout
 

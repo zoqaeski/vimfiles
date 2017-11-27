@@ -49,7 +49,6 @@ call SourceFile('plugins/lightline.vim')
 
 "Plug 'terryma/vim-expand-region'
 "Plug 'terryma/vim-multiple-cursors'
-Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular' 
 
 " Yankstack.vim is a lightweight implementation of the Emacs 'kill ring' for
@@ -77,6 +76,9 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-commentary'
+
+Plug 'junegunn/vim-peekaboo'
 
 Plug 'easymotion/vim-easymotion'
 
@@ -108,6 +110,7 @@ Plug 'tpope/vim-rhubarb', { 'depends' : 'tpope/vim-fugitive' }
 "   omni-completed (<C-X><C-O>, see :help compl-omni). This makes inserting
 "   those Closes #123 remarks slightly easier than copying and pasting from
 "   the browser.
+Plug 'tpope/vim-git'
 
 "}}}
 
@@ -187,7 +190,15 @@ Plug 'eagletmt/neco-ghc', { 'for' : 'haskell' }
 
 "}}}
 
+" Lua {{{
+" ---
+Plug 'tbastos/vim-lua', { 'for': 'lua' }
+
+" }}}
+
 " Other plugins -------------------------------------------------------------{{{
+
+Plug 'plasticboy/vim-markdown', { 'for' : 'markdown' }
 
 "Plug 'wincent/terminus'
 "Plug 'ashisha/image.vim', { 'disabled' : !has('python') }
@@ -218,7 +229,6 @@ Plug 'xolox/vim-session', {'depends': 'xolox/vim-misc'}
 " above.
 Plug 'xolox/vim-misc'
 
-Plug 'tpope/vim-markdown', { 'for' : 'markdown' }
 
 "Plug 'scrooloose/syntastic' 
 "let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [], 'passive_filetypes': [] }
