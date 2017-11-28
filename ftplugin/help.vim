@@ -33,10 +33,10 @@ nmap <buffer> o /'[a-z]\{2,\}'<CR>
 nmap <buffer> O ?'[a-z]\{2,\}'<CR>
 
 " Skip to next subject link
-nmap <buffer><nowait> s /\|\S\+\|<CR>l
+nmap <buffer><nowait> gs /\|\S\+\|<CR>l
 
 " Skip to previous subject link
-nmap <buffer> S h?\|\S\+\|<CR>l
+nmap <buffer> gS h?\|\S\+\|<CR>l
 
 " Skip to next tag (subject anchor)
 nmap <buffer> t /\*\S\+\*<CR>l
