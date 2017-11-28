@@ -32,27 +32,32 @@ if ! isdirectory(expand($VARPATH))
 endif
 
 " This file sourcing function was adapted from rafi/vim-config
-function! SourceFile(path, ...) abort
-	" let use_global = get(a:000, 0, ! has('vim_starting'))
+" It sources a file, copying the file into a temporary buffer if Vim is not
+" currently starting up.
+function! SourceFile(path, ...) abort " {{{
+	let use_global = get(a:000, 0, ! has('vim_starting'))
 	let abspath = resolve(expand($CONFIGPATH.'/'.a:path))
-	execute 'source' fnameescape(abspath)
-	return
+	if ! use_global
+		execute 'source' fnameescape(abspath)
+		return
+	endif
 
-	" let content = map(readfile(abspath),
-	" 	\ "substitute(v:val, '^\\W*\\zsset\\ze\\W', 'setglobal', '')")
-	" let tempfile = tempname()
-	" try
-	" 	echo 'Trying to load:'.tempfile
-	" 	call writefile(content, tempfile)
-	" 	execute printf('source %s', fnameescape(tempfile))
-	" finally
-	" 	if filereadable(tempfile)
-	" 		call delete(tempfile)
-	" 	endif
-	" endtry
-endfunction
+	let content = map(readfile(abspath),
+		\ "substitute(v:val, '^\\W*\\zsset\\ze\\W', 'setglobal', '')")
+	let tempfile = tempname()
+	try
+		echo 'Trying to load:'.tempfile
+		call writefile(content, tempfile)
+		execute printf('source %s', fnameescape(tempfile))
+	finally
+		if filereadable(tempfile)
+			call delete(tempfile)
+		endif
+	endtry
+endfunction " }}}
 
-" Setup ====================================================================={{{
+" Setup {{{
+" -----
 
 if has('vim_starting')
 	" Reset ALL THE THINGS!!!!
@@ -121,7 +126,7 @@ call s:setupMappingHelper("<C-n>")
 call s:setupMappingHelper("<C-p>")
 call s:setupMappingHelper("'")
 call s:setupMappingHelper("<C-l>")
-"}}}
+" }}}
 
 " Reset the colorscheme now to avoid errors when reloading vimrc.
 unlet! g:colors_name

@@ -39,9 +39,9 @@ set tabpagemax=100
 set winaltkeys=no
 
 " Wrapping and edge characters
-set fillchars=vert:│,fold:─
-set listchars=tab:\▏\ ,extends:⟫,precedes:⟪,nbsp:␣,trail:·,eol:$
-let &showbreak='>'                                              
+" set fillchars=vert:│,fold:─
+set listchars=tab:››,extends:…,precedes:«,nbsp:␣,trail:·,eol:$
+let &showbreak='↳'
 
 if has('cmdline_info')
 	" Show the ruler

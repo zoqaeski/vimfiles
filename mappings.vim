@@ -19,9 +19,10 @@
 "
 """"""""""""""""""""""""""""""""""""""""
 
-" Convenient editing mappings ---------------------------------------------{{{
+" Convenient editing mappings {{{
+" ---------------------------
 " Unset last search pattern
-nnoremap <Space> :nohlsearch<CR><Space>
+" nnoremap <Space> :nohlsearch<CR><Space>
 " change cursor position in insert mode
 inoremap <C-h> <left>
 inoremap <C-l> <right>
@@ -56,7 +57,8 @@ nnoremap <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
 
 " }}}
 
-" Folding -------------------------------------------------------------------{{{
+" Folding {{{
+" -------
 
 nnoremap zr zr:echo &foldlevel<CR>
 nnoremap zm zm:echo &foldlevel<CR>
@@ -65,7 +67,8 @@ nnoremap zM zM:echo &foldlevel<CR>
 
 " }}}
 
-" Sane regex. Always be very magic ------------------------------------------{{{
+" Sane regex. Always be very magic {{{
+" --------------------------------
 
 " nnoremap / /\v
 " vnoremap / /\v
@@ -75,7 +78,8 @@ nnoremap zM zM:echo &foldlevel<CR>
 
 " }}}
 
-" Command-line mappings -----------------------------------------------------{{{
+" Command-line mappings {{{
+" ---------------------
 
 nnoremap :: q:
 nnoremap // q/
@@ -92,7 +96,8 @@ cnoremap $c e <C-\>eCurrentFileDir("e")<CR>
 
 " }}}
 
-" Insert-mode mappings ------------------------------------------------------{{{
+" Insert-mode mappings {{{
+" --------------------
 
 " Emacs mode in Insert? HERESY!!!
 " inoremap <C-A> <Home>
@@ -103,7 +108,8 @@ cnoremap $c e <C-\>eCurrentFileDir("e")<CR>
 
 " }}}
 
-" Visual mode mappings ------------------------------------------------------{{{
+" Visual mode mappings {{{
+" --------------------
 
 " Use tab to indent in visual mode
 vnoremap <Tab> >gv|
@@ -117,10 +123,6 @@ vnoremap > >gv
 vnoremap <silent> * :call VisualSearch('f')<CR>
 vnoremap <silent> # :call VisualSearch('b')<CR>
 
-" When you press gv you vimgrep after the selected text
-vnoremap <silent> gv :call VisualSearch('gv')<CR>
-map <Leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
-
 " Exit Visual Mode with q
 vnoremap <silent> q <ESC>
 
@@ -131,7 +133,8 @@ nnoremap gV `[v`]
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 "}}}
 
-" Windows and Buffers -------------------------------------------------------{{{
+" Windows and Buffers {{{
+" -------------------
 
 " Toggle between windows
 " This breaks tab key for some reason :/
@@ -160,8 +163,8 @@ nnoremap <silent> [window]h <C-w>h
 nnoremap <silent> [window]j <C-w>j
 nnoremap <silent> [window]k <C-w>k
 nnoremap <silent> [window]l <C-w>l
-nnoremap <silent> [window]s  <C-w>w
-nnoremap <silent> [window]S  <C-w>W
+nnoremap <silent><nowait> [window]s  <C-w>w
+nnoremap <silent><nowait> [window]S  <C-w>W
 
 nnoremap <silent> [window]n :bnext<CR>
 nnoremap <silent> [window]N :bprevious<CR>
@@ -183,7 +186,7 @@ if has('nvim')
 	nnoremap <A-k> <C-w>k
 	nnoremap <A-l> <C-w>l
 	" Terminal split openings
-	nmap <C-t> [terminal]
+	nmap <A-t> [terminal]
 	nmap [terminal] <nop>
 	nnoremap [terminal]i :new term://zsh<CR>
 	nnoremap [terminal]v :vnew term://zsh<CR>

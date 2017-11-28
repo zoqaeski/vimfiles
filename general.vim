@@ -68,7 +68,7 @@ set nolist                                         " Highlight whitespace
 " Timing {{{
 " ------
 set timeout ttimeout
-set timeoutlen=500                                " Time out on mappings
+set timeoutlen=1000                                " Time out on mappings
 set updatetime=1000                                " Idle time to write swap and trigger CursorHold
 set ttimeoutlen=-1                                 " Keycode timeout
 
@@ -85,7 +85,7 @@ set showmatch                                      " Jump to matching bracket
 set matchpairs+=<:>                                " Add HTML brackets to pair matching
 set matchtime=1                                    " Tenths of a second to show the matching paren
 set cpoptions-=m                                   " showmatch will wait 0.5s or until a char is typed
-"}}}
+" }}}
 
 " Wildmenu {{{
 " --------

@@ -18,30 +18,25 @@
 " 
 """"""""""""""""""""""""""""""""""""""""
 
-" Functions ================================================================={{{
+" Functions {{{
+" ---------
 
-function! EnsureExists(path)
+function! EnsureExists(path) " {{{
 	if !isdirectory(expand(a:path))
 		call mkdir(expand(a:path))
 	endif
-endfunction
+endfunction " }}}
 
-function! Cwd()
+function! Cwd() " {{{
 	let cwd = getcwd()
 	return "e " . cwd 
-endfunction
+endfunction " }}}
 
-function! CurrentFileDir(cmd)
+function! CurrentFileDir(cmd) " {{{
 	return a:cmd . " " . expand("%:p:h") . "/"
-endfunction
+endfunction " }}}
 
-function! CmdLine(str)
-	exe "menu Foo.Bar :" . a:str
-	emenu Foo.Bar
-	unmenu Foo
-endfunction
-
-function! VisualSearch(direction) range "{{{		
+function! VisualSearch(direction) range " {{{		
 	let l:saved_reg = @"
 	execute "normal! vgvy"
 
@@ -50,61 +45,31 @@ function! VisualSearch(direction) range "{{{
 
 	if a:direction == 'b'
 		execute "normal ?" . l:pattern . "^M"
-	elseif a:direction == 'gv'
-		call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
 	elseif a:direction == 'f'
 		execute "normal /" . l:pattern . "^M"
 	endif
 
 	let @/ = l:pattern
 	let @" = l:saved_reg
-endfunction "}}}
-
-" Buffer closing
-" function! s:BufferEmpty() " {{{
-" 	let l:current = bufnr('%')
-" 	if ! getbufvar(l:current, '&modified')
-" 		enew
-" 		silent! execute 'bdelete '.l:current
-" 	endif
-" endfunction " }}}
-
+endfunction " }}}
 
 " Creates a temporary working buffer
-function! ScratchEdit(cmd, options) "{{{
+function! ScratchEdit(cmd, options) " {{{
 	exe a:cmd tempname()
 	setl buftype=nofile bufhidden=wipe nobuflisted
 	if !empty(a:options) | exe 'setl' a:options | endif
-endfunction "}}}
+endfunction " }}}
 
 " Identifies the syntax colouring item under the cursor
-function! <SID>SynStack()
+function! <SID>SynStack() " {{{
 	if !exists("*synstack")
 		return
 	endif
 	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
+endfunc " }}}
 
-"function! ToggleVExplorer() "{{{
-"	if exists("t:expl_buf_num")
-"		let expl_win_num = bufwinnr(t:expl_buf_num)
-"		if expl_win_num != -1
-"			let cur_win_nr = winnr()
-"			exec expl_win_num . 'wincmd w'
-"			close
-"			exec cur_win_nr . 'wincmd w'
-"			unlet t:expl_buf_num
-"		else
-"			unlet t:expl_buf_num
-"		endif
-"	else
-"		exec '1wincmd w'
-"		Vexplore
-"		let t:expl_buf_num = bufnr("%")
-"	endif
-"endfunction "}}}
-" }}}
-" Useful Commands ==========================================================={{{
+" Useful Commands {{{
+" ---------------
 
 " Diff original file
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
@@ -116,6 +81,6 @@ command! -bar -nargs=* Ssplit call ScratchEdit('split', <q-args>)
 command! -bar -nargs=* Svsplit call ScratchEdit('vsplit', <q-args>)
 command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
 
-"}}}
+" }}}
 
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :
