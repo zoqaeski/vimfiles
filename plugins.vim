@@ -16,13 +16,15 @@
 " This section contains all plugins and their associated sections. 
 "
 " Plugins that contain a lot of settings (for the moment NERDTree, FZF, and
-" Lightline) source their own configurations
+" Lightline and vim-bookmarks) source their own configurations by putting it in
+" plugin/.
 "
 """"""""""""""""""""""""""""""""""""""""
 
 call plug#begin()
 
-" Core Plugins --------------------------------------------------------------{{{
+" Core Plugins {{{
+" ------------
 
 Plug 'Shougo/vimproc', {
 			\ 'do' : 'make'
@@ -33,19 +35,20 @@ Plug 'Shougo/vimproc', {
 " Plug 'sheerun/vim-polyglot'
   " let g:polyglot_disabled = ['latex']
 
-"}}}
+" }}}
 
-" Status line plugins -------------------------------------------------------{{{
+" Status line plugins {{{
+" -------------------
 " Supposedly better status lines. If nothing else, they're certainly pretty.
 " Need to set noshowmode to hide it as the statusline updates
 
 Plug 'itchyny/lightline.vim'
 " A light and configurable statusline/tabline plugin for Vim
-call SourceFile('plugins/lightline.vim')
 
 " }}}
 
-" Editing plugins -----------------------------------------------------------{{{
+" Editing plugins {{{
+" ---------------
 
 "Plug 'terryma/vim-expand-region'
 "Plug 'terryma/vim-multiple-cursors'
@@ -82,9 +85,10 @@ Plug 'junegunn/vim-peekaboo'
 
 Plug 'easymotion/vim-easymotion'
 
-"}}}
+" }}}
 
-" SCM (git, hg, etc) plugins ------------------------------------------------{{{
+" SCM (git, hg, etc) plugins {{{
+" --------------------------
 
 Plug 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
 " Git wrapper with many many many features, some of which I will probably
@@ -112,15 +116,15 @@ Plug 'tpope/vim-rhubarb', { 'depends' : 'tpope/vim-fugitive' }
 "   the browser.
 Plug 'tpope/vim-git'
 
-"}}}
+" }}}
 
-" Navigation plugins --------------------------------------------------------{{{
+" Navigation plugins {{{
+" ------------------
 
 " FZF is a fast fuzzy finder. TODO: Add some means of caching filesystem
 " searches.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
 Plug 'junegunn/fzf.vim'
-call SourceFile('plugins/fzf.vim')
 
 Plug 'mileszs/ack.vim' 
 		let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -130,14 +134,13 @@ Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree'
 " NERDTree API settings are in after/plugin/NERDTree.vim, other settings are in
 " plugins/NERDTree.vim
-call SourceFile('plugins/NERDTree.vim')
 
 Plug 'MattesGroeger/vim-bookmarks'
-call SourceFile('plugins/vim-bookmarks.vim')
 
-"}}}
+" }}}
 
-" Completion plugins -------------------------------------------------------{{{
+" Completion plugins {{{
+" ------------------
 
 Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
 	let g:deoplete#enable_at_startup = 0
@@ -146,9 +149,10 @@ Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
 Plug 'mattn/emmet-vim'
 		let g:user_emmet_mode='a'
 
-""}}}
+"" }}}
 
-" LaTeX plugins -------------------------------------------------------------{{{
+" LaTeX plugins {{{
+" -------------
 
 " VimTex
 Plug 'lervag/vimtex'
@@ -157,30 +161,27 @@ Plug 'lervag/vimtex'
 		let g:vimtex_compiler_method = 'arara'
 		let g:vimtex_quickfix_enabled = 1
 
-		let g:vimtex_compiler_arara = {
-					\ 'backend' : 'nvim',
-					\ 'background' : 1,
-					\ 'options' : ['--log'],
-					\}
-
 		" Not sure how to get this to work
 		" if !exists('g:deoplete#omni#input_patterns')
 		" 	let g:deoplete#omni#input_patterns = {}
 		" endif
 		" let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
 
-"}}}
+" }}}
 
-" Web Plugins ---------------------------------------------------------------{{{
+" Web Plugins {{{
+" -----------
 " -nil-
 " }}}
 
-" Python Plugins ------------------------------------------------------------{{{
+" Python Plugins {{{
+" --------------
 "Plug 'klen/python-mode', {'autoload':{'filetypes':['python']}}
 "let g:pymode_rope=0
-"}}}
+" }}}
 
-" Haskell Plugins -----------------------------------------------------------{{{
+" Haskell Plugins {{{
+" ---------------
 
 Plug 'dag/vim2hs', { 'for' : 'haskell' }
 Plug 'lukerandall/haskellmode-vim', { 'for' : 'haskell' }
@@ -188,7 +189,7 @@ Plug 'eagletmt/ghcmod-vim', { 'for' : 'haskell' }
 Plug 'eagletmt/neco-ghc', { 'for' : 'haskell' }
 "Plug 'travitch/hasksyn', { 'for' : 'haskell' }
 
-"}}}
+" }}}
 
 " Lua {{{
 " ---
@@ -196,7 +197,8 @@ Plug 'tbastos/vim-lua', { 'for': 'lua' }
 
 " }}}
 
-" Other plugins -------------------------------------------------------------{{{
+" Other plugins {{{
+" -------------
 
 Plug 'plasticboy/vim-markdown', { 'for' : 'markdown' }
 
@@ -245,7 +247,7 @@ Plug 'rhysd/accelerated-jk'
 	nmap k <Plug>(accelerated_jk_gk)
 
 
-"}}}
+" }}}
 
 call plug#end()
 
