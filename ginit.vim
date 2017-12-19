@@ -1,5 +1,4 @@
 " gvimrc, attempt to fix sourcing of GUI when forking from term
-colorscheme zarniwoop
 set background=dark
 " GUI Options
 " (a) Autoselect in VISUAL mode
@@ -23,11 +22,9 @@ set guioptions-=T
 " Fixed window width
 set columns=144
 set lines=48
-" Resize X window to default size
-nmap <Leader><S-s> :set columns=144 lines=48<CR>
 
 " Fonts
 "set guifont=Droid\ Sans\ Mono\ 11
 "set guifont=DejaVu\ Sans\ Mono\ 12
-set guifont=Source\ Code\ Pro\ 12
+" set guifont=Source\ Code\ Pro\ 12
 
