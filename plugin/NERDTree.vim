@@ -2,7 +2,7 @@
 " ---------------------
 
 " General Settings
-let g:NERDTreeWinSize = 25
+let g:NERDTreeWinSize = 40
 let g:NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeCascadeSingleChildDir = 0
 let g:NERDTreeShowHidden = 0

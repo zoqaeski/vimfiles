@@ -143,7 +143,7 @@ set nospell spellfile=$CONFIGPATH/spell/en.utf-8.add
 " persistent undo
 if exists('+undofile')
 	set undodir=$VARPATH/undo//
-	set noundofile
+	set undofile
 	set undolevels=1000
 	set undoreload=10000
 	au BufWritePre /tmp/* setlocal noundofile

@@ -54,10 +54,6 @@ Plug 'itchyny/lightline.vim'
 "Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular' 
 
-" Yankstack.vim is a lightweight implementation of the Emacs 'kill ring' for
-" Vim. 
-" Plug 'maxbrunsfeld/vim-yankstack'
-
 Plug 'vim-scripts/matchit.zip'
 
 " Plug 'machakann/vim-sandwich'
@@ -73,13 +69,21 @@ Plug 'tpope/vim-surround'
 			let b:surround_{char2nr("c")} = "\\\1command: \1{\r}"
 		endfunction
 
-Plug 'kana/vim-repeat'
-" Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
+
+" EasyClip is a plugin for Vim which contains a collection of clipboard related
+" functionality with the goal of making using the clipboard in Vim simpler and
+" more intuitive without losing any of its power.
+Plug 'svermeulen/vim-easyclip', { 'depends' : 'tpope/vim-repeat' }
+	let g:EasyClipUseCutDefaults = 0
+	nmap d <Plug>MoveMotionPlug
+	xmap d <Plug>MoveMotionXPlug
+	nmap dd <Plug>MoveMotionLinePlug
 
 Plug 'junegunn/vim-peekaboo'
 
@@ -221,15 +225,14 @@ Plug 'mattn/gist-vim', {'depends': 'mattn/webapi-vim'}
 " being.
 " Plug 'tmux-plugins/vim-tmux'
 
-Plug 'xolox/vim-session', {'depends': 'xolox/vim-misc'}
-		set sessionoptions=blank,buffers,curdir,folds,resize,tabpages,winpos,winsize
-		let g:session_autosave = 'yes'
-		let g:session_autoload = 'no'
-		let g:session_command_aliases = 1
+" Plug 'xolox/vim-session', {'depends': 'xolox/vim-misc'}
+"     let g:session_autosave = 'yes'
+"     let g:session_autoload = 'no'
+"     let g:session_command_aliases = 1
 
 " Required by other xolox	plugins. Made into a dependency for vim-session
-" above.
-Plug 'xolox/vim-misc'
+" " above.
+" Plug 'xolox/vim-misc'
 
 
 "Plug 'scrooloose/syntastic' 

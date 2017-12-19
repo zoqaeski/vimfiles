@@ -17,7 +17,7 @@ let g:fzf_buffers_jump = 1
 
 " Key Mappings {{{
 " ------------
-nmap <c-p> [fzf]
+nmap <Space> [fzf]
 nnoremap [fzf] <nop>
 
 nmap <leader><tab> <plug>(fzf-maps-n)

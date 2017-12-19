@@ -142,6 +142,7 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 " nmap <S-Tab> <C-w>W
 
 " Window-control prefix
+unmap     s
 nmap      s [window]
 nnoremap  [window]   <nop>
 
