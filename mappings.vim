@@ -190,6 +190,7 @@ if has('nvim')
 	nmap [terminal] <nop>
 	nnoremap [terminal]i :new term://zsh<CR>
 	nnoremap [terminal]v :vnew term://zsh<CR>
+	nnoremap [terminal]t :tabnew term://zsh<CR>
 endif
 
 
@@ -198,8 +199,11 @@ nnoremap <silent> g0 :<C-u>tabfirst<CR>
 nnoremap <silent> g$ :<C-u>tablast<CR>
 nnoremap <silent> gn :<C-u>tabnext<CR>
 nnoremap <silent> gN :<C-u>tabprevious<CR>
-nnoremap <Leader>> :tabmove +1<CR>
-nnoremap <Leader>< :tabmove -1<CR>
+nnoremap <silent> g> :tabmove +1<CR>
+nnoremap <silent> g< :tabmove -1<CR>
+nnoremap <silent> gm :tabmove<CR>
+let g:lasttab = 1
+nnoremap <silent> gG :execute 'tabn '.g:lasttab<CR>
 
 " When pressing <leader>cd switch to the directory of the open buffer
 map <Leader>cd :lcd %:p:h<CR>:pwd<CR>
