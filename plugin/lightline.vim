@@ -12,12 +12,12 @@ let g:lightline = {
 			\ },
 			\ 'component_function': {
 			\   'gitbranch': 'fugitive#head',
-			\   'modified': 'LightlineMod',
-			\   'readonly': 'LightlineRO',
-			\   'filename': 'LightlineName',
-			\   'fileformat': 'LightlineFileformat',
-			\   'filetype': 'LightlineFiletype',
-			\   'fileencoding': 'LightlineEncoding',
+			\   'modified': 'lightline#mod',
+			\   'readonly': 'lightline#readonly',
+			\   'filename': 'lightline#name',
+			\   'fileformat': 'lightline#fileformat',
+			\   'filetype': 'lightline#filetype',
+			\   'fileencoding': 'lightline#encoding',
 			\ },
 			\ 'component_type': {
 			\		'readonly': 'error',
@@ -26,52 +26,77 @@ let g:lightline = {
 
 " Custom functions for lightline.vim
 " These were adapted from http://code.xero.nu/dotfiles
-function! LightlineMod()
+function lightline#mod()
 	return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : ''
 endfunction
 
-function! LightlineRO()
+function lightline#readonly()
 	return &ft !~? 'help\|vimfiler' && &readonly ? 'RO' : ''
 endfunction
 
 " This function will return the path of the file compressed to show only the
 " first character for all preceding directories except the last
-function! LightlineName()
-	let l:name = expand('%:t')
-	" NERDTree
-	if l:name =~ 'NetrwTreeListing\|NERD_tree'
-		return '[Filesystem]'
+function lightline#name() abort
+	
+	" if exists('b:cached_filename') && len(b:cached_filename) > 0
+	" 	return b:cached_filename
+	" endif
+
+	if &filetype ==# 'nerdtree'
+		let b:cached_filename = '[Filesystem]'
+	elseif expand('%:t') ==? ''
+		let b:cached_filename = '[None]'
+	elseif &filetype == 'help'
+		" Don't do path reduction on help files
+		let b:cached_filename = expand('%:t')
+	else
+		" Reduce path to ~/.x/x/x/x/directory/filename.ext
+		let l:path = split(expand('%:~:.'), '\/')
+		let l:i = 0
+		while l:i < len(l:path) - 2
+			let l:firstchar = strpart(l:path[l:i], 0, 1)
+			if l:firstchar == '.'
+				let l:path[l:i] = strpart(l:path[l:i], 0, 2)
+			else 
+				let l:path[l:i] = l:firstchar
+			endif
+			let l:i = l:i + 1
+		endwhile
+		let b:cached_filename = join(l:path, '/')
 	endif
 
-	" Don't do path reduction on help files
-	if &filetype == 'help'
-		return expand('%:t')
+	if exists('b:fugitive_type') && b:fugitive_type ==# 'blob'
+		let b:cached_filename .= ' (blob)'
 	endif
 	
-	" Reduce path to ~/.x/x/x/x/directory/filename.ext
-	let l:path = split(expand('%:~:.'), '\/')
-	let i = 0
-	while i < len(l:path) - 2
-		let l:firstchar = strpart(l:path[i], 0, 1)
-		if l:firstchar == '.'
-			let l:path[i] = strpart(l:path[i], 0, 2)
-		else 
-			let l:path[i] = l:firstchar
-		endif
-		let i = i + 1
-	endwhile
-	return ('' != expand('%:t') ? join(l:path, '/') : '[none]') 
+	return b:cached_filename
 endfunction
 
-function! LightlineFileformat()
+" augroup lightline-cache
+" 	autocmd!
+" 	autocmd DirChanged,WinEnter *
+" 		\ unlet! b:cached_filename
+" augroup END
+
+" function lightline#getcwd() abort
+" 	let dir = getbufvar('%', 'current_dir')
+" 	let g:curr_dir = getcwd()
+" 	if empty(dir) || dir != g:curr_dir
+" 		call setbufvar('%', 'current_dir', g:curr_dir)
+" 		unlet! b:cached_filename
+" 	endif
+" 	return fnamemodify(dir, ':t')
+" endfunction
+
+function lightline#fileformat()
 	return winwidth(0) > 70 ? &fileformat : ''
 endfunction
 
-function! LightlineFiletype()
+function lightline#filetype()
 	return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : '') : ''
 endfunction
 
-function! LightlineEncoding()
+function lightline#encoding()
 	return winwidth(0) > 70 ? (strlen(&fenc) ? &enc : &enc) : ''
 endfunction
 
