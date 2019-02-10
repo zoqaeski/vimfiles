@@ -79,11 +79,11 @@ Plug 'tpope/vim-commentary'
 " EasyClip is a plugin for Vim which contains a collection of clipboard related
 " functionality with the goal of making using the clipboard in Vim simpler and
 " more intuitive without losing any of its power.
-Plug 'svermeulen/vim-easyclip', { 'depends' : 'tpope/vim-repeat' }
-	let g:EasyClipUseCutDefaults = 0
-	nmap d <Plug>MoveMotionPlug
-	xmap d <Plug>MoveMotionXPlug
-	nmap dd <Plug>MoveMotionLinePlug
+" Plug 'svermeulen/vim-easyclip', { 'depends' : 'tpope/vim-repeat' }
+" 	let g:EasyClipUseCutDefaults = 0
+" 	nmap d <Plug>MoveMotionPlug
+" 	xmap d <Plug>MoveMotionXPlug
+" 	nmap dd <Plug>MoveMotionLinePlug
 
 Plug 'junegunn/vim-peekaboo'
 

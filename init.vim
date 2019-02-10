@@ -129,7 +129,7 @@ call s:setupMappingHelper("<C-l>")
 " }}}
 
 " Reset the colorscheme now to avoid errors when reloading vimrc.
-unlet! g:colors_name
+" unlet! g:colors_name
 " Turn on syntax now to ensure any appropriate autocommands run after the
 " syntax file has loaded.
 syntax on
