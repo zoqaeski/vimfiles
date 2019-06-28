@@ -6,8 +6,7 @@ let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-i': 'split',
       \ 'ctrl-v': 'vsplit',
-      \ 'ctrl-a': 'argedit',
-      \ 'ctrl-o': '!runa'
+      \ 'ctrl-a': 'argedit'
       \ }
 
 let g:fzf_layout = {"down":'~40%'}
@@ -30,10 +29,12 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 " Files in the current directory
 nnoremap [fzf]p :Files<CR>
 " Files in the current buffer's directory except for scm
-nnoremap [fzf]d :call <SID>fzf('find -L . -type f ! -path "*.hg/*" ! -path "*.git/*"', ':Files %:p:h') <CR>
+" nnoremap [fzf]d :call <SID>fzf('find -L . -type f ! -path "*.hg/*" ! -path "*.git/*"', ':Files %:p:h') <CR>
+nnoremap [fzf]d :call <SID>fzf('fd -L', ':Files %:p:h') <CR>
 " All files in the home directory execpt for scm
 nnoremap [fzf]f :Files ~<CR>
-nnoremap [fzf]a :call <SID>fzf('find -L . -type f ! -path "*.hg/*" ! -path "*.git/*"', ':Files ~') <CR>
+" nnoremap [fzf]a :call <SID>fzf('find -L . -type f ! -path "*.hg/*" ! -path "*.git/*"', ':Files ~') <CR>
+nnoremap [fzf]a :call <SID>fzf('fd -L -H', ':Files ~') <CR>
 nnoremap [fzf]g :GitFiles<CR>
 " Files in a specific directory
 nnoremap [fzf]<s-f> :Files<Space>
@@ -103,4 +104,14 @@ function! s:fzf_ag_expand(cmd)
   call s:fzf_ag_raw(ecmd)
 endfunction
 
+function! s:fasd_update() abort
+  if empty(&buftype) || &filetype ==# 'dirvish'
+    call jobstart(['fasd', '-A', expand('%:p')])
+  endif
+endfunction
+augroup fasd
+  autocmd!
+  autocmd BufWinEnter,BufFilePost * call s:fasd_update()
+augroup END
+command! FASD call fzf#run(fzf#wrap({'source': 'fasd -fl', 'options': '--no-sort --tac --tiebreak=index'}))
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :

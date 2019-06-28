@@ -127,7 +127,7 @@ Plug 'tpope/vim-git'
 
 " FZF is a fast fuzzy finder. TODO: Add some means of caching filesystem
 " searches.
-Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 Plug 'mileszs/ack.vim' 
@@ -146,9 +146,9 @@ Plug 'MattesGroeger/vim-bookmarks'
 " Completion plugins {{{
 " ------------------
 
-Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
-	let g:deoplete#enable_at_startup = 0
-  let g:deoplete#complete_method = 'completefunc'
+" Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
+" 	let g:deoplete#enable_at_startup = 0
+"   let g:deoplete#complete_method = 'completefunc'
 
 Plug 'mattn/emmet-vim'
 		let g:user_emmet_mode='a'
@@ -219,7 +219,8 @@ Plug 'gorodinskiy/vim-coloresque'
 
 Plug 'chriskempson/base16-vim'
 
-Plug 'mattn/gist-vim', {'depends': 'mattn/webapi-vim'}
+Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim'
 
 " Not sure what this plugin does, so it's being commented out for the time
 " being.
