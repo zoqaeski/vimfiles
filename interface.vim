@@ -58,6 +58,9 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
 
+" GUI font
+set guifont=Source\ Code\ Pro:h12
+
 " }}}
 
 " Status Line {{{
