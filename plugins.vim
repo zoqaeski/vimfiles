@@ -130,8 +130,8 @@ Plug 'tpope/vim-git'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
-Plug 'mileszs/ack.vim' 
-		let g:ackprg = 'ag --nogroup --nocolor --column'
+" Plug 'mileszs/ack.vim' 
+" 		let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Always load NERDTree (on-demand loading prevents it from
 " stealing focus from netrw)
@@ -246,9 +246,9 @@ Plug 'mattn/gist-vim'
 "Plug 'tpope/vim-haml'
 "Plug 'tpope/vim-ragtag'
 
-Plug 'rhysd/accelerated-jk'
-	nmap j <Plug>(accelerated_jk_gj)
-	nmap k <Plug>(accelerated_jk_gk)
+" Plug 'rhysd/accelerated-jk'
+" 	nmap j <Plug>(accelerated_jk_gj)
+" 	nmap k <Plug>(accelerated_jk_gk)
 
 
 " }}}
