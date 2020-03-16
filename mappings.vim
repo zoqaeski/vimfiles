@@ -39,7 +39,7 @@ vnoremap <expr> cN "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
 nnoremap cp yap<S-}>p
 
 " Indent paragraph
-nnoremap <leader>a =ip
+" nnoremap <leader>a =ip
 
 " Duplicate lines
 nnoremap yd m`YP``
@@ -156,8 +156,8 @@ nnoremap <silent> [window]q  :close<CR>
 nnoremap <silent> [window]Q  :bdelete<CR>
 
 " Split current buffer, go to previous window and previous buffer
-nnoremap <silent> [window]sv :split<CR>:wincmd p<CR>:e#<CR>
-nnoremap <silent> [window]sg :vsplit<CR>:wincmd p<CR>:e#<CR>
+nnoremap <silent> [window]I :split<CR>:wincmd p<CR>:e#<CR>
+nnoremap <silent> [window]V :vsplit<CR>:wincmd p<CR>:e#<CR>
 
 " Moving between windows and buffers
 nnoremap <silent> [window]h <C-w>h

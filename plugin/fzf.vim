@@ -42,6 +42,9 @@ nnoremap [fzf]<s-f> :Files<Space>
 nnoremap [fzf]l :BLines<CR>
 " Lines in all buffers
 nnoremap [fzf]<S-l> :Lines<CR>
+" Searching with ripgrep
+nnoremap [fzf]r :Rg<CR>
+nnoremap [fzf]R :Rg<Space>
 " Switch between windows
 nnoremap [fzf]w :Windows<CR>
 " Switch between buffers

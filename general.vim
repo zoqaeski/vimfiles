@@ -45,6 +45,7 @@ set hidden                                         " Allow buffer switching with
 set autoread                                       " Auto reload if file saved externally
 set fileformats+=unix,dos,mac                      " Add mac to auto-detection of file format line endings
 set nrformats=octal,hex,alpha                      " Consider octal, hexadecimal and alphanumeric as numbers
+set shortmess+=c
 " Disable sounds
 set noerrorbells                                  
 set novisualbell                                   
@@ -69,7 +70,7 @@ set nolist                                         " Highlight whitespace
 " ------
 set timeout ttimeout
 set timeoutlen=1000                                " Time out on mappings
-set updatetime=1000                                " Idle time to write swap and trigger CursorHold
+set updatetime=500                                 " Idle time to write swap and trigger CursorHold
 set ttimeoutlen=-1                                 " Keycode timeout
 
 " }}}
@@ -153,7 +154,7 @@ endif
 if exists('+backup')
 	set backupdir=$VARPATH/backup/
 	set nobackup
-	set writebackup
+	set nowritebackup
 	set backupskip+=/tmp
 	set backupskip+=/private/tmp " OS X /tmp
 	" Skip backups of Git files
@@ -174,6 +175,9 @@ if executable('ag')
 	set grepformat=%f:%l:%c:%m
 elseif executable('ack')
 	set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
+	set grepformat=%f:%l:%c:%m
+elseif executable('rg')
+	set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
 	set grepformat=%f:%l:%c:%m
 endif
 
