@@ -30,11 +30,6 @@ Plug 'Shougo/vimproc', {
 			\ 'do' : 'make'
 			\ }
 
-" Better language support? Disabled for now
-" THIS CONFLICTS WITH MANY THINGS. HERE BE DRAGONS
-" Plug 'sheerun/vim-polyglot'
-  " let g:polyglot_disabled = ['latex']
-
 " }}}
 
 " Status line plugins {{{
@@ -50,13 +45,10 @@ Plug 'itchyny/lightline.vim'
 " Editing plugins {{{
 " ---------------
 
-"Plug 'terryma/vim-expand-region'
-"Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular' 
 
 Plug 'vim-scripts/matchit.zip'
 
-" Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-surround'
 		augroup latexSurround
 			autocmd!
@@ -150,8 +142,12 @@ Plug 'MattesGroeger/vim-bookmarks'
 " 	let g:deoplete#enable_at_startup = 0
 "   let g:deoplete#complete_method = 'completefunc'
 
-Plug 'mattn/emmet-vim'
-		let g:user_emmet_mode='a'
+" COC: Completion tool
+" Coc is an intellisense engine for Vim/Neovim.
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Plug 'mattn/emmet-vim'
+" 		let g:user_emmet_mode='a'
 
 "" }}}
 
