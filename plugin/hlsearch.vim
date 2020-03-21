@@ -1,3 +1,6 @@
+" Settings for searching
+" ======================
+
 " Disable hlsearch when you are done searching
 " Credits: https://github.com/romainl/vim-cool
 

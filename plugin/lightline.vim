@@ -1,5 +1,5 @@
 " Settings for Lightline
-" ----------------------
+" ======================
 
 let g:lightline = {
 			\ 'colorscheme' : 'wombat',

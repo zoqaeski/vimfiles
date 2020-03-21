@@ -34,7 +34,7 @@ endif
 " This file sourcing function was adapted from rafi/vim-config
 " It sources a file, copying the file into a temporary buffer if Vim is not
 " currently starting up.
-function! SourceFile(path, ...) abort " {{{
+function! s:source_file(path, ...) abort " {{{
 	let use_global = get(a:000, 0, ! has('vim_starting'))
 	let abspath = resolve(expand($CONFIGPATH.'/'.a:path))
 	if ! use_global
@@ -155,11 +155,11 @@ let g:loaded_2html_plugin = 1
 " }}}
 
 " All the things
-call SourceFile('general.vim')    " General settings
-call SourceFile('functions.vim')  " Useful functions and macros that don't belong anywhere else
-call SourceFile('plugins.vim')    " This sources settings specific to plugins as well
-call SourceFile('interface.vim')  " Interface settings
-call SourceFile('mappings.vim')   " Key mappings
-call SourceFile('filetype.vim')  " This should be in ftplugin, but I can't make it work
+call s:source_file('general.vim')    " General settings
+call s:source_file('functions.vim')  " Useful functions and macros that don't belong anywhere else
+call s:source_file('plugins.vim')    " This sources settings specific to plugins as well
+call s:source_file('interface.vim')  " Interface settings
+call s:source_file('mappings.vim')   " Key mappings
+call s:source_file('filetype.vim')  " This should be in ftplugin, but I can't make it work
 
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :

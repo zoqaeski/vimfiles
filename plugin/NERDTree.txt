@@ -33,4 +33,4 @@ let g:NERDTreeMapCloseChildren = 'T'
 let g:NERDTreeMapToggleHidden = '.'
 
 map <Leader>t :NERDTreeToggle<CR>
-nmap <Leader>f :NERDTreeFind<CR>
+nmap <Leader>T :NERDTreeFind<CR>

@@ -21,7 +21,7 @@
 "
 """"""""""""""""""""""""""""""""""""""""
 
-call plug#begin()
+call plug#begin('~/.config/nvim/plugins')
 
 " Core Plugins {{{
 " ------------
@@ -67,6 +67,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
+" Plug 'preservim/nerdcommenter'
 
 " EasyClip is a plugin for Vim which contains a collection of clipboard related
 " functionality with the goal of making using the clipboard in Vim simpler and
@@ -127,9 +128,11 @@ Plug 'junegunn/fzf.vim'
 
 " Always load NERDTree (on-demand loading prevents it from
 " stealing focus from netrw)
-Plug 'scrooloose/nerdtree'
+" Plug 'preservim/nerdtree'
 " NERDTree API settings are in after/plugin/NERDTree.vim, other settings are in
 " plugins/NERDTree.vim
+
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'MattesGroeger/vim-bookmarks'
 

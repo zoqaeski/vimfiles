@@ -1,6 +1,5 @@
-
 " Protect sensitive information
-"---------------------------------------------------------
+" =============================
 
 " Don't backup files in temp directories or shm
 if exists('&backupskip')

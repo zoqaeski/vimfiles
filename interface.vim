@@ -32,7 +32,7 @@ set foldlevelstart=99                              " Open all folds by default
 set showtabline=2                                  " Always show tab line
 set nocursorline                                   " STOP UNDERLINING THE CURRENT LINE!!!
 set noshowcmd                                      " Don't show partial command in bottom corner
-set cmdheight=2                                    " Two lines for the command line
+set cmdheight=1                                    " One lines for the command line
 set signcolumn=yes                                 " Always show the sign column
 
 " Allow lots of tab pages -- 100 should be plenty
