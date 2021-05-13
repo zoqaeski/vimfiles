@@ -17,4 +17,4 @@
 """"""""""""""""""""""""""""""""""""""""
 
 " Never use the GUI tab line
-GuiTabline 0
+" GuiTabline 0

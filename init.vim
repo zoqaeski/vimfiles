@@ -59,10 +59,10 @@ endfunction " }}}
 " Setup {{{
 " -----
 
-if has('vim_starting')
-	" Reset ALL THE THINGS!!!!
-	" set all& 
-endif
+" if has('vim_starting')
+" 	" Reset ALL THE THINGS!!!!
+" 	set all& 
+" endif
 
 " Clear vimrc autogroup so the rest of the file can add to it
 augroup vimrc

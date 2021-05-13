@@ -9,7 +9,8 @@ let g:fzf_action = {
       \ 'ctrl-a': 'argedit'
       \ }
 
-let g:fzf_layout = {"down":'~40%'}
+" let g:fzf_layout = {"down":'~40%'}
+let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 
 " Jump to existing window if possible
 let g:fzf_buffers_jump = 1
@@ -107,14 +108,4 @@ function! s:fzf_ag_expand(cmd)
   call s:fzf_ag_raw(ecmd)
 endfunction
 
-function! s:fasd_update() abort
-  if empty(&buftype) || &filetype ==# 'dirvish'
-    call jobstart(['fasd', '-A', expand('%:p')])
-  endif
-endfunction
-augroup fasd
-  autocmd!
-  autocmd BufWinEnter,BufFilePost * call s:fasd_update()
-augroup END
-command! FASD call fzf#run(fzf#wrap({'source': 'fasd -fl', 'options': '--no-sort --tac --tiebreak=index'}))
 " vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :

@@ -18,24 +18,25 @@
 " 
 """"""""""""""""""""""""""""""""""""""""
 
-" Functions {{{
-" ---------
-
+" Ensures a directory exists
 function! EnsureExists(path) " {{{
 	if !isdirectory(expand(a:path))
 		call mkdir(expand(a:path))
 	endif
 endfunction " }}}
 
+" Gets the current working directory
 function! Cwd() " {{{
 	let cwd = getcwd()
 	return "e " . cwd 
 endfunction " }}}
 
+" Gets the current file directory
 function! CurrentFileDir(cmd) " {{{
 	return a:cmd . " " . expand("%:p:h") . "/"
 endfunction " }}}
 
+" Searches in Visual Mode
 function! VisualSearch(direction) range " {{{		
 	let l:saved_reg = @"
 	execute "normal! vgvy"
@@ -68,6 +69,93 @@ function! <SID>SynStack() " {{{
 	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc " }}}
 
+" Terminal Drawer
+" Pops up a terminal window at the bottom of the screen
+let g:terminal_drawer = { 'win_id': v:null, 'buffer_id': v:null } " {{{
+function! ToggleTerminalDrawer() abort
+	if win_gotoid(g:terminal_drawer.win_id)
+		hide
+		set laststatus=2 showmode ruler
+	else
+		botright new
+		if !g:terminal_drawer.buffer_id
+			call termopen($SHELL, {"detach": 0})
+			let g:terminal_drawer.buffer_id = bufnr("")
+		else
+			exec 'buffer' g:terminal_drawer.buffer_id
+			call RemoveEmptyBuffers()
+		endif
+
+		exec 'resize' float2nr(&lines * 0.25)
+		setlocal laststatus=0 noshowmode noruler
+		setlocal nobuflisted
+		echo ''
+		startinsert!
+		let g:terminal_drawer.win_id = win_getid()
+
+		tnoremap <buffer><Esc> <C-\><C-n>
+		nnoremap <buffer><silent><Esc> :q<cr>
+	endif
+endfunction
+" }}}
+
+" Creates a centered floating window
+function! CreateCenteredFloatingWindow() "  {{{
+	let width  = float2nr(&columns * 0.9)
+	let height = float2nr(&lines * 0.8)
+	let top    = ((&lines - height) / 2) - 1
+	let left   = (&columns - width) / 2
+	let opts   = { 'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal' }
+	let top    = "╭" . repeat("─", width - 2) . "╮"
+	let mid    = "│" . repeat(" ", width - 2) . "│"
+	let bot    = "╰" . repeat("─", width - 2) . "╯"
+	let lines  = [top] + repeat([mid], height - 2) + [bot]
+	let s:buf  = nvim_create_buf(v:false, v:true)
+
+	call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+	call nvim_open_win(s:buf, v:true, opts)
+	set winhl=Normal:Floating
+
+	call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, CreatePadding(opts))
+	autocmd BufWipeout <buffer> exe 'bwipeout '.s:buf
+endfunction
+
+function! CreatePadding(opts)
+	let a:opts.row    += 1
+	let a:opts.height -= 2
+	let a:opts.col    += 2
+	let a:opts.width  -= 4
+	return a:opts
+endfunction
+" }}}
+
+" Toggle Terminal 
+" Creates a centered terminal floating window
+function! ToggleTerm(cmd) " {{{
+	if empty(bufname(a:cmd))
+		call CreateCenteredFloatingWindow()
+		call termopen(a:cmd, { 'on_exit': function('OnTermExit') })
+	else
+		bwipeout!
+	endif
+endfunction
+
+function! OnTermExit(job_id, code, event) dict
+	if a:code == 0
+		bwipeout!
+	endif
+endfunction
+" }}}
+
+" Removes empty buffers
+function! RemoveEmptyBuffers() " {{{
+	let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val) && empty(bufname(v:val)) && bufwinnr(v:val)<0 && !getbufvar(v:val, "&mod")')
+	if !empty(buffers)
+		silent exe 'bw ' . join(buffers, ' ')
+	endif
+endfunction
+" }}}
+
 " Useful Commands {{{
 " ---------------
 
@@ -81,6 +169,26 @@ command! -bar -nargs=* Ssplit call ScratchEdit('split', <q-args>)
 command! -bar -nargs=* Svsplit call ScratchEdit('vsplit', <q-args>)
 command! -bar -nargs=* Stabedit call ScratchEdit('tabe', <q-args>)
 
+
+
+" AutoCommands {{{
+" ------------
+
+" Changes line numbers to be absolute on insert mode and relative otherwise.
+augroup NumberToggle
+	autocmd!
+	autocmd InsertLeave * set relativenumber
+	autocmd InsertEnter * set norelativenumber
+augroup END
+
+" Default settings for terminal
+augroup TerminalBehavior
+	autocmd!
+	autocmd TermOpen * setlocal listchars= nonumber norelativenumber nowrap winfixwidth laststatus=0 noruler signcolumn=no noshowmode
+	autocmd TermOpen * startinsert
+	autocmd TermClose * set laststatus=2 showmode ruler
+augroup END
+
 " }}}
 
-" vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :
+" vim: ft=vim fdm=marker et ts=2 sts=2 sw=2 fdl=0 :

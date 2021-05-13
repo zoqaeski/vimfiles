@@ -39,7 +39,7 @@ vnoremap <expr> cN "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
 nnoremap cp yap<S-}>p
 
 " Indent paragraph
-" nnoremap <leader>a =ip
+" nnoremap <Leader>a =ip
 
 " Duplicate lines
 nnoremap yd m`YP``
@@ -146,6 +146,7 @@ unmap     s
 nmap      s [window]
 nnoremap  [window]   <nop>
 
+" Opening and closing windows
 nnoremap <silent> [window]i  :<C-u>split<CR>
 nnoremap <silent> [window]v  :<C-u>vsplit<CR>
 nnoremap <silent> [window]t  :tabnew<CR>
@@ -175,25 +176,68 @@ nnoremap <silent> [window]J <C-w>J
 nnoremap <silent> [window]K <C-w>K
 nnoremap <silent> [window]L <C-w>L
 
-" Quick moving between windows using ALT-
-if has('nvim')
-	" tnoremap <esc> <C-\><C-n><esc>
-	tnoremap <A-h> <C-\><C-n><C-w>h
-	tnoremap <A-j> <C-\><C-n><C-w>j
-	tnoremap <A-k> <C-\><C-n><C-w>k
-	tnoremap <A-l> <C-\><C-n><C-w>l
-	nnoremap <A-h> <C-w>h
-	nnoremap <A-j> <C-w>j
-	nnoremap <A-k> <C-w>k
-	nnoremap <A-l> <C-w>l
-	" Terminal split openings
-	nmap <A-t> [terminal]
-	nmap [terminal] <nop>
-	nnoremap [terminal]i :new term://zsh<CR>
-	nnoremap [terminal]v :vnew term://zsh<CR>
-	nnoremap [terminal]t :tabnew term://zsh<CR>
-endif
+" Window resizing
+let g:resize_active=0
+function! ToggleResizeMode() " {{{
+	if g:resize_active == 0
+		let g:resize_active = 1
+		" ESC should exit
+		nnoremap <ESC> :call ToggleResizeMode()<CR>
+		" Switch to resize keys
+		nnoremap h <C-w><
+		nnoremap j <C-w>-
+		nnoremap k <C-w>+
+		nnoremap l <C-w>>
+		" Switch to window moving keys
+		nnoremap H <C-w>H
+		nnoremap J <C-w>J
+		nnoremap K <C-w>K
+		nnoremap L <C-w>L
+		nnoremap = <C-w>=
+		nnoremap _ <C-w>_
+		nnoremap + <C-w><bar>
+		echom 'Resize Mode'
+	else
+		let g:resize_active = 0
+		" Switch back to 'normal' keys
+		nnoremap <esc> <esc>
+		nnoremap h h
+		nnoremap k k
+		nnoremap j j
+		nnoremap l l
+		nnoremap K {
+		nnoremap J }
+		nnoremap H ^
+		nnoremap L $
+		nnoremap = =
+		nnoremap _ _
+		nnoremap + +
+		echom ''
+	endif
+endfunction " }}}
+nnoremap <silent> <Leader>r :call ToggleResizeMode()<CR>
 
+" Quick moving between windows using ALT-
+" tnoremap <esc> <C-\><C-n><esc>
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+" Terminal split openings
+" These have been replaced with the terminal drawer as it is much more useful
+" nmap <Leader>t [terminal]
+" nmap [terminal] <nop>
+" nnoremap [terminal]i :new term://zsh<CR>
+" nnoremap [terminal]v :vnew term://zsh<CR>
+" nnoremap [terminal]t :tabnew term://zsh<CR>
+
+nnoremap <Leader>t           :call ToggleTerminalDrawer()<CR>
+tnoremap <Leader>t <C-\><C-n>:call ToggleTerminalDrawer()<CR>
+nnoremap <Leader>T  :call ToggleTerm($SHELL)<CR>
 
 " Tab mappings
 nnoremap <silent> g0 :<C-u>tabfirst<CR>
@@ -206,10 +250,10 @@ nnoremap <silent> gm :tabmove<CR>
 let g:lasttab = 1
 nnoremap <silent> gG :execute 'tabn '.g:lasttab<CR>
 
-" When pressing <leader>cd switch to the directory of the open buffer
+" When pressing <Leader>cd switch to the directory of the open buffer
 map <Leader>cd :lcd %:p:h<CR>:pwd<CR>
 
 " }}}
 
 
-" vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :
+" vim: ft=vim fdm=marker et ts=2 sts=2 sw=2 fdl=0 :

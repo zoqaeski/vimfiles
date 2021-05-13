@@ -21,14 +21,14 @@
 "
 """"""""""""""""""""""""""""""""""""""""
 
-call plug#begin('~/.config/nvim/plugins')
+call plug#begin('~/.config/nvim/bundle')
 
 " Core Plugins {{{
 " ------------
 
 Plug 'Shougo/vimproc', {
-			\ 'do' : 'make'
-			\ }
+		\ 'do' : 'make'
+		\ }
 
 " }}}
 
@@ -37,8 +37,10 @@ Plug 'Shougo/vimproc', {
 " Supposedly better status lines. If nothing else, they're certainly pretty.
 " Need to set noshowmode to hide it as the statusline updates
 
-Plug 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
 " A light and configurable statusline/tabline plugin for Vim
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " }}}
 
@@ -50,16 +52,16 @@ Plug 'godlygeek/tabular'
 Plug 'vim-scripts/matchit.zip'
 
 Plug 'tpope/vim-surround'
-		augroup latexSurround
-			autocmd!
-			autocmd FileType tex call s:latexSurround()
-		augroup END
+augroup latexSurround
+	autocmd!
+	autocmd FileType tex call s:latexSurround()
+augroup END
 
-		function! s:latexSurround()
-			let b:surround_{char2nr("e")}
-						\ = "\\begin{\1environment: \1}\n\t\r\n\\end{\1\1}"
-			let b:surround_{char2nr("c")} = "\\\1command: \1{\r}"
-		endfunction
+function! s:latexSurround()
+	let b:surround_{char2nr("e")}
+			\ = "\\begin{\1environment: \1}\n\t\r\n\\end{\1\1}"
+	let b:surround_{char2nr("c")} = "\\\1command: \1{\r}"
+endfunction
 
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-dispatch'
@@ -91,16 +93,16 @@ Plug 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
 " Git wrapper with many many many features, some of which I will probably
 " never use because I'm terrible at using Git.
 
-	nnoremap <Leader>gs :Gstatus<CR>
-	nnoremap <Leader>gd :Gdiff<CR>
-	nnoremap <Leader>gc :Gcommit<CR>
-	nnoremap <Leader>gb :Gblame<CR>
-	nnoremap <Leader>gl :Glog<CR>
-	nnoremap <Leader>gp :Git push<CR>
-	nnoremap <Leader>gw :Gwrite<CR>
-	nnoremap <Leader>gr :Gremove<CR>
-	autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
-	autocmd BufReadPost fugitive://* set bufhidden=delete
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gl :Glog<CR>
+nnoremap <Leader>gp :Git push<CR>
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>gr :Gremove<CR>
+autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
+autocmd BufReadPost fugitive://* set bufhidden=delete
 
 Plug 'tpope/vim-rhubarb', { 'depends' : 'tpope/vim-fugitive' }
 " If fugitive.vim is the Git, rhubarb.vim is the Hub. Here's the full list of
@@ -159,16 +161,16 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " VimTex
 Plug 'lervag/vimtex'
-		let g:tex_flavor = 'latex'
-    let g:vimtex_fold_enabled = 1
-		let g:vimtex_compiler_method = 'arara'
-		let g:vimtex_quickfix_enabled = 1
+let g:tex_flavor = 'latex'
+let g:vimtex_fold_enabled = 1
+let g:vimtex_compiler_method = 'arara'
+let g:vimtex_quickfix_enabled = 1
 
-		" Not sure how to get this to work
-		" if !exists('g:deoplete#omni#input_patterns')
-		" 	let g:deoplete#omni#input_patterns = {}
-		" endif
-		" let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+" Not sure how to get this to work
+" if !exists('g:deoplete#omni#input_patterns')
+" 	let g:deoplete#omni#input_patterns = {}
+" endif
+" let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
 
 " }}}
 
@@ -186,10 +188,10 @@ Plug 'lervag/vimtex'
 " Haskell Plugins {{{
 " ---------------
 
-Plug 'dag/vim2hs', { 'for' : 'haskell' }
-Plug 'lukerandall/haskellmode-vim', { 'for' : 'haskell' }
-Plug 'eagletmt/ghcmod-vim', { 'for' : 'haskell' }
-Plug 'eagletmt/neco-ghc', { 'for' : 'haskell' }
+"Plug 'dag/vim2hs', { 'for' : 'haskell' }
+"Plug 'lukerandall/haskellmode-vim', { 'for' : 'haskell' }
+"Plug 'eagletmt/ghcmod-vim', { 'for' : 'haskell' }
+"Plug 'eagletmt/neco-ghc', { 'for' : 'haskell' }
 "Plug 'travitch/hasksyn', { 'for' : 'haskell' }
 
 " }}}
@@ -209,9 +211,13 @@ Plug 'plasticboy/vim-markdown', { 'for' : 'markdown' }
 "Plug 'ashisha/image.vim', { 'disabled' : !has('python') }
 Plug 'mhinz/vim-sayonara'
 " Quit with 'q', and make macros use 'Q'
-nnoremap <silent> q :Sayonara<CR>
-nnoremap Q q
-nnoremap gQ @q
+nnoremap <silent> <C-q> :Sayonara<CR>
+" nnoremap Q q
+" nnoremap gQ @q
+" augroup TermAppendNotQuit
+" 	autocmd!
+" 	autocmd TermOpen * nnoremap <buffer> q a
+" augroup END
 
 
 Plug 'gorodinskiy/vim-coloresque'
@@ -254,4 +260,4 @@ Plug 'mattn/gist-vim'
 
 call plug#end()
 
-" vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :
+" vim: ft=vim fdm=marker et ts=2 sts=2 sw=2 fdl=0 :

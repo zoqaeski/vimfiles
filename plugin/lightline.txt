@@ -2,7 +2,7 @@
 " ======================
 
 let g:lightline = {
-			\ 'colorscheme' : 'wombat',
+			\ 'colorscheme': 'ayu_dark',
 			\ 'active': {
 			\   'left': [ [ 'mode', 'paste' ],
 			\             [ 'gitbranch', 'filename' ],
@@ -112,3 +112,5 @@ function! s:MaybeUpdateLightline()
 		call lightline#update()
 	end
 endfunction
+
+" vim: ft=vim

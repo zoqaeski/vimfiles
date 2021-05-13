@@ -55,12 +55,19 @@ if has('cmdline_info')
 endif
 
 " Set colour scheme from Base16
+let g:base16_shell_path="~/.local/share/themes/base16/base16-shell/scripts/"
 if filereadable(expand("~/.vimrc_background"))
-  source ~/.vimrc_background
+	source ~/.vimrc_background
 endif
 
 " GUI font
 set guifont=Source\ Code\ Pro:h12
+
+augroup NumberToggle
+	autocmd!
+	autocmd InsertLeave * set relativenumber
+	autocmd InsertEnter * set norelativenumber
+augroup END
 
 " }}}
 
@@ -88,4 +95,4 @@ set statusline+=\ %P                        " Percentage
 "}}}
 
 
-" vim: ft=vim fdm=marker ts=2 sts=2 sw=2 fdl=0 :
+" vim: ft=vim fdm=marker et ts=2 sts=2 sw=2 fdl=0 :
