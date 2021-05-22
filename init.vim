@@ -152,6 +152,8 @@ let g:loaded_zipPlugin = 1
 " misc
 let g:loaded_tutor_mode_plugin = 1
 let g:loaded_2html_plugin = 1
+
+let g:ale_disable_lsp = 1
 " }}}
 
 " All the things

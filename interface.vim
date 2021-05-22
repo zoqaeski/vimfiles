@@ -60,14 +60,23 @@ if filereadable(expand("~/.vimrc_background"))
 	source ~/.vimrc_background
 endif
 
-" GUI font
-set guifont=Source\ Code\ Pro:h12
-
 augroup NumberToggle
 	autocmd!
 	autocmd InsertLeave * set relativenumber
 	autocmd InsertEnter * set norelativenumber
 augroup END
+
+" }}}
+
+" GUI Options {{{
+" -----------
+
+" GUI font
+set guifont=Source\ Code\ Pro:h20
+
+" Neovide options
+let g:neovide_cursor_animation_length=0
+let g:neovide_cursor_trail_length=0
 
 " }}}
 

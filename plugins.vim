@@ -69,16 +69,6 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
-" Plug 'preservim/nerdcommenter'
-
-" EasyClip is a plugin for Vim which contains a collection of clipboard related
-" functionality with the goal of making using the clipboard in Vim simpler and
-" more intuitive without losing any of its power.
-" Plug 'svermeulen/vim-easyclip', { 'depends' : 'tpope/vim-repeat' }
-" 	let g:EasyClipUseCutDefaults = 0
-" 	nmap d <Plug>MoveMotionPlug
-" 	xmap d <Plug>MoveMotionXPlug
-" 	nmap dd <Plug>MoveMotionLinePlug
 
 Plug 'junegunn/vim-peekaboo'
 
@@ -93,14 +83,14 @@ Plug 'tpope/vim-fugitive', { 'augroup' : 'fugitive'}
 " Git wrapper with many many many features, some of which I will probably
 " never use because I'm terrible at using Git.
 
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gl :Glog<CR>
+nnoremap <Leader>gs :Git<CR>
+nnoremap <Leader>gd :Gdiffsplit<CR>
+nnoremap <Leader>gc :Git commit<CR>
+" nnoremap <Leader>gb :Git_blame<CR>
+nnoremap <Leader>gl :Gclog<CR>
 nnoremap <Leader>gp :Git push<CR>
 nnoremap <Leader>gw :Gwrite<CR>
-nnoremap <Leader>gr :Gremove<CR>
+nnoremap <Leader>gr :GRemove<CR>
 autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
@@ -124,6 +114,10 @@ Plug 'tpope/vim-git'
 " searches.
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+" Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
+" Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/remote', 'do': ':UpdateRemotePlugins' }
+
+
 
 " Plug 'mileszs/ack.vim' 
 " 		let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -150,6 +144,9 @@ Plug 'MattesGroeger/vim-bookmarks'
 " COC: Completion tool
 " Coc is an intellisense engine for Vim/Neovim.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" ALE: Asynchronous Lint Engine
+Plug 'dense-analysis/ale'
 
 " Plug 'mattn/emmet-vim'
 " 		let g:user_emmet_mode='a'
