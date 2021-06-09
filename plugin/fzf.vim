@@ -27,8 +27,9 @@ omap <leader><tab> <plug>(fzf-maps-o)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 imap <c-x><c-k> <plug>(fzf-complete-word)
 
+nnoremap [fzf]p     :FZFMru<CR>
 " Files in the current directory
-nnoremap [fzf]p :Files<CR>
+nnoremap [fzf]<S-p> :Files<CR>
 " Files in the current buffer's directory except for scm
 " nnoremap [fzf]d :call <SID>fzf('find -L . -type f ! -path "*.hg/*" ! -path "*.git/*"', ':Files %:p:h') <CR>
 nnoremap [fzf]d :call <SID>fzf('fd -L', ':Files %:p:h') <CR>

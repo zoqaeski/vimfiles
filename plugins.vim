@@ -114,6 +114,7 @@ Plug 'tpope/vim-git'
 " searches.
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'pbogut/fzf-mru.vim'
 " Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
 " Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/remote', 'do': ':UpdateRemotePlugins' }
 
