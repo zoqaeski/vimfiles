@@ -16,6 +16,8 @@
 -----------------------------------------------------------
 -- Import Lua modules
 -----------------------------------------------------------
+--require('functions')
 require('settings')
+--require('interface')
 require('keymaps')
 require('plugins/packer')

@@ -8,6 +8,7 @@
 --
 ----------------------------------------
 
+local cmd = vim.cmd
 local map = function(key)
   -- get the extra options
   local opts = {noremap = true}
@@ -26,8 +27,16 @@ local map = function(key)
   end
 end
 
-function unmap(mode, shortcut)
-	vim.api.nvim_del_keymap(mode, shortcut)
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+_G.smart_tab = function()
+  if vim.fn.pumvisible() == 1 then
+    return t'<C-n>'
+  else
+    return t'<Tab>'
+  end
 end
 
 ------------------------------
@@ -75,6 +84,13 @@ map { 'i', '<C-K>', '<C-U>'}
 map { 'i', '<C-b>', '<Left>'}
 map { 'i', '<C-f>', '<Right>'}
 
+vim.api.nvim_set_keymap(
+  'i',
+  '<Tab>',
+  'v:lua.smart_tab()',
+  {noremap = true, expr = true}
+)
+
 -----------------------
 -- Visual mode mappings
 -----------------------
@@ -103,7 +119,10 @@ map { 'n', 'gV', '`[v`]' }
 -- Windows and Buffers
 ----------------------
 -- Window-control prefix
-vim.api.nvim_del_keymap('', 's')
+vim.api.nvim_del_keymap('n', 's')
+vim.api.nvim_del_keymap('v', 's')
+vim.api.nvim_del_keymap('o', 's')
+--cmd [[unmap s]]
 map {'', 's', '[window]' , noremap = false }
 map {'n', '[window]', '', silent = true }
 
