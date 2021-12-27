@@ -119,9 +119,9 @@ map { 'n', 'gV', '`[v`]' }
 -- Windows and Buffers
 ----------------------
 -- Window-control prefix
-vim.api.nvim_del_keymap('n', 's')
-vim.api.nvim_del_keymap('v', 's')
-vim.api.nvim_del_keymap('o', 's')
+--vim.api.nvim_del_keymap('n', 's')
+--vim.api.nvim_del_keymap('v', 's')
+--vim.api.nvim_del_keymap('o', 's')
 --cmd [[unmap s]]
 map {'', 's', '[window]' , noremap = false }
 map {'n', '[window]', '', silent = true }
