@@ -2,7 +2,7 @@
 # Things git should ignore
 sessions/
 bundle/
-plugins/
+./plugins/
 tmp/
 .cache/
 Removed-Bundles/
