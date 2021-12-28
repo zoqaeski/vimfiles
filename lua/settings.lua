@@ -156,46 +156,42 @@ opt.history = 1000                                   -- number of command lines 
 -- :50  - remember 50 items in command-line history 
 -- opt.viminfo = '20,\--50,:50,/50'
 
--- if exists('+shada')
--- 	opt.shada = '100,f1,<50,:100,s100
--- end
--- 
+if fn.exists('+shada') == 1 then
+	opt.shada = "'100,f1,<50,:100,s100"
+end
 
 ------------------
 -- Vim Directories 
 ------------------
 opt.swapfile = true
---opt.directory = $VARPATH/swap//
---opt.viewdir = $VARPATH/view/
+opt.directory = fn.stdpath('cache')..'/swap/'
+opt.viewdir = fn.stdpath('cache')..'/view/'
 opt.spell = false 
---opt.spellfile = '$CONFIGPATH/spell/en.utf-8.add'
+opt.spellfile = fn.stdpath('data')..'/site/spell/en.utf-8.add'
 
---[[
 -- persistent undo
-if exists('+undofile')
-	-- opt.undodir = $VARPATH/undo//
+if fn.exists('+undofile') == 1 then
+	opt.undodir = fn.stdpath('cache') ..'/undo/'
 	opt.undofile = true
 	opt.undolevels = 1000
 	opt.undoreload = 10000
-	-- au BufWritePre /tmp/* setlocal noundofile
+	cmd [[au BufWritePre /tmp/* setlocal noundofile]]
 end
 
 -- Turn Backup off: reduces clutter
-if exists('+backup')
-	-- opt.backupdir = '$VARPATH/backup/'
+if fn.exists('+backup') == 1 then
+	opt.backupdir = fn.stdpath('cache')..'/backup/'
 	opt.backup = false
 	opt.writebackup = false
-	opt.backupskip:append('/tmp'
-	opt.backupskip:append('/private/tmp' -- OS X /tmp
+	opt.backupskip:append({'/tmp', '/private/tmp'})
 	-- Skip backups of Git files
-	opt.backupskip:append('*.git/COMMIT_EDITMSG,*.git/MERGE_MSG,*.git/TAG_EDITMSG'
-	opt.backupskip:append('*.git/modules/*/COMMIT_EDITMSG,*.git/modules/*/MERGE_MSG'
-	opt.backupskip:append('*.git/modules/*/TAG_EDITMSG,git-rebase-todo'
+	opt.backupskip:append({'*.git/COMMIT_EDITMSG', '*.git/MERGE_MSG', '*.git/TAG_EDITMSG'})
+	opt.backupskip:append({'*.git/modules/*/COMMIT_EDITMSG', '*.git/modules/*/MERGE_MSG'})
+	opt.backupskip:append({'*.git/modules/*/TAG_EDITMSG', 'git-rebase-todo'})
 	-- Skip backups of SVN commit files
-	opt.backupskip:append(svn-commit*.tmp
+	opt.backupskip:append({'svn-commit*.tmp'})
 	-- au BufWritePre * let &bex = '-' . strftime(--%Y%m%d-%H%M%S--) . '.vimbackup'
 end
 
 -- Write swap file to disk after every 50 characters
---opt.updatecount = 50
---]]
+opt.updatecount = 100
