@@ -47,6 +47,14 @@ return require('packer').startup(function()
   use 'tpope/vim-sleuth'
   use 'tpope/vim-commentary'
 
+  -----------------------------
+  -- SCM (git, hg, etc) Plugins
+  -----------------------------
+   use {
+     'tpope/vim-fugitive', 
+     cmd = { 'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull' }
+   }
+
   -------------------
   -- Language Servers
   -------------------

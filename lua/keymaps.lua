@@ -210,12 +210,12 @@ map { 'n', '<A-j>', '<C-w>j' }
 map { 'n', '<A-k>', '<C-w>k' }
 map { 'n', '<A-l>', '<C-w>l' }
 -- Terminal split openings
--- These have been replaced with the terminal drawer as it is much more useful
--- nmap <Leader>t [terminal]
--- nmap [terminal] <nop>
--- nnoremap [terminal]i :new term://zsh<CR>
--- nnoremap [terminal]v :vnew term://zsh<CR>
--- nnoremap [terminal]t :tabnew term://zsh<CR>
+-- These will eventually replaced with the terminal drawer once I reimplement it in Lua.
+map {'', '<Leader>t', '[terminal]' , noremap = false }
+map {'n', '[terminal]', '', silent = true }
+map {'n', '[terminal]i', ':new term://zsh<CR>' }
+map {'n', '[terminal]v', ':vnew term://zsh<CR>' }
+map {'n', '[terminal]t', ':tabnew term://zsh<CR>' }
 
 -- nnoremap <Leader>t           :call ToggleTerminalDrawer()<CR>
 -- tnoremap <Leader>t <C-\><C-n>:call ToggleTerminalDrawer()<CR>
