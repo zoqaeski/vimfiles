@@ -1,5 +1,7 @@
 # .gitignore
 # Things git should ignore
+plugin/packer_compiled.*
+
 sessions/
 bundle/
 ./plugins/

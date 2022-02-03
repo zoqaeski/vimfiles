@@ -37,6 +37,12 @@ return require('packer').startup(function()
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
 
+  -------------------------------
+  -- Interface and Colour Schemes
+  -------------------------------
+  use 'RRethy/nvim-base16'
+  use 'glepnir/zephyr-nvim'
+
   ------------------
   -- Editing Plugins
   ------------------

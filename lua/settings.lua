@@ -14,6 +14,8 @@ local opt = vim.opt             -- global/buffer/windows-scoped options
 
 g.mapleader = '\\'
 
+cmd('colorscheme base16-helios')
+
 ------------
 -- Behaviour
 ------------
