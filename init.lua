@@ -20,4 +20,4 @@
 require('settings')
 --require('interface')
 require('keymaps')
-require('plugins/packer')
+require('plugins.packer')
