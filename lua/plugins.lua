@@ -6,9 +6,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
--- Only required if you have packer configured as `opt`
--- vim.cmd [[packadd packer.nvim]]
-
 -- Automatically compile packer plugin list on file change
 vim.cmd([[
   augroup packer_user_config

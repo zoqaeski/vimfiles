@@ -1,17 +1,44 @@
+--[[
+    Utility functions
+    =================
+
+    Some of these were borrowed from [LunarVim](https://github.com/lunarvim/lunarvim)
+--]]
+
+local M = {}
+local uv = vim.loop
 local fn = vim.fn
 
 -- inspect something
-function inspect(item)
+function M.inspect(item)
   vim.pretty_print(item)
 end
 
-local M = {}
+--- Checks whether a given path exists and is a file.
+--@param path (string) path to check
+--@returns (bool)
+function M.is_file(path)
+  local stat = uv.fs_stat(path)
+  return stat and stat.type == "file" or false
+end
 
-function M.executable(name)
-  if fn.executable(name) > 0 then
+--- Checks whether a given path exists and is a directory
+--@param path (string) path to check
+--@returns (bool)
+function M.is_directory(path)
+  local stat = uv.fs_stat(path)
+  return stat and stat.type == "directory" or false
+end
+
+M.join_paths = _G.join_paths
+
+--- Checks whether a given path is executable
+--@param path (string) path to check
+--@returns (bool)
+function M.executable(path)
+  if fn.executable(path) > 0 then
     return true
   end
-
   return false
 end
 
