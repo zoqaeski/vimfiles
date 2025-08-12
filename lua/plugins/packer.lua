@@ -32,10 +32,10 @@ return require('packer').startup(function()
     requires = { {'nvim-lua/plenary.nvim'} }
   }
 
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
-  }
+--  use {
+--    'nvim-treesitter/nvim-treesitter',
+--    run = ':TSUpdate'
+--  }
 
   --------------
   -- Language Server Plugins
@@ -71,10 +71,15 @@ return require('packer').startup(function()
   --  requires = { { 'hoob3rt/lualine.nvim', opt = true }, {'kyazdani42/nvim-web-devicons', opt = true} },
   --  config = [[require('plugins.tabline')]]
   --}
-  use { 
-    "akinsho/bufferline.nvim", 
-    event = "VimEnter", 
-    config = [[require('plugins.bufferline')]] 
+  --use { 
+  --  "akinsho/bufferline.nvim", 
+  --  event = "VimEnter", 
+  --  config = [[require('plugins.bufferline')]] 
+  --}
+  use {
+    'romgrk/barbar.nvim',
+    config = [[require('plugins.barbar')]],
+    requires = {{ 'nvim-tree/nvim-web-devicons', 'lewis6991/gitsigns.nvim'}}
   }
 
   -- Show match number and index for searching

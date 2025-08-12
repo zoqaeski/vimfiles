@@ -150,6 +150,7 @@ map { 'n', '[window]S', '<C-w>W', nowait = true }
 
 map { 'n', '[window]n', ':bnext<CR>' }
 map { 'n', '[window]N', ':bprevious<CR>' }
+map { 'n', '[window]p', ':BufferPick<CR>'}
 
 map { 'n', '[window]H', '<C-w>H' }
 map { 'n', '[window]J', '<C-w>J' }
