@@ -1,9 +1,9 @@
 ----------------------------------------
--- Settings
+-- Options
 ----------------------------------------
-
+--
 -- General configuration options for the editor.
-
+--
 ----------------------------------------
 
 local cmd = vim.cmd             -- execute Vim commands
@@ -13,9 +13,6 @@ local g = vim.g                 -- global variables
 local opt = vim.opt             -- global/buffer/windows-scoped options
 
 g.mapleader = '\\'
-
---cmd('colorscheme base16-helios')
-cmd('colorscheme tokyonight')
 
 ------------
 -- Behaviour
@@ -112,14 +109,6 @@ if fn.has('cmdline_info') == 1 then
 	opt.showcmd = true
 end
 
-cmd([[
-augroup NumberToggle
-	autocmd!
-	autocmd InsertLeave * set relativenumber
-	autocmd InsertEnter * set norelativenumber
-augroup END
-]])
-
 -----------
 -- Wildmenu 
 -----------
@@ -147,7 +136,6 @@ opt.sessionoptions:append({'tabpages'})
 
 -- What to save for views
 opt.viewoptions:remove({'options', 'unix', 'slash'})
-
 
 -----------------
 -- History Saving 

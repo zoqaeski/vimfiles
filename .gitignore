@@ -2,13 +2,17 @@
 # Things git should ignore
 plugin/packer_compiled.*
 
-sessions/
-bundle/
 ./plugins/
-tmp/
 .cache/
-Removed-Bundles/
-yankring_history_v2.txt
-.netrwhist
-shada/
 .init.vim-rplugin~
+.netrwhist
+.lazy-lock.json
+Removed-Bundles/
+_vimscript/
+bundle/
+lua/_plugins/
+sessions/
+shada/
+tmp/
+yankring_history_v2.txt
+
