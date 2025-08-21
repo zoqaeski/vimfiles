@@ -111,15 +111,73 @@ return {
             scope = { enabled = true },
             scroll = { enabled = true },
             statuscolumn = { enabled = true },
+            terminal = { enabled = true },
             words = { enabled = true },
         },
         keys = {
+            { "<leader>.", function() Snacks.scratch() end,        desc = "Toggle Scratch Buffer" },
+            { "<leader>S", function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+            { "<leader>E", function() Snacks.explorer() end,       desc = "Explorer" },
+            { "<leader>T", function() Snacks.terminal() end,       desc = "Terminal" },
         },
     },
     {
         "ibhagwan/fzf-lua",
         event = "VeryLazy",
         dependencies = { "echasnovski/mini.icons" },
+        cmd = "FzfLua",
+        opts = function(_, opts)
+            local fzf = require("fzf-lua")
+            local config = fzf.config
+            local actions = fzf.actions
+            local utils = fzf.utils
+
+            return {
+                "default-title",
+                fzf_colors = true,
+                fzf_opts = {
+                    ["--no-scrollbar"] = true,
+                },
+                defaults = {
+                    -- formatter = "path.filename_first",
+                    formatter = "path.dirname_first",
+                },
+                winopts = {
+                    width = 0.8,
+                    height = 0.8,
+                    row = 0.5,
+                    col = 0.5,
+                    preview = {
+                        scrollchars = { "┃", "" },
+                    },
+                },
+                files = {
+                    cwd_prompt = false,
+                    actions = {
+                        ["alt-i"] = actions.toggle_ignore,
+                        ["alt-h"] = actions.toggle_hidden,
+                        ["enter"] = actions.file_edit_or_qf,
+                        ["ctrl-i"] = actions.file_split,
+                        ["ctrl-v"] = actions.file_vsplit,
+                        ["ctrl-t"] = actions.file_tabedit,
+                        ["alt-q"] = actions.file_sel_to_qf,
+                        ["alt-l"] = actions.file_sel_to_ll,
+                    },
+                },
+            }
+        end,
+        keys = {
+            { "<leader>ff", "<cmd>FzfLua files<cr>",                                    desc = "Files" },
+            { "<leader>fg", "<cmd>FzfLua git_files<cr>",                                desc = "Find Files (git-files)" },
+            { "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
+            { "<leader>fr", "<cmd>FzfLua oldfiles<cr>",                                 desc = "Recent Files" },
+            { "<leader>fh", "<cmd>FzfLua help_tags<cr>",                                desc = "Help Pages" },
+            { "<leader>fk", "<cmd>FzfLua keymaps<cr>",                                  desc = "Key Mappings" },
+            { "<leader>fc", "<cmd>FzfLua commands<cr>",                                 desc = "Commands" },
+            { "<leader>:",  "<cmd>FzfLua command_history<cr>",                          desc = "Command History" },
+            { "<leader>/",  "<cmd>FzfLua search_history<cr>",                           desc = "Search History" },
+            { '<leader>"',  "<cmd>FzfLua registers<cr>",                                desc = "Registers" },
+        },
     },
     {
         'folke/which-key.nvim',

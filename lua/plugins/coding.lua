@@ -16,15 +16,15 @@ return {
         event = "VeryLazy",
         opts = {
             mappings = {
-                add = 'gsa',    -- Add surrounding in Normal and Visual modes
-                delete = 'gsd', -- Delete surrounding
-                find = 'gsf',   -- Find surrounding (to the right)
-                find_left = 'gsF', -- Find surrounding (to the left)
-                highlight = 'gsh', -- Highlight surrounding
-                replace = 'gsr', -- Replace surrounding
-                update_n_lines = 'gsn', -- Update `n_lines`
-                suffix_last = '', -- Suffix to search with "prev" method
-                suffix_next = '', -- Suffix to search with "next" method
+                add = '<leader>sa',            -- Add surrounding in Normal and Visual modes
+                delete = '<leader>sd',         -- Delete surrounding
+                find = '<leader>sf',           -- Find surrounding (to the right)
+                find_left = '<leader>sF',      -- Find surrounding (to the left)
+                highlight = '<leader>sh',      -- Highlight surrounding
+                replace = '<leader>sr',        -- Replace surrounding
+                update_n_lines = '<leader>sn', -- Update `n_lines`
+                suffix_last = '',              -- Suffix to search with "prev" method
+                suffix_next = '',              -- Suffix to search with "next" method
             },
         },
     },
@@ -42,14 +42,14 @@ return {
                         i = { "@block.inner", "@conditional.inner", "@loop.inner" },
                     }),
                     f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
-                    c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
-                    t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" }, -- tags
-                    d = { "%f[%d]%d+" },                                                -- digits
-                    e = {                                                               -- Word with case
+                    c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),       -- class
+                    t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },           -- tags
+                    d = { "%f[%d]%d+" },                                                          -- digits
+                    e = {                                                                         -- Word with case
                         { "%u[%l%d]+%f[^%l%d]", "%f[%S][%l%d]+%f[^%l%d]", "%f[%P][%l%d]+%f[^%l%d]", "^[%l%d]+%f[^%l%d]" },
                         "^().*()$",
                     },
-                    u = ai.gen_spec.function_call(),                 -- u for "Usage"
+                    u = ai.gen_spec.function_call(),                           -- u for "Usage"
                     U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
                 },
             }
@@ -70,7 +70,7 @@ return {
         keys = {
             {
                 -- Customize or remove this keymap to your liking
-                "<leader>f",
+                "<leader>cF",
                 function()
                     require("conform").format({ async = true })
                 end,

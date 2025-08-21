@@ -148,49 +148,6 @@ map { 'n', 'sL', '<C-w>L', desc = "Move window right" }
 map { 'n', 'ss', '<C-w>w', nowait = true, desc = "Go to next window" }
 map { 'n', 'sS', '<C-w>W', nowait = true, desc = "Go to previous window" }
 
---[[
--- Window resizing
-let g:resize_active=0
-function! ToggleResizeMode() " {{{
-  if g:resize_active == 0
-    let g:resize_active = 1
-    " ESC should exit
-    nnoremap <ESC> :call ToggleResizeMode()<CR>
-    " Switch to resize keys
-    nnoremap h <C-w><
-    nnoremap j <C-w>-
-    nnoremap k <C-w>+
-    nnoremap l <C-w>>
-    " Switch to window moving keys
-    nnoremap H <C-w>H
-    nnoremap J <C-w>J
-    nnoremap K <C-w>K
-    nnoremap L <C-w>L
-    nnoremap = <C-w>=
-    nnoremap _ <C-w>_
-    nnoremap + <C-w><bar>
-    echom 'Resize Mode'
-  else
-    let g:resize_active = 0
-    " Switch back to 'normal' keys
-    nnoremap <esc> <esc>
-    nnoremap h h
-    nnoremap k k
-    nnoremap j j
-    nnoremap l l
-    nnoremap K {
-    nnoremap J }
-    nnoremap H ^
-    nnoremap L $
-    nnoremap = =
-    nnoremap _ _
-    nnoremap + +
-    echom ''
-  endif
-endfunction " }}}
-nnoremap <silent> <Leader>r :call ToggleResizeMode()<CR>
---]]
-
 -- Quick moving between windows using ALT-
 -- tnoremap <esc> <C-\><C-n><esc>
 -- map { 't', '<A-h>', '<C-\\><C-n><C-w>h' }
@@ -206,7 +163,6 @@ nnoremap <silent> <Leader>r :call ToggleResizeMode()<CR>
 map { 'n', '<leader>ti', ':new term://zsh<CR>', desc = "New terminal split horizontally" }
 map { 'n', '<leader>tv', ':vnew term://zsh<CR>', desc = "New terminal split vertically" }
 map { 'n', '<leader>tt', ':tabnew term://zsh<CR>', desc = "Open terminal in new tab" }
--- map { 'n', '<leader>ft', function() Snacks.terminal() end, desc = "Snacks terminal" }
 
 -- Tab mappings
 map { silent = true, 'n', 'g0', ':<C-u>tabfirst<CR>' }
