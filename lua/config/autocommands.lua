@@ -10,12 +10,12 @@ end
 -- Toggle line numbers between absolute and relative when switching modes
 local number_toggle = vim.api.nvim_create_augroup("number_toggle", { clear = true })
 vim.api.nvim_create_autocmd("InsertEnter", {
-	group = number_toggle,
-	command = "set norelativenumber"
+  group = number_toggle,
+  command = "set norelativenumber",
 })
 vim.api.nvim_create_autocmd("InsertLeave", {
-	group = number_toggle,
-	command = "set relativenumber"
+  group = number_toggle,
+  command = "set relativenumber",
 })
 
 -- Close certain buffer types with q
