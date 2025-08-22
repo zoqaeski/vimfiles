@@ -20,9 +20,7 @@
 -----------------------------------------------------------
 -- Import Lua modules
 -----------------------------------------------------------
-require('config.options')
-require('config.lazy')
-require('config.keymaps')
-require('config.autocommands')
-
-vim.cmd('colorscheme tokyonight')
+require("config.options")
+require("config.lazy")
+require("config.keymaps")
+require("config.autocommands")

@@ -9,25 +9,7 @@
 ----------------------------------------
 
 local cmd = vim.cmd
-local map = function(key)
-  -- get the extra options
-  local opts = { noremap = true }
-  for i, v in pairs(key) do
-    if type(i) == "string" then
-      opts[i] = v
-    end
-  end
-
-  -- basic support for buffer-scoped keybindings
-  local buffer = opts.buffer
-  opts.buffer = nil
-
-  if buffer then
-    vim.api.nvim_buf_set_keymap(0, key[1], key[2], key[3], opts)
-  else
-    vim.api.nvim_set_keymap(key[1], key[2], key[3], opts)
-  end
-end
+local map = vim.keymap.set
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -47,69 +29,77 @@ local wk = require("which-key")
 -- Convenient editing mappings
 ------------------------------
 -- Change current word in a repeatable manner
-map({ "n", "cn", "*``cgn" })
-map({ "n", "cN", "*``cgN" })
+map("n", "cn", "*``cgn")
+map("n", "cN", "*``cgN")
 
 ---- Duplicate lines
-map({ "n", "yd", "m`YP``" })
-map({ "v", "yd", "YPgv" })
+map("n", "yd", "m`YP``")
+map("v", "yd", "YPgv")
 
 -- Drag current line/s vertically and auto-indent
-map({ "v", "mk", ":m-2<CR>gv=gv" })
-map({ "v", "mj", ":m'>+<CR>gv=gv" })
-map({ "n", "mk", ":m-2<CR>" })
-map({ "n", "mj", ":m+<CR>" })
+map("v", "mk", "<cmd>m-2<CR>gv=gv")
+map("v", "mj", "<cmd>m'>+<CR>gv=gv")
+map("n", "mk", "<cmd>m-2<CR>")
+map("n", "mj", "<cmd>m+<CR>")
+
+-- Better up/down movement
+map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+
+-- commenting
+map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
+map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
 
 --------------------------
 ---- Command-line mappings
 --------------------------
-map({ "n", "::", "q:" })
-map({ "n", "//", "q/" })
-map({ "n", "??", "q?" })
+map("n", "::", "q:")
+map("n", "//", "q/")
+map("n", "??", "q?")
 
 -- Emacs keys in command window
-map({ "c", "<C-A>", "<Home>" })
-map({ "c", "<C-E>", "<End>" })
-map({ "c", "<C-K>", "<C-U>" })
-map({ "c", "<C-P>", "<Up>" })
-map({ "c", "<C-N>", "<Down>" })
+map("c", "<C-A>", "<Home>")
+map("c", "<C-E>", "<End>")
+map("c", "<C-K>", "<C-U>")
+map("c", "<C-P>", "<Up>")
+map("c", "<C-N>", "<Down>")
 
 -- Shortcuts
-map({ "c", "$h", "e ~/" })
-map({ "c", "$c", 'e <C-\\>eCurrentFileDir("e")<CR>' })
+map("c", "$h", "~/")
+-- map({ "c", "$c", 'e <C-\\>eCurrentFileDir("e")<CR>' })
 
 -----------------------
 -- Insert-mode mappings
 -----------------------
--- Emacs mode in Insert? HERESY!!!
-map({ "i", "<C-A>", "<Home>" })
-map({ "i", "<C-E>", "<End>" })
-map({ "i", "<C-K>", "<C-U>" })
-map({ "i", "<C-b>", "<Left>" })
-map({ "i", "<C-f>", "<Right>" })
+map("i", "<C-A>", "<Home>")
+map("i", "<C-E>", "<End>")
+map("i", "<C-K>", "<C-U>")
+map("i", "<C-b>", "<Left>")
+map("i", "<C-f>", "<Right>")
 
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.smart_tab()", { noremap = true, expr = true })
+map("i", "<Tab>", "v:lua.smart_tab()", { expr = true })
 
 -----------------------
 -- Visual mode mappings
 -----------------------
 -- Use tab to indent in visual mode
-map({ "v", "<Tab>", ">gv|" })
-map({ "v", "<S-Tab>", "<gv" })
+map("v", "<Tab>", ">gv|")
+map("v", "<S-Tab>", "<gv")
 
 ---- Reselect visual block after indent
-map({ "v", "<", "<gv" })
-map({ "v", ">", ">gv" })
+map("v", "<", "<gv")
+map("v", ">", ">gv")
 
 ----  In visual mode when you press * or # to search for the current selection
 ----map('v', '*', ':call VisualSearch('f')<CR>', 'silent')
 ----map('v', '#', ':call VisualSearch('b')<CR>', 'silent')
 
 -- Exit Visual Mode with q
-map({ "v", "q", "<ESC>", silent = true })
+map("v", "q", "<ESC>", { silent = true })
 
--- Select last thing pasted
-map({ "n", "gV", "`[v`]" })
+map("n", "gV", "`[v`]", { desc = "Select last thing pasted" })
 
 -- Select last thing pasted
 --nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
@@ -118,32 +108,44 @@ map({ "n", "gV", "`[v`]" })
 -- Windows and Buffers
 ----------------------
 -- Unset s to use this key as a prefix
-map({ "n", "s", "<Nop>" })
-map({ "v", "s", "<Nop>" })
-map({ "o", "s", "<Nop>" })
+map("n", "s", "<Nop>")
+map("v", "s", "<Nop>")
+map("o", "s", "<Nop>")
 
 -- Opening and closing windows
-map({ "n", "si", ":<C-u>split<CR>", desc = "Split window horizontally" })
-map({ "n", "sv", ":<C-u>vsplit<CR>", desc = "Split window vertically" })
-map({ "n", "st", ":tabnew<CR>", desc = "Open new empty tab" })
-map({ "n", "so", ":<C-u>only<CR>", desc = "Close all windows but current" })
-map({ "n", "sb", ":ls<CR>", desc = "List open buffers" })
-map({ "n", "sB", ":ls<CR>:e #", desc = "List open buffers and switch" })
-map({ "n", "sT", ":ls<CR>:tabe #", desc = "List open buffers and open in new tab" })
-map({ "n", "sI", ":ls<CR>:split #", desc = "List open buffers and split horizontally" })
-map({ "n", "sV", ":ls<CR>:vsplit #", desc = "List open buffers and split vertically" })
-map({ "n", "sq", ":close<CR>", desc = "Close window" })
-map({ "n", "sQ", ":bdelete<CR>", desc = "Unload buffer" })
-map({ "n", "sh", "<C-w>h", desc = "Go to window left" })
-map({ "n", "sj", "<C-w>j", desc = "Go to window below" })
-map({ "n", "sk", "<C-w>k", desc = "Go to window above" })
-map({ "n", "sl", "<C-w>l", desc = "Go to window right" })
-map({ "n", "sH", "<C-w>H", desc = "Move window left" })
-map({ "n", "sJ", "<C-w>J", desc = "Move window below" })
-map({ "n", "sK", "<C-w>K", desc = "Move window above" })
-map({ "n", "sL", "<C-w>L", desc = "Move window right" })
-map({ "n", "ss", "<C-w>w", nowait = true, desc = "Go to next window" })
-map({ "n", "sS", "<C-w>W", nowait = true, desc = "Go to previous window" })
+map("n", "si", "<cmd>split<CR>", { desc = "Split window horizontally" })
+map("n", "sv", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
+map("n", "st", "<cmd>wincmd t<CR>", { desc = "Move buffer to new tab" })
+map("n", "so", "<cmd>only<CR>", { desc = "Close all windows but current" })
+map("n", "sq", "<cmd>close<CR>", { desc = "Close window" })
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
+-- map({ "n", "sd", "<cmd>bdelete<CR>",{ desc ="Unload buffer" })
+-- Buffers
+map("n", "sb", "<cmd>ls<CR>", { desc = "List open buffers" })
+map("n", "sB", "<cmd>ls<CR><cmd>e #", { desc = "List open buffers and switch" })
+map("n", "sT", "<cmd>ls<CR><cmd>tabe #", { desc = "List open buffers and open in new tab" })
+map("n", "sI", "<cmd>ls<CR><cmd>split #", { desc = "List open buffers and split horizontally" })
+map("n", "sV", "<cmd>ls<CR><cmd>vsplit #", { desc = "List open buffers and split vertically" })
+map("n", "]b", "<cmd>bnext", { desc = "Next buffer" })
+map("n", "[b", "<cmd>bnext", { desc = "Previous buffer" })
+-- Moving between windows
+map("n", "sh", "<cmd>wincmd h<CR>", { desc = "Go to window left" })
+map("n", "sj", "<cmd>wincmd j<CR>", { desc = "Go to window below" })
+map("n", "sk", "<cmd>wincmd k<CR>", { desc = "Go to window above" })
+map("n", "sl", "<cmd>wincmd l<CR>", { desc = "Go to window right" })
+map("n", "sw", "<cmd>wincmd w<CR>", { desc = "Go to next window", nowait = true })
+map("n", "sW", "<cmd>wincmd W<CR>", { desc = "Go to previous window", nowait = true })
+-- Resizing windows
+map("n", "sH", "<cmd>wincmd H<CR>", { desc = "Move window left" })
+map("n", "sJ", "<cmd>wincmd J<CR>", { desc = "Move window below" })
+map("n", "sK", "<cmd>wincmd K<CR>", { desc = "Move window above" })
+map("n", "sL", "<cmd>wincmd L<CR>", { desc = "Move window right" })
+map("n", "s=", "<cmd>wincmd =<CR>", { desc = "Equally high and wide" })
+map("n", "s_", "<cmd>wincmd _<CR>", { desc = "Max out the height" })
+map("n", "s|", "<cmd>wincmd |<CR>", { desc = "Max out the width" })
+
+-- new file
+map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
 -- Quick moving between windows using ALT-
 -- tnoremap <esc> <C-\><C-n><esc>
@@ -157,18 +159,35 @@ map({ "n", "sS", "<C-w>W", nowait = true, desc = "Go to previous window" })
 -- map { 'n', '<A-l>', '<C-w>l' }
 
 -- Terminal split openings
-map({ "n", "<leader>ti", ":new term://zsh<CR>", desc = "New terminal split horizontally" })
-map({ "n", "<leader>tv", ":vnew term://zsh<CR>", desc = "New terminal split vertically" })
-map({ "n", "<leader>tt", ":tabnew term://zsh<CR>", desc = "Open terminal in new tab" })
+map("n", "<leader>ti", "<cmd>new term://zsh<CR>", { desc = "New terminal split horizontally" })
+map("n", "<leader>tv", "<cmd>vnew term://zsh<CR>", { desc = "New terminal split vertically" })
+map("n", "<leader>tt", "<cmd>tabnew term://zsh<CR>", { desc = "Open terminal in new tab" })
 
 -- Tab mappings
-map({ silent = true, "n", "g0", ":<C-u>tabfirst<CR>" })
-map({ silent = true, "n", "g$", ":<C-u>tablast<CR>" })
-map({ silent = true, "n", "g>", ":tabmove +1<CR>" })
-map({ silent = true, "n", "g<", ":tabmove -1<CR>" })
-map({ silent = true, "n", "gm", ":tabmove<CR>" })
+map("n", "<leader><tab>0", "<cmd><C-u>tabfirst<CR>", { silent = true })
+map("n", "<leader><tab>$", "<cmd><C-u>tablast<CR>", { silent = true })
+map("n", "<leader><tab>>", "<cmd>tabmove +1<CR>", { silent = true })
+map("n", "<leader><tab><", "<cmd>tabmove -1<CR>", { silent = true })
+map("n", "<leader><tab>m", "<cmd>tabmove<CR>", { silent = true })
+map("n", "<leader><tab>]", "<cmd>tabnext<CR>", { desc = "Next tab" })
+map("n", "<leader><tab>[", "<cmd>tabprev<CR>", { desc = "Previous tab" })
 -- let g:lasttab = 1
 -- nnoremap <silent> gG :execute 'tabn '.g:lasttab<CR>
 
 -- When pressing <Leader>cd switch to the directory of the open buffer
-map({ "n", "<Leader>cd", ":lcd %:p:h<CR>:pwd<CR>", desc = "cd to directory of open buffer" })
+map("n", "<Leader>cd", ":lcd %:p:h<CR>:pwd<CR>", { desc = "cd to directory of open buffer" })
+
+-- diagnostic (taken from LazyVim)
+local diagnostic_goto = function(next, severity)
+  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+  severity = severity and vim.diagnostic.severity[severity] or nil
+  return function()
+    go({ severity = severity })
+  end
+end
+map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
+map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
+map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
+map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
+map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
+map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })

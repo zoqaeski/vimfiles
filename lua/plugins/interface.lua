@@ -120,7 +120,7 @@ return {
     },
     keys = {
       {
-        "<leader>.",
+        "<leader>W",
         function()
           Snacks.scratch()
         end,
@@ -199,23 +199,60 @@ return {
       { "<leader>fg", "<cmd>FzfLua git_files<cr>", desc = "Find Files (git-files)" },
       { "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
       { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent Files" },
-      { "<leader>fh", "<cmd>FzfLua help_tags<cr>", desc = "Help Pages" },
-      { "<leader>fk", "<cmd>FzfLua keymaps<cr>", desc = "Key Mappings" },
-      { "<leader>fc", "<cmd>FzfLua commands<cr>", desc = "Commands" },
+      { "<leader>H", "<cmd>FzfLua help_tags<cr>", desc = "Help Pages" },
+      { "<leader>K", "<cmd>FzfLua keymaps<cr>", desc = "Key Mappings" },
+      { "<leader>C", "<cmd>FzfLua commands<cr>", desc = "Commands" },
       { "<leader>:", "<cmd>FzfLua command_history<cr>", desc = "Command History" },
       { "<leader>/", "<cmd>FzfLua search_history<cr>", desc = "Search History" },
       { '<leader>"', "<cmd>FzfLua registers<cr>", desc = "Registers" },
+      {
+        "<C-x><C-f>",
+        function()
+          require("fzf-lua").complete_path()
+        end,
+        { "n", "v", "i" },
+        { silent = true, desc = "Fuzzy complete path" },
+      },
     },
   },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
+    opts_extend = { "spec" },
     opts = {
+      -- preset = "helix",
+      -- defaults = {},
       triggers = {
         { "<leader>", mode = { "n", "v" } },
-        { "g", mode = { "n" } },
-        { "s", mode = { "n" } },
-        { "z", mode = { "n" } },
+        { "[", mode = { "n", "v" } },
+        { "]", mode = { "n", "v" } },
+        { "g", mode = { "n", "v" } },
+        { "gs", mode = { "n", "v" } },
+        { "s", mode = "n" },
+        { "z", mode = { "n", "v" } },
+      },
+      spec = {
+        {
+          mode = { "n", "v" },
+          { "<leader><tab>", group = "tabs" },
+          --     { "<leader>c", group = "code" },
+          --     { "<leader>d", group = "debug" },
+          --     -- { "<leader>dp", group = "profiler" },
+          { "<leader>f", group = "file/find" },
+          --     { "<leader>g", group = "git" },
+          --     { "<leader>gh", group = "hunks" },
+          --     { "<leader>q", group = "quit/session" },
+          --     { "<leader>s", group = "search" },
+          --     { "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
+          { "[", group = "prev" },
+          { "]", group = "next" },
+          { "g", group = "goto" },
+          { "gs", group = "surround" },
+          { "s", group = "window" },
+          { "z", group = "fold" },
+          --     -- better descriptions
+          --     { "gx", desc = "Open with system app" },
+        },
       },
     },
     keys = {
