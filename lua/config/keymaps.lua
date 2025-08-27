@@ -119,15 +119,7 @@ map("n", "st", "<cmd>wincmd t<CR>", { desc = "Move buffer to new tab" })
 map("n", "so", "<cmd>only<CR>", { desc = "Close all windows but current" })
 map("n", "sq", "<cmd>close<CR>", { desc = "Close window" })
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
--- map({ "n", "sd", "<cmd>bdelete<CR>",{ desc ="Unload buffer" })
--- Buffers
-map("n", "sb", "<cmd>ls<CR>", { desc = "List open buffers" })
-map("n", "sB", "<cmd>ls<CR><cmd>e #", { desc = "List open buffers and switch" })
-map("n", "sT", "<cmd>ls<CR><cmd>tabe #", { desc = "List open buffers and open in new tab" })
-map("n", "sI", "<cmd>ls<CR><cmd>split #", { desc = "List open buffers and split horizontally" })
-map("n", "sV", "<cmd>ls<CR><cmd>vsplit #", { desc = "List open buffers and split vertically" })
-map("n", "]b", "<cmd>bnext", { desc = "Next buffer" })
-map("n", "[b", "<cmd>bnext", { desc = "Previous buffer" })
+
 -- Moving between windows
 map("n", "sh", "<cmd>wincmd h<CR>", { desc = "Go to window left" })
 map("n", "sj", "<cmd>wincmd j<CR>", { desc = "Go to window below" })
@@ -144,19 +136,23 @@ map("n", "s=", "<cmd>wincmd =<CR>", { desc = "Equally high and wide" })
 map("n", "s_", "<cmd>wincmd _<CR>", { desc = "Max out the height" })
 map("n", "s|", "<cmd>wincmd |<CR>", { desc = "Max out the width" })
 
+-- Buffers
+map("n", "<leader>bb", "<cmd>ls<CR>", { desc = "List open buffers" })
+map("n", "<leader>bB", "<cmd>ls<CR><cmd>e #", { desc = "List open buffers and switch" })
+map("n", "<leader>bd", function()
+  Snacks.bufdelete()
+end, { desc = "Delete buffer" })
+map("n", "<leader>bD", "<cmd>bdelete", { desc = "Delete buffer and window" })
+map("n", "<leader>bt", "<cmd>ls<CR><cmd>tabe #", { desc = "List open buffers and open in new tab" })
+map("n", "<leader>bi", "<cmd>ls<CR><cmd>split #", { desc = "List open buffers and split horizontally" })
+map("n", "<leader>bv", "<cmd>ls<CR><cmd>vsplit #", { desc = "List open buffers and split vertically" })
+map("n", "]b", "<cmd>bnext", { desc = "Next buffer" })
+map("n", "[b", "<cmd>bprevious", { desc = "Previous buffer" })
+map("n", "gb", "<cmd>bnext", { desc = "Next buffer" })
+map("n", "gB", "<cmd>bprevious", { desc = "Previous buffer" })
+
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
-
--- Quick moving between windows using ALT-
--- tnoremap <esc> <C-\><C-n><esc>
--- map { 't', '<A-h>', '<C-\\><C-n><C-w>h' }
--- map { 't', '<A-j>', '<C-\\><C-n><C-w>j' }
--- map { 't', '<A-k>', '<C-\\><C-n><C-w>k' }
--- map { 't', '<A-l>', '<C-\\><C-n><C-w>l' }
--- map { 'n', '<A-h>', '<C-w>h' }
--- map { 'n', '<A-j>', '<C-w>j' }
--- map { 'n', '<A-k>', '<C-w>k' }
--- map { 'n', '<A-l>', '<C-w>l' }
 
 -- Terminal split openings
 map("n", "<leader>ti", "<cmd>new term://zsh<CR>", { desc = "New terminal split horizontally" })
@@ -164,8 +160,8 @@ map("n", "<leader>tv", "<cmd>vnew term://zsh<CR>", { desc = "New terminal split 
 map("n", "<leader>tt", "<cmd>tabnew term://zsh<CR>", { desc = "Open terminal in new tab" })
 
 -- Tab mappings
-map("n", "<leader><tab>0", "<cmd><C-u>tabfirst<CR>", { silent = true })
-map("n", "<leader><tab>$", "<cmd><C-u>tablast<CR>", { silent = true })
+map("n", "<leader><tab>0", "<cmd>tabfirst<CR>", { silent = true })
+map("n", "<leader><tab>$", "<cmd>tablast<CR>", { silent = true })
 map("n", "<leader><tab>>", "<cmd>tabmove +1<CR>", { silent = true })
 map("n", "<leader><tab><", "<cmd>tabmove -1<CR>", { silent = true })
 map("n", "<leader><tab>m", "<cmd>tabmove<CR>", { silent = true })
@@ -174,8 +170,8 @@ map("n", "<leader><tab>[", "<cmd>tabprev<CR>", { desc = "Previous tab" })
 -- let g:lasttab = 1
 -- nnoremap <silent> gG :execute 'tabn '.g:lasttab<CR>
 
--- When pressing <Leader>cd switch to the directory of the open buffer
-map("n", "<Leader>cd", ":lcd %:p:h<CR>:pwd<CR>", { desc = "cd to directory of open buffer" })
+-- When pressing <LocalLeader>cd switch to the directory of the open buffer
+map("n", "<LocalLeader>cd", "<cmd>lcd %:p:h<CR><cmd>pwd<CR>", { desc = "cd to directory of open buffer" })
 
 -- diagnostic (taken from LazyVim)
 local diagnostic_goto = function(next, severity)

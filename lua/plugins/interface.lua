@@ -106,7 +106,7 @@ return {
       -- refer to the configuration section below
       bigfile = { enabled = true },
       dashboard = { enabled = true },
-      explorer = { enabled = true },
+      explorer = { enabled = true, replace_netrw = true },
       indent = { enabled = true },
       input = { enabled = true },
       picker = { enabled = true },
@@ -218,7 +218,7 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts_extend = { "spec" },
+    -- opts_extend = { "spec" },
     opts = {
       -- preset = "helix",
       -- defaults = {},
@@ -235,6 +235,7 @@ return {
         {
           mode = { "n", "v" },
           { "<leader><tab>", group = "tabs" },
+          { "<leader>b", group = "buffers" },
           --     { "<leader>c", group = "code" },
           --     { "<leader>d", group = "debug" },
           --     -- { "<leader>dp", group = "profiler" },
