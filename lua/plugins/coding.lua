@@ -78,22 +78,28 @@ return {
         desc = "Format buffer",
       },
     },
-    -- This will provide type hinting with LuaLS
-    ---@module "conform"
-    ---@type conform.setupOpts
     opts = {
       -- Define your formatters
       formatters_by_ft = {
         lua = { "stylua" },
         python = { "isort", "black" },
-        javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { "prettier", stop_after_first = true },
+        html = { "prettier" },
+        tex = { "latexindent", "tex-fmt" },
       },
       -- Set default options
       default_format_opts = {
         lsp_format = "fallback",
       },
       -- Set up format-on-save
-      format_on_save = { timeout_ms = 500 },
+      format_on_save = {
+        lsp_format = "fallback",
+        timeout_ms = 500,
+      },
+      -- Notify when a formatter errors
+      notify_on_error = true,
+      -- Notify when no formatters are available for the buffer
+      notify_no_formatters = true,
       -- Customize formatters
       formatters = {
         shfmt = {
