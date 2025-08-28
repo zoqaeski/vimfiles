@@ -108,7 +108,7 @@ return {
       dashboard = { enabled = true },
       explorer = { enabled = true, replace_netrw = true },
       indent = { enabled = true },
-      input = { enabled = true },
+      -- input = { enabled = true },
       picker = { enabled = true },
       notifier = { enabled = true },
       quickfile = { enabled = true },
@@ -118,103 +118,120 @@ return {
       terminal = { enabled = true },
       words = { enabled = true },
     },
-    keys = {
-      {
-        "<leader>W",
-        function()
-          Snacks.scratch()
-        end,
-        desc = "Toggle Scratch Buffer",
-      },
-      {
-        "<leader>S",
-        function()
-          Snacks.scratch.select()
-        end,
-        desc = "Select Scratch Buffer",
-      },
-      {
-        "<leader>E",
-        function()
-          Snacks.explorer()
-        end,
-        desc = "Explorer",
-      },
-      {
-        "<leader>T",
-        function()
-          Snacks.terminal()
-        end,
-        desc = "Terminal",
-      },
+    -- stylua: ignore
+    keys = { 
+      -- Scratch buffers
+      { "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer", },
+      { "<leader>S", function() Snacks.scratch.select() end, desc = "Select Scratch Buffer", },
+      -- History
+      { "<leader>/", function() Snacks.picker.search_history() end, desc = "Search History" },
+      { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
+      { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
+      { '<leader>"', function() Snacks.picker.registers() end, desc="Registers" },
+      -- Find/Files
+      { "<leader>fe", function() Snacks.explorer() end, desc = "File Explorer" },
+      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
+      { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+      { "<leader>fh", function() Snacks.picker.files({ cwd = "~" }) end, desc = "Find Files in $HOME" },
+      { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
+      { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
+      -- Grep
+      { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
+      { "<leader>sb", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+      { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Grep Word" },
+      { "<leader>sl", function() Snacks.picker.lines() end, desc = "Lines" },
+      -- Search
+      { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
+      { "<leader>si", function() Snacks.picker.icons() end, desc = "Icons" },
+      { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+      { "<leader>sm", function() Snacks.picker.man() end, desc = "Manual Pages" },
+      { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
+      { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo history" },
+      -- Git
+      { "<leader>gg", function() Snacks.lazygit.open() end, desc = "LazyGit" },
+      { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
+      { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
+      { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
+      { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
+      { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+      { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
+      { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
+      -- Terminal
+      { "<leader>t", function() Snacks.terminal() end, desc = "Terminal", },
+      -- User Interface
+      -- { "<leader>ux", function()
+      --     Snacks.toggle.option()
+      -- end},
     },
   },
-  {
-    "ibhagwan/fzf-lua",
-    event = "VeryLazy",
-    dependencies = { "echasnovski/mini.icons" },
-    cmd = "FzfLua",
-    opts = function(_, opts)
-      local fzf = require("fzf-lua")
-      local config = fzf.config
-      local actions = fzf.actions
-      local utils = fzf.utils
-
-      return {
-        "default-title",
-        fzf_colors = true,
-        fzf_opts = {
-          ["--no-scrollbar"] = true,
-        },
-        defaults = {
-          -- formatter = "path.filename_first",
-          formatter = "path.dirname_first",
-        },
-        winopts = {
-          width = 0.8,
-          height = 0.8,
-          row = 0.5,
-          col = 0.5,
-          preview = {
-            scrollchars = { "┃", "" },
-          },
-        },
-        files = {
-          cwd_prompt = false,
-          actions = {
-            ["alt-i"] = actions.toggle_ignore,
-            ["alt-h"] = actions.toggle_hidden,
-            ["enter"] = actions.file_edit_or_qf,
-            ["ctrl-i"] = actions.file_split,
-            ["ctrl-v"] = actions.file_vsplit,
-            ["ctrl-t"] = actions.file_tabedit,
-            ["alt-q"] = actions.file_sel_to_qf,
-            ["alt-l"] = actions.file_sel_to_ll,
-          },
-        },
-      }
-    end,
-    keys = {
-      { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Files" },
-      { "<leader>fg", "<cmd>FzfLua git_files<cr>", desc = "Find Files (git-files)" },
-      { "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
-      { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent Files" },
-      { "<leader>H", "<cmd>FzfLua help_tags<cr>", desc = "Help Pages" },
-      { "<leader>K", "<cmd>FzfLua keymaps<cr>", desc = "Key Mappings" },
-      { "<leader>C", "<cmd>FzfLua commands<cr>", desc = "Commands" },
-      { "<leader>:", "<cmd>FzfLua command_history<cr>", desc = "Command History" },
-      { "<leader>/", "<cmd>FzfLua search_history<cr>", desc = "Search History" },
-      { '<leader>"', "<cmd>FzfLua registers<cr>", desc = "Registers" },
-      {
-        "<C-x><C-f>",
-        function()
-          require("fzf-lua").complete_path()
-        end,
-        { "n", "v", "i" },
-        { silent = true, desc = "Fuzzy complete path" },
-      },
-    },
-  },
+  -- Replaced fzf-lua with snacks
+  -- {
+  --   "ibhagwan/fzf-lua",
+  --   event = "VeryLazy",
+  --   dependencies = { "echasnovski/mini.icons" },
+  --   cmd = "FzfLua",
+  --   opts = function(_, opts)
+  --     local fzf = require("fzf-lua")
+  --     local config = fzf.config
+  --     local actions = fzf.actions
+  --     local utils = fzf.utils
+  --
+  --     return {
+  --       "default-title",
+  --       fzf_colors = true,
+  --       fzf_opts = {
+  --         ["--no-scrollbar"] = true,
+  --       },
+  --       defaults = {
+  --         -- formatter = "path.filename_first",
+  --         formatter = "path.dirname_first",
+  --       },
+  --       winopts = {
+  --         width = 0.8,
+  --         height = 0.8,
+  --         row = 0.5,
+  --         col = 0.5,
+  --         preview = {
+  --           scrollchars = { "┃", "" },
+  --         },
+  --       },
+  --       files = {
+  --         cwd_prompt = false,
+  --         actions = {
+  --           ["alt-i"] = actions.toggle_ignore,
+  --           ["alt-h"] = actions.toggle_hidden,
+  --           ["enter"] = actions.file_edit_or_qf,
+  --           ["ctrl-s"] = actions.file_split,
+  --           ["ctrl-v"] = actions.file_vsplit,
+  --           ["ctrl-t"] = actions.file_tabedit,
+  --           ["alt-q"] = actions.file_sel_to_qf,
+  --           ["alt-l"] = actions.file_sel_to_ll,
+  --         },
+  --       },
+  --     }
+  --   end,
+  --   keys = {
+  --     { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Files" },
+  --     { "<leader>fg", "<cmd>FzfLua git_files<cr>", desc = "Find Files (git-files)" },
+  --     { "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
+  --     { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent Files" },
+  --     { "<leader>H", "<cmd>FzfLua help_tags<cr>", desc = "Help Pages" },
+  --     { "<leader>K", "<cmd>FzfLua keymaps<cr>", desc = "Key Mappings" },
+  --     { "<leader>C", "<cmd>FzfLua commands<cr>", desc = "Commands" },
+  --     { "<leader>:", "<cmd>FzfLua command_history<cr>", desc = "Command History" },
+  --     { "<leader>/", "<cmd>FzfLua search_history<cr>", desc = "Search History" },
+  --     { '<leader>"', "<cmd>FzfLua registers<cr>", desc = "Registers" },
+  --     {
+  --       "<C-x><C-f>",
+  --       function()
+  --         require("fzf-lua").complete_path()
+  --       end,
+  --       { "n", "v", "i" },
+  --       { silent = true, desc = "Fuzzy complete path" },
+  --     },
+  --   },
+  -- },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -228,7 +245,7 @@ return {
         { "]", mode = { "n", "v" } },
         { "g", mode = { "n", "v" } },
         { "gs", mode = { "n", "v" } },
-        { "s", mode = "n" },
+        -- { "s", mode = "n" },
         { "z", mode = { "n", "v" } },
       },
       spec = {
@@ -236,20 +253,20 @@ return {
           mode = { "n", "v" },
           { "<leader><tab>", group = "tabs" },
           { "<leader>b", group = "buffers" },
+          { "<leader>w", group = "window" },
           --     { "<leader>c", group = "code" },
           --     { "<leader>d", group = "debug" },
-          --     -- { "<leader>dp", group = "profiler" },
           { "<leader>f", group = "file/find" },
-          --     { "<leader>g", group = "git" },
-          --     { "<leader>gh", group = "hunks" },
-          --     { "<leader>q", group = "quit/session" },
-          --     { "<leader>s", group = "search" },
+          { "<leader>g", group = "git" },
+          { "<leader>q", group = "quit/session" },
+          { "<leader>s", group = "search" },
+          { "<leader>u", group = "user interface" },
           --     { "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
           { "[", group = "prev" },
           { "]", group = "next" },
           { "g", group = "goto" },
           { "gs", group = "surround" },
-          { "s", group = "window" },
+          -- { "s", group = "window" },
           { "z", group = "fold" },
           --     -- better descriptions
           --     { "gx", desc = "Open with system app" },

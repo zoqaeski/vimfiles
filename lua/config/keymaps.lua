@@ -49,8 +49,8 @@ map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, 
 map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
 
 -- commenting
-map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
-map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
+map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcl<cr>fxa<bs>", { desc = "Add Comment Below" })
+map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcl<cr>fxa<bs>", { desc = "Add Comment Above" })
 
 --------------------------
 ---- Command-line mappings
@@ -113,51 +113,51 @@ map("v", "s", "<Nop>")
 map("o", "s", "<Nop>")
 
 -- Opening and closing windows
-map("n", "si", "<cmd>split<CR>", { desc = "Split window horizontally" })
-map("n", "sv", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
-map("n", "st", "<cmd>wincmd t<CR>", { desc = "Move buffer to new tab" })
-map("n", "so", "<cmd>only<CR>", { desc = "Close all windows but current" })
-map("n", "sq", "<cmd>close<CR>", { desc = "Close window" })
+map("n", "<leader>ws", "<cmd>split<CR>", { desc = "Split window horizontally" })
+map("n", "<leader>wv", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
+map("n", "<leader>wt", "<cmd>wincmd t<CR>", { desc = "Move buffer to new tab" })
+map("n", "<leader>wo", "<cmd>only<CR>", { desc = "Close all windows but current" })
+map("n", "<leader>wq", "<cmd>close<CR>", { desc = "Close window" })
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
 -- Moving between windows
-map("n", "sh", "<cmd>wincmd h<CR>", { desc = "Go to window left" })
-map("n", "sj", "<cmd>wincmd j<CR>", { desc = "Go to window below" })
-map("n", "sk", "<cmd>wincmd k<CR>", { desc = "Go to window above" })
-map("n", "sl", "<cmd>wincmd l<CR>", { desc = "Go to window right" })
-map("n", "sw", "<cmd>wincmd w<CR>", { desc = "Go to next window", nowait = true })
-map("n", "sW", "<cmd>wincmd W<CR>", { desc = "Go to previous window", nowait = true })
+map("n", "<leader>wh", "<cmd>wincmd h<CR>", { desc = "Go to window left" })
+map("n", "<leader>wj", "<cmd>wincmd j<CR>", { desc = "Go to window below" })
+map("n", "<leader>wk", "<cmd>wincmd k<CR>", { desc = "Go to window above" })
+map("n", "<leader>wl", "<cmd>wincmd l<CR>", { desc = "Go to window right" })
+map("n", "<leader>ww", "<cmd>wincmd w<CR>", { desc = "Go to next window", nowait = true })
+map("n", "<leader>wW", "<cmd>wincmd W<CR>", { desc = "Go to previous window", nowait = true })
 -- Resizing windows
-map("n", "sH", "<cmd>wincmd H<CR>", { desc = "Move window left" })
-map("n", "sJ", "<cmd>wincmd J<CR>", { desc = "Move window below" })
-map("n", "sK", "<cmd>wincmd K<CR>", { desc = "Move window above" })
-map("n", "sL", "<cmd>wincmd L<CR>", { desc = "Move window right" })
-map("n", "s=", "<cmd>wincmd =<CR>", { desc = "Equally high and wide" })
-map("n", "s_", "<cmd>wincmd _<CR>", { desc = "Max out the height" })
-map("n", "s|", "<cmd>wincmd |<CR>", { desc = "Max out the width" })
+map("n", "<leader>wH", "<cmd>wincmd H<CR>", { desc = "Move window left" })
+map("n", "<leader>wJ", "<cmd>wincmd J<CR>", { desc = "Move window below" })
+map("n", "<leader>wK", "<cmd>wincmd K<CR>", { desc = "Move window above" })
+map("n", "<leader>wL", "<cmd>wincmd L<CR>", { desc = "Move window right" })
+map("n", "<leader>w=", "<cmd>wincmd =<CR>", { desc = "Equally high and wide" })
+map("n", "<leader>w_", "<cmd>wincmd _<CR>", { desc = "Max out the height" })
+map("n", "<leader>w|", "<cmd>wincmd |<CR>", { desc = "Max out the width" })
 
 -- Buffers
-map("n", "<leader>bb", "<cmd>ls<CR>", { desc = "List open buffers" })
-map("n", "<leader>bB", "<cmd>ls<CR><cmd>e #", { desc = "List open buffers and switch" })
 map("n", "<leader>bd", function()
   Snacks.bufdelete()
 end, { desc = "Delete buffer" })
-map("n", "<leader>bD", "<cmd>bdelete", { desc = "Delete buffer and window" })
-map("n", "<leader>bt", "<cmd>ls<CR><cmd>tabe #", { desc = "List open buffers and open in new tab" })
-map("n", "<leader>bi", "<cmd>ls<CR><cmd>split #", { desc = "List open buffers and split horizontally" })
-map("n", "<leader>bv", "<cmd>ls<CR><cmd>vsplit #", { desc = "List open buffers and split vertically" })
-map("n", "]b", "<cmd>bnext", { desc = "Next buffer" })
-map("n", "[b", "<cmd>bprevious", { desc = "Previous buffer" })
-map("n", "gb", "<cmd>bnext", { desc = "Next buffer" })
-map("n", "gB", "<cmd>bprevious", { desc = "Previous buffer" })
+map("n", "<leader>bD", "<cmd>bdelete<CR>", { desc = "Delete buffer and window" })
+map("n", "<leader>bb", "<cmd>ls<CR>", { desc = "List open buffers" })
+map("n", "<leader>bB", ":ls<CR><cmd>e #", { desc = "List open buffers and switch" })
+map("n", "<leader>bt", ":ls<CR><cmd>tabe #", { desc = "List open buffers and open in new tab" })
+map("n", "<leader>bs", ":ls<CR><cmd>split #", { desc = "List open buffers and split horizontally" })
+map("n", "<leader>bv", ":ls<CR><cmd>vsplit #", { desc = "List open buffers and split vertically" })
+map("n", "]b", "<cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "[b", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+map("n", "gb", "<cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "gB", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
--- Terminal split openings
-map("n", "<leader>ti", "<cmd>new term://zsh<CR>", { desc = "New terminal split horizontally" })
-map("n", "<leader>tv", "<cmd>vnew term://zsh<CR>", { desc = "New terminal split vertically" })
-map("n", "<leader>tt", "<cmd>tabnew term://zsh<CR>", { desc = "Open terminal in new tab" })
+-- Terminal split openings - these are not necessary with snacks.nvim
+-- map("n", "<leader>t", "<cmd>new term://zsh<CR>", { desc = "New terminal split horizontally" })
+-- map("n", "<leader>tv", "<cmd>vnew term://zsh<CR>", { desc = "New terminal split vertically" })
+-- map("n", "<leader>tt", "<cmd>tabnew term://zsh<CR>", { desc = "Open terminal in new tab" })
 
 -- Tab mappings
 map("n", "<leader><tab>0", "<cmd>tabfirst<CR>", { silent = true })
@@ -187,3 +187,9 @@ map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
 map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
 map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
+
+-- Toggle UI options
+Snacks.toggle.zen():map("<leader>uz")
+Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+Snacks.toggle.option("cursorline", { name = "Cursor Line" }):map("<leader>ul")
+Snacks.toggle.option("cursorcolumn", { name = "Cursor Column" }):map("<leader>uc")

@@ -74,7 +74,7 @@ return {
         function()
           require("conform").format({ async = true })
         end,
-        mode = "",
+        mode = { "n", "v" },
         desc = "Format buffer",
       },
     },
@@ -85,7 +85,7 @@ return {
         python = { "isort", "black" },
         javascript = { "prettier", stop_after_first = true },
         html = { "prettier" },
-        tex = { "latexindent", "tex-fmt" },
+        tex = { "latexindent" },
       },
       -- Set default options
       default_format_opts = {
