@@ -3,7 +3,7 @@
 ----------------------------------------
 return {
   {
-    "echasnovski/mini.pairs",
+    "nvim-mini/mini.pairs",
     version = "*",
     event = "VeryLazy",
     opts = {
@@ -11,7 +11,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     version = "*",
     event = "VeryLazy",
     opts = {
@@ -29,7 +29,24 @@ return {
     },
   },
   {
-    "echasnovski/mini.ai",
+    "nvim-mini/mini.splitjoin",
+    version = "*",
+    event = "VeryLazy",
+    opts = {
+      mappings = {
+        toggle = "<leader>cs",
+        split = "",
+        join = "",
+      },
+    },
+  },
+  {
+    "nvim-mini/mini.move",
+    version = "*",
+    event = "VeryLazy",
+  },
+  {
+    "nvim-mini/mini.ai",
     version = "*",
     event = "VeryLazy",
     opts = function()
@@ -59,9 +76,20 @@ return {
     end,
   },
   {
-    "folke/ts-comments.nvim",
+    "nvim-mini/mini.align",
+    version = "*",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      mappings = {
+        start = "<leader>ca",
+        start_with_preview = "<leader>cA",
+      },
+    },
+  },
+  {
+    "nvim-mini/mini.comment",
+    version = "*",
+    event = "VeryLazy",
   },
   {
     "stevearc/conform.nvim",
