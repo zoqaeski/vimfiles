@@ -187,9 +187,3 @@ map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
 map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
 map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
-
--- Toggle UI options
-Snacks.toggle.zen():map("<leader>uz")
-Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-Snacks.toggle.option("cursorline", { name = "Cursor Line" }):map("<leader>ul")
-Snacks.toggle.option("cursorcolumn", { name = "Cursor Column" }):map("<leader>uc")

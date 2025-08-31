@@ -110,16 +110,20 @@ return {
       indent = { enabled = true },
       -- input = { enabled = true },
       picker = { enabled = true },
-      notifier = { enabled = true },
+      notifier = { enabled = true, level = vim.log.levels.WARN },
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },
       statuscolumn = { enabled = true },
       terminal = { enabled = true },
       words = { enabled = true },
+      zen = {
+        enabled = true,
+        win = { backdrop = { transparent = false, blend = 90 } },
+      },
     },
     -- stylua: ignore
-    keys = { 
+    keys = {
       -- Scratch buffers
       { "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer", },
       { "<leader>S", function() Snacks.scratch.select() end, desc = "Select Scratch Buffer", },
@@ -160,16 +164,42 @@ return {
       -- Terminal
       { "<leader>t", function() Snacks.terminal() end, desc = "Terminal", },
       -- User Interface
-      -- { "<leader>ux", function()
-      --     Snacks.toggle.option()
-      -- end},
+      { "<leader>un", function () Snacks.notifier.hide() end, desc = "Dismiss all notifications", }
     },
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "VeryLazy",
+        callback = function()
+          -- Setup some globals for debugging (lazy-loaded)
+          _G.dd = function(...)
+            Snacks.debug.inspect(...)
+          end
+          _G.bt = function()
+            Snacks.debug.backtrace()
+          end
+          vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+          -- Create some toggle mappings
+          Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+          Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+          Snacks.toggle.option("cursorline", { name = "Cursor Line" }):map("<leader>ul")
+          Snacks.toggle.option("cursorcolumn", { name = "Cursor Column" }):map("<leader>uc")
+          Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
+          Snacks.toggle.treesitter():map("<leader>uT")
+          Snacks.toggle.inlay_hints():map("<leader>uh")
+          Snacks.toggle.indent():map("<leader>ug")
+          Snacks.toggle.dim():map("<leader>ud")
+          Snacks.toggle.zen():map("<leader>uz")
+          Snacks.toggle.diagnostics():map("<leader>uD")
+        end,
+      })
+    end,
   },
   -- Replaced fzf-lua with snacks
   -- {
   --   "ibhagwan/fzf-lua",
   --   event = "VeryLazy",
-  --   dependencies = { "echasnovski/mini.icons" },
+  --   dependencies = { "nvim-mini/mini.icons" },
   --   cmd = "FzfLua",
   --   opts = function(_, opts)
   --     local fzf = require("fzf-lua")
@@ -266,7 +296,6 @@ return {
           { "]", group = "next" },
           { "g", group = "goto" },
           { "gs", group = "surround" },
-          -- { "s", group = "window" },
           { "z", group = "fold" },
           --     -- better descriptions
           --     { "gx", desc = "Open with system app" },
@@ -283,5 +312,7 @@ return {
       },
     },
   },
+  -- Icons
+  { "nvim-mini/mini.icons", version = "*" },
 }
 -- vim: et ts=2 sts=2
