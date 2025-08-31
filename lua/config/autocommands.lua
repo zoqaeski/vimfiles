@@ -57,4 +57,15 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
+
+-- Disable hlsearch after moving cursor
+-- https://www.reddit.com/r/neovim/comments/zc720y/comment/iyvcdf0/
+vim.on_key(function(char)
+  if vim.fn.mode() == "n" then
+    local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
+    if vim.opt.hlsearch:get() ~= new_hlsearch then
+      vim.opt.hlsearch = new_hlsearch
+    end
+  end
+end, vim.api.nvim_create_namespace("auto_hlsearch"))
 -- vim: et ts=2 sts=2
